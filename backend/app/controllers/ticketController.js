@@ -55,6 +55,7 @@ const getAllTicketsByProduct = async (productId) => {
 const getTicketById = async (req, res) => {
   try {
     const ticketId = req.params.ticketId;
+   //  Ticket.find({ producto: productId }).populate('product');
     const ticket = await Ticket.findById(ticketId);
     if (!ticket) {
       return res.status(404).json({ error: 'Ticket no encontrado' });
