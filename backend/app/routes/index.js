@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const ticketRoutes = require('./ticketRoutes');
+const productRoutes = require('./productRoutes');
 
 // Rutas para los tickets
-router.use('/tickets', ticketRoutes);
+router.use('/products', productRoutes);
 
 module.exports = router;
