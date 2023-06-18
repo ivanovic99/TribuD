@@ -1,14 +1,16 @@
 const Ticket = require('../models/Ticket');
-const Producto = require('../models/Product');
+const Product = require('../models/Product');
 
 // Crear un nuevo ticket y asociarlo a un producto existente
 const createTicketForProduct = async (productId, ticketData) => {
   try {
     const ticket = new Ticket({
       ...ticketData,
-      producto: productId
+      product: productId
     });
     await ticket.save();
+   // Actualizar el producto con el nuevo ticket
+   await Product.findByIdAndUpdate(productId, { $push: { tickets: ticket._id } }, { new: true, useFindAndModify: false });
     return ticket;
   } catch (error) {
     console.error('Error al crear el ticket con producto:', error);
@@ -19,8 +21,11 @@ const createTicketForProduct = async (productId, ticketData) => {
 // Obtener todos los tickets de un producto en particular
 const getAllTicketsByProduct = async (productId) => {
   try {
-    const tickets = await Ticket.find({ producto: productId }).populate('product');
-    return tickets;
+   if (productId !== "undefined") {
+      const tickets = await Ticket.find({product: productId});
+     return tickets;
+   }
+   return [];
   } catch (error) {
     console.error('Error al obtener los tickets por producto:', error);
     throw error;
@@ -56,6 +61,9 @@ const getTicketById = async (req, res) => {
   try {
     const ticketId = req.params.ticketId;
    //  Ticket.find({ producto: productId }).populate('product');
+   if (ticketId === "undefined") {
+      return res.status(404).json({ error: 'Undefined ticketId' });
+   }
     const ticket = await Ticket.findById(ticketId);
     if (!ticket) {
       return res.status(404).json({ error: 'Ticket no encontrado' });
@@ -71,11 +79,12 @@ const getTicketById = async (req, res) => {
 const updateTicketById = async (req, res) => {
   try {
     const ticketId = req.params.ticketId;
+    const productId = req.params.productId;
     const { title, description, status } = req.body;
     const updatedTicket = await Ticket.findByIdAndUpdate(
       ticketId,
-      { title, description, status },
-      { new: true }
+      { title, description, status, product: productId },
+      { new: true, useFindAndModify: false }
     );
     if (!updatedTicket) {
       return res.status(404).json({ error: 'Ticket no encontrado' });

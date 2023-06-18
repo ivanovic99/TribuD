@@ -1,4 +1,5 @@
 const Product = require('../models/Product');
+const Ticket = require('../models/Ticket');
 
 // Crear un nuevo producto
 const createProduct = async (productData) => {
@@ -27,6 +28,9 @@ const getAllProducts = async (req, res) => {
 const getProductById = async (req, res) => {
   try {
     const productId = req.params.productId;
+    if (productId === "undefined") {
+      return res.status(404).json({ error: 'Undefined productId' });
+    }
     const product = await Product.findById(productId);
     if (!product) {
       return res.status(404).json({ error: 'producto no encontrado' });
@@ -62,7 +66,11 @@ const updateProductById = async (req, res) => {
 const deleteProductById = async (req, res) => {
   try {
     const productId = req.params.productId;
-    const deletedProduct = await Product.findByIdAndDelete(productId);
+    const deletedProduct = await Product.findByIdAndDelete(productId).populate("tickets");
+    for (let i = 0; i < deletedProduct.tickets.length; i++) {
+      let ticket = deletedProduct.tickets[i];
+      await Ticket.findByIdAndDelete(ticket._id);
+   }
     if (!deletedProduct) {
       return res.status(404).json({ error: 'Producto no encontrado' });
     }
