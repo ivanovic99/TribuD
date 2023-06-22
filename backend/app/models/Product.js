@@ -11,7 +11,8 @@ const productSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   },
-  tickets: [{ type: mongoose.Schema.Types.ObjectId, ref: "Ticket" }]
+  tickets: [{ type: mongoose.Schema.Types.ObjectId, ref: "Ticket" }], //lo pase a version
+//   version: [{ type: mongoose.Schema.Types.ObjectId, ref: "Version" }],
 });
 
 const Product = mongoose.model('Product', productSchema);

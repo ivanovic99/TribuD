@@ -31,6 +31,5 @@ router.delete('/:productId', productController.deleteProductById);
 
 // Rutas para los tickets
 router.use('/:productId/tickets', ticketRoutes);
-
-
+ 
 module.exports = router;
