@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL_PRODUCT = 'http://localhost:8080/api'; // La URL del servidor backend
+const BASE_URL_PRODUCT = 'https://tribud.onrender.com/api'; // La URL del servidor backend
 
 // Obtener lista de productos
 export const getProducts = async (setProducts) => {
