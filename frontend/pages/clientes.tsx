@@ -10,7 +10,7 @@ export default function Clientes() {
     const [list, setList] = useState([])
 
     useEffect(() => {
-        fetch("http://localhost:8080/api/clients/")
+        fetch("https://tribud.onrender.com/api/clients")
             .then((res) => {
                 console.log("res", res)
                 return res.json()
