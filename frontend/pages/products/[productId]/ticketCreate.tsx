@@ -12,7 +12,7 @@ const TicketForm: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await createTicket(productId, { title, description, status });
+      await createTicket(productId as string, { title, description, status });
       // Limpiar el formulario después de crear el ticket
       setTitle('');
       setDescription('');

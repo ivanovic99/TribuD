@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { getTickets } from "@/pages/api/ticketsServices";
 import TicketsGridRow from "@/components/ticketsGridRow";
-import { Tickets } from "@/pages/types";
+import { Tickets } from "@/public/types";
 import { useRouter } from 'next/router';
 
 function HeaderItem({ title }: { title: string }) {
@@ -19,7 +19,7 @@ export default function Tickets() {
   var { productId } = router.query;
   useEffect(() => {
      (async () => {
-        await getTickets(productId, setTickets);
+        await getTickets(productId as string, setTickets);
       })()
    }, [router.query]);
    if (!tickets.length) {  
@@ -59,7 +59,7 @@ export default function Tickets() {
 
                 <tbody>
                   {tickets.map((ticket) => (
-                     <TicketsGridRow key={ticket._id} productId={productId} ticket={ticket} />
+                     <TicketsGridRow key={ticket._id} productId={productId as string} ticket={ticket} />
                   ))}
                 </tbody>
               </table>

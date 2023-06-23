@@ -1,9 +1,11 @@
 import axios from "axios";
 
-const BASE_URL_PRODUCT = 'http://localhost:8080/api'; // La URL del servidor backend
+const BASE_URL_PRODUCT = 'https://tribud.onrender.com/api'; // La URL del servidor backend
+
+
 
 // Obtener lista de productos
-export const getProducts = async (setProducts) => {
+export const getProducts = async (setProducts: React.Dispatch<React.SetStateAction<any[]>>) => {
   try {
     const response = await axios.get(`${BASE_URL_PRODUCT}/products/`);
     setProducts(response.data)
@@ -15,7 +17,7 @@ export const getProducts = async (setProducts) => {
 };
 
 // Crear un nuevo producto
-export const createProduct = async (productData) => {
+export const createProduct = async (productData: {}) => {
   try {
     const response = await axios.post(`${BASE_URL_PRODUCT}/products`, productData);
     return response.data;
@@ -26,18 +28,18 @@ export const createProduct = async (productData) => {
 };
 
 // Obtener un producto por su ID
-export const getProductById = async (productId) => {
+export const getProductById = async (productId: String) => {
    try {
      const response = await axios.get(`${BASE_URL_PRODUCT}/products/${productId}`);
      return response.data;
    } catch (error) {
-      if (error.response.status !== 404) console.error(`Error al obtener el producto con ID ${productId}:`, error);
+      // if (error.response.status !== 404) console.error(`Error al obtener el producto con ID ${productId}:`, error);
      throw error;
    }
  };
  
  // Actualizar un producto por su ID
-export const updateProduct = async (productId, productData) => {
+export const updateProduct = async (productId: String, productData: {}) => {
    try {
      const response = await axios.put(`${BASE_URL_PRODUCT}/products/${productId}`, productData);
      return response.data;
@@ -49,7 +51,7 @@ export const updateProduct = async (productId, productData) => {
  
 
 // Eliminar un producto por su ID
-export const deleteProduct = async (productId) => {
+export const deleteProduct = async (productId: String) => {
    try {
      const response = await axios.delete(`${BASE_URL_PRODUCT}/products/${productId}`);
      return response.data;

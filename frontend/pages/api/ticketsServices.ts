@@ -1,9 +1,9 @@
 import axios from "axios";
 
-const BASE_URL_TICKET = 'http://localhost:8080/api/products/'; // La URL del servidor backend
+const BASE_URL_TICKET = 'https://tribud.onrender.com/api/products/'; // La URL del servidor backend
 
 // Obtener lista de tickets de un producto
-export const getTickets = async (productId, setTickets) => {
+export const getTickets = async (productId: String, setTickets: React.Dispatch<React.SetStateAction<any[]>>) => {
   try {
     const response = await axios.get(`${BASE_URL_TICKET}/${productId}/tickets`);
     setTickets(response.data)
@@ -15,7 +15,7 @@ export const getTickets = async (productId, setTickets) => {
 };
 
 // Crear un nuevo ticket para un producto
-export const createTicket = async (productId, ticketData) => {
+export const createTicket = async (productId: String, ticketData: {}) => {
   try {
     const response = await axios.post(`${BASE_URL_TICKET}/${productId}/tickets`, ticketData);
     return response.data;
@@ -26,7 +26,7 @@ export const createTicket = async (productId, ticketData) => {
 };
 
 // Obtener un ticket por su ID respecto de un producto
-export const getTicketById = async (productId, ticketId) => {
+export const getTicketById = async (productId: String, ticketId: String) => {
    try {
      const response = await axios.get(`${BASE_URL_TICKET}/${productId}/tickets/${ticketId}`);
      return response.data;
@@ -37,7 +37,7 @@ export const getTicketById = async (productId, ticketId) => {
  };
  
  // Actualizar un ticket por su ID respecto de un producto
-export const updateTicket = async (productId, ticketId, ticketData) => {
+export const updateTicket = async (productId: String, ticketId: String, ticketData: {}) => {
    try {
      const response = await axios.put(`${BASE_URL_TICKET}/${productId}/tickets/${ticketId}`, ticketData);
      return response.data;
@@ -49,7 +49,7 @@ export const updateTicket = async (productId, ticketId, ticketData) => {
  
 
 // Eliminar un ticket por su ID respecto de un producto
-export const deleteTicket = async (productId, ticketId) => {
+export const deleteTicket = async (productId: String, ticketId: String) => {
    try {
      const response = await axios.delete(`${BASE_URL_TICKET}/${productId}/tickets/${ticketId}`);
      return response.data;

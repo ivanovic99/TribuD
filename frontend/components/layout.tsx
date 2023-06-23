@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import SideBarItem from "./SidebarItem";
 import { ISidebarItem } from "./types";
 import { Route } from "next/dist/server/router";
-import TicketsDetails from "../pages/tickets/[id]"
 
 export default function Layout({ children }: { children: any }) {
   const menuItems: ISidebarItem[] = [
