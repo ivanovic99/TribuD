@@ -1,6 +1,11 @@
 import Link from "next/link";
+import { Products } from "@/public/types";
 
-export default function ProductsGridRow({ product }) {
+ type ProductsGridRowProps = {
+   product: Products;
+ };
+
+export default function ProductsGridRow({ product }: ProductsGridRowProps) {
   return (
       <tr className="cursor-pointer" key={`${product._id}`}>
         <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">

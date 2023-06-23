@@ -11,7 +11,7 @@ const ProductForm: React.FC = () => {
   const router = useRouter();
   const { productId } = router.query;
 
-  const setFormData = (data) => {
+  const setFormData = (data: {title: string, description: string, status: string}) => {
       const { title, description, status } = data;
       setTitle(title);
       setDescription(description);
@@ -27,7 +27,7 @@ const ProductForm: React.FC = () => {
    //    } catch (error) {
    //       console.error('Error al obtener los detalles del producto:', error);
    //    }
-      getProductById(productId)
+      getProductById(productId as string)
       .then((data) => setFormData(data))
       .catch((error) => {
          if (error.response.status !== 404) console.error('Error al obtener los detalles del producto:', error)
@@ -39,7 +39,7 @@ const ProductForm: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await updateProduct(productId, { title, description, status });
+      await updateProduct(productId as string, { title, description, status });
       // Limpiar el formulario después de modificar el producto
       setTitle('');
       setDescription('');

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { getProducts } from "@/pages/api/productsServices";
 import ProductsGridRow from "@/components/productsGridRow";
-import { Products } from "@/pages/types";
+import { Products } from "@/public/types";
 
 function HeaderItem({ title }: { title: string }) {
   return (

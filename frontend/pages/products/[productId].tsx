@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { getProductById, deleteProduct } from '@/pages/api/productsServices';
-import { Products } from '@/pages/types';
+import { Products } from '@/public/types';
 
 function HeaderItem({ title }: { title: string }) {
   return (
@@ -18,7 +18,7 @@ const ProductDetails = () => {
   const { productId } = router.query;
 
   useEffect(() => {
-    getProductById(productId)
+    getProductById(productId as string)
       .then((data) => setProduct(data))
       .catch((error) => {
          if (error.response.status !== 404) console.error('Error al obtener los detalles del producto:', error)
@@ -35,7 +35,7 @@ const ProductDetails = () => {
   const handleDeleteProduct = async () => {
     const confirmAction = window.confirm('¿Estás seguro de que quieres borrar este producto?');
     if (confirmAction) {
-      await deleteProduct(productId);
+      await deleteProduct(productId as string);
       setShowDeleteConfirmation(true);
    }
 };

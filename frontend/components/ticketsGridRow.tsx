@@ -1,6 +1,20 @@
 import Link from "next/link";
+import { type } from "os";
 
-export default function TicketsGridRow({ productId, ticket }) {
+type Ticket = {
+   _id: string;
+   title: string;
+   description: string;
+   status: string;
+   createdAt: string;
+}
+
+type TicketsGridRowProps = {
+   productId: string;
+   ticket: Ticket;
+}
+
+export default function TicketsGridRow({ productId, ticket }: TicketsGridRowProps) {
   return (
       <tr className="cursor-pointer" key={`${ticket._id}`}>
         <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">

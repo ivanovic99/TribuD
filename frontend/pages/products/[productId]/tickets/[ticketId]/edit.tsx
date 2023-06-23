@@ -11,7 +11,7 @@ const TicketForm: React.FC = () => {
   const router = useRouter();
   const { productId, ticketId } = router.query;
 
-  const setFormData = (data) => {
+  const setFormData = (data: { title: string, description: string, status: string}) => {
       const { title, description, status } = data;
       setTitle(title);
       setDescription(description);
@@ -27,7 +27,7 @@ const TicketForm: React.FC = () => {
    //    } catch (error) {
    //       console.error('Error al obtener los detalles del ticket:', error);
    //    }
-      getTicketById(productId, ticketId)
+      getTicketById(productId as string, ticketId as string)
       .then((data) => setFormData(data))
       .catch((error) => console.error('Error al obtener los detalles del ticket:', error));
 
@@ -37,7 +37,7 @@ const TicketForm: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await updateTicket(productId, ticketId, { title, description, status });
+      await updateTicket(productId as string, ticketId as string, { title, description, status });
       // Limpiar el formulario después de crear el ticket
       setTitle('');
       setDescription('');

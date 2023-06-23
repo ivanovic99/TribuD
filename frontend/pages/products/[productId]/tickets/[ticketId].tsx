@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { getTicketById, deleteTicket } from '@/pages/api/ticketsServices';
-import { Tickets } from '@/pages/types';
+import { Tickets } from '@/public/types';
 
 function HeaderItem({ title }: { title: string }) {
   return (
@@ -18,7 +18,7 @@ const TicketDetails = () => {
   const { productId, ticketId } = router.query;
 
   useEffect(() => {
-    getTicketById(productId, ticketId)
+    getTicketById(productId as string, ticketId as string)
       .then((data) => setTicket(data))
       .catch((error) => console.error('Error al obtener los detalles del ticket:', error));
   }, [ticketId]);
@@ -33,7 +33,7 @@ const TicketDetails = () => {
   const handleDeleteTicket = async () => {
     const confirmAction = window.confirm('¿Estás seguro de que quieres borrar este ticket?');
     if (confirmAction) {
-      await deleteTicket(productId, ticketId);
+      await deleteTicket(productId as string, ticketId as string);
       setShowDeleteConfirmation(true);
    }
 };
