@@ -1,21 +1,9 @@
 import React, {useState} from "react";
 
 const AddHours: React.FC = () => {
-    let selectedProject = null;
-    let selectedTask = null;
-    let selectedResource = null;
-
-    const handleProject = (id) => {
-        selectedProject = id;
-    };
-
-    const handleTask = (id) => {
-        selectedTask = id;
-    };
-
-    const handleResource = (id) => {
-        selectedResource = id;
-    };
+    const [project, setProject] = useState('');
+    const [task, setTask] = useState('');
+    const [resource, setResource] = useState('');
 
     return (
         <div className="container max-w-7xl mx-auto mt-8">
@@ -26,21 +14,21 @@ const AddHours: React.FC = () => {
             <form>
                 <div className="form-group">
                     <label htmlFor="project">Proyecto:</label>
-                    <select id="project" value="default" onChange={handleProject}>
+                    <select id="project" value="default" onChange={(e) => setProject(e.target.value)}>
                         <option value="default">Seleccione el projecto</option>
                     </select>
                 </div>
 
                 <div className="form-group">
                     <label htmlFor="task">Tarea:</label>
-                    <select id="task" value="default" onChange={handleTask}>
+                    <select id="task" value="default" onChange={(e) => setTask(e.target.value)}>
                         <option value="default">Seleccione la tarea</option>
                     </select>
                 </div>
 
                 <div className="form-group">
                     <label htmlFor="resource">Recurso:</label>
-                    <select id="resource" value="default" onChange={handleResource}>
+                    <select id="resource" value="default" onChange={(e) => setResource(e.target.value)}>
                         <option value="default">Seleccione el recurso</option>
                     </select>
                 </div>

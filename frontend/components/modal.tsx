@@ -52,8 +52,8 @@ export default function Modal({ modalOpen, setModalOpen, list }: ModalProps) {
                 >
                   <option selected>Seleccione el recurso</option>
                   {list.map((resource: Resource) => (
-                    <option value={`${resource.nombre}-${resource.apellido}`} key={`${resource.nombre}-${resource.apellido}`}>
-                      {resource.nombre} {resource.apellido}
+                    <option value={`${resource.Nombre}-${resource.Apellido}`} key={`${resource.Nombre}-${resource.Apellido}`}>
+                      {resource.Nombre} {resource.Apellido}
                     </option>
                   ))}
                 </select>
