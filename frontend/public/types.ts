@@ -1,7 +1,14 @@
-export interface Usuario {
-  nombre: string
-  apellido: string
+export interface Resource {
+  Nombre: string
+  Apellido: string
   legajo: number
+}
+
+export interface ResourceTask {
+  resource: string
+  name: string
+  hours: number
+  date: string
 }
 
 export interface Cliente {

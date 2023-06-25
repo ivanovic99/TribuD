@@ -15,17 +15,21 @@ export default function Layout({ children }: { children: any }) {
       title: "Clientes",
     },
     {
-      href: "/usuarios",
-      title: "Usuarios",
-    },
-    {
       href: "/products",
       title: "Productos",
     },
     {
       href: "/productCreate",
       title: "Crear producto",
-    }
+    },
+    {
+      href: "/resources",
+      title: "Recursos",
+    },
+    {
+      href: "/resources/addHours",
+      title: "Cargar horas",
+    },
   ];
 
   const router = useRouter();
