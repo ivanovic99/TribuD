@@ -25,6 +25,10 @@ export default function Layout({ children }: { children: any }) {
     {
       href: "/productCreate",
       title: "Crear producto",
+    },
+    {
+      href: "/proyectos",
+      title: "Proyectos",
     }
   ];
 
@@ -45,10 +49,10 @@ export default function Layout({ children }: { children: any }) {
             </ul>
           </nav>
         </aside>
-         <main className="flex-1">
-            {/* {router.pathname === "/tickets/:id" && <TicketsDetails ticketId={router.query.id} />} */}
-            {children}
-         </main>
+        <main className="flex-1">
+          {/* {router.pathname === "/tickets/:id" && <TicketsDetails ticketId={router.query.id} />} */}
+          {children}
+        </main>
       </div>
     </div>
   );
