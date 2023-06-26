@@ -80,10 +80,10 @@ const updateTicketById = async (req, res) => {
   try {
     const ticketId = req.params.ticketId;
     const productId = req.params.productId;
-    const { title, description, status } = req.body;
+    const { title, description, status, priority, severity, task, client } = req.body;
     const updatedTicket = await Ticket.findByIdAndUpdate(
       ticketId,
-      { title, description, status, product: productId },
+      { title, description, status, priority, severity, task, client, product: productId },
       { new: true, useFindAndModify: false }
     );
     if (!updatedTicket) {

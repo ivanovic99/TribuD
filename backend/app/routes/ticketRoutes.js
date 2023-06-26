@@ -7,7 +7,7 @@ const ticketController = require('../controllers/ticketController');
 router.post('/', async (req, res) => {
   try {
     const productId = req.params.productId;
-    const { title, description, status } = req.body;
+    const { title, description, status, priority, severity, task, client } = req.body;
     const ticketData = { title, description, status };
     const createdTicket = await ticketController.createTicketForProduct(productId, ticketData);
     res.status(201).json(createdTicket);

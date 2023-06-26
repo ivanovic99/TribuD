@@ -9,7 +9,7 @@ const ticketSchema = new mongoose.Schema({
   },
   priority: {
     type: String,
-    enum: ['High', 'Medium', 'Low'],
+    enum: ['Alta', 'Media', 'Baja'],
   },
   severity: {
     type: String,
@@ -19,8 +19,12 @@ const ticketSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   },
-  product: { type: mongoose.Schema.Types.ObjectId, ref: "Product", required: true }
-            
+  product: { type: mongoose.Schema.Types.ObjectId, ref: "Product", required: true },
+
+  task: String,
+  
+  client: String,
+         
 });
 
 const Ticket = mongoose.model('Ticket', ticketSchema);
