@@ -5,12 +5,13 @@ const ProductForm: React.FC = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [status, setStatus] = useState('Open');
+  const [version] = useState('1.0.0');
   const [showPopup, setShowPopup] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await createProduct({ title, description, status });
+      await createProduct({ title, description, status, version });
       // Limpiar el formulario después de crear el producto
       setTitle('');
       setDescription('');
@@ -50,6 +51,10 @@ const ProductForm: React.FC = () => {
             <option value="In Progress">In Progress</option>
             <option value="Closed">Closed</option>
           </select>
+        </div>
+        <div className="form-group">
+          <label htmlFor="description">Versión:</label>
+          <textarea id="description" value={version} onChange={(e) => setDescription(e.target.value)} />
         </div>
         <button type="submit" className="btn-create">Crear</button>
       </form>

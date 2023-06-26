@@ -34,13 +34,13 @@ export default function Products() {
                 <thead>
                   <tr>
                     <HeaderItem title="ID" />
-                    <HeaderItem title="Titulo" />
-                    <HeaderItem title="Descripcion" />
+                    <HeaderItem title="Título" />
+                    <HeaderItem title="Descripción" />
                     <HeaderItem title="Estado" />
-                    <HeaderItem title="Fecha de creacion" />
+                    <HeaderItem title="Fecha de creación" />
+                    <HeaderItem title="Versión" />
                   </tr>
                 </thead>
-
                 <tbody>
                   {products.map((product) => (
                      <ProductsGridRow key={product._id} product={product} />
