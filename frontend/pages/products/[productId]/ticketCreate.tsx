@@ -8,6 +8,7 @@ const TicketForm: React.FC = () => {
   const [status, setStatus] = useState('Open');
   const [severity, setSeverity] = useState('S1');
   const [priority, setPriority] = useState('Alta');
+  const [task, setTask] = useState('');
   const [client, setClient] = useState('');
   const [showPopup, setShowPopup] = useState(false);
   const router = useRouter();
@@ -15,7 +16,7 @@ const TicketForm: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await createTicket(productId as string, { title, description, status,  });
+      await createTicket(productId as string, { title, description, status, priority, severity, task, client });
       // Limpiar el formulario después de crear el ticket
       setTitle('');
       setDescription('');
@@ -49,6 +50,10 @@ const TicketForm: React.FC = () => {
         <div className="form-group">
           <label htmlFor="client">Cliente:</label>
           <input required type="text" id="client" value={client} onChange={(e) => setClient(e.target.value)} />
+        </div>
+        <div className="form-group">
+          <label htmlFor="task">Tarea:</label>
+          <input required type="text" id="task" value={task} onChange={(e) => setTask(e.target.value)} />
         </div>
         <div className="form-group">
           <label htmlFor="description">Descripcion:</label>
