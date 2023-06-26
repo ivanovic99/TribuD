@@ -1,5 +1,6 @@
 import Modal from "@/components/modal";
 import ModalCrearProyecto from "@/components/modalCrearProyecto";
+import ModalFiltrarProyectos from "@/components/modalFiltrarProyectos"
 import ProyectoGridRow from "@/components/proyectoGridRow";
 import { useState } from "react";
 
@@ -47,7 +48,8 @@ const projectExamples = [
 ]
 
 export default function TableProjets() {
-    const [modalOpen, setmodalOpen] = useState(false)
+    const [modalOpen, setmodalOpen] = useState(false);
+    const [modalFiltrarOpen, setModalFiltrarOpen] = useState(false);
 
     const HeaderItem = ({ titulo }: { titulo: string }) => {
         return <th className="px-6 py-3 text-sm text-left text-gray-500 border-b border-gray-200 bg-gray-50">{titulo}</th>
@@ -71,6 +73,14 @@ export default function TableProjets() {
         return <></>
     }
 
+    const showModalFiltrar = () => {
+        if (modalFiltrarOpen) {
+            return <ModalFiltrarProyectos modalOpen={modalFiltrarOpen} setModalOpen={setModalFiltrarOpen} />
+        }
+        return <></>
+    }
+
+
     return (
         <>
             <div className="container max-w-7xl mx-auto mt-8">
@@ -80,6 +90,7 @@ export default function TableProjets() {
                         <button
                             type="button"
                             className="text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800"
+                            onClick={() => setModalFiltrarOpen(true)}
                         >Filtrar</button>
 
                         <button
@@ -93,9 +104,9 @@ export default function TableProjets() {
                 <div className="flex flex-col">
                     <div className="overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
                         <div className="inline-block min-w-full overflow-hidden align-middle border-b border-gray-200 shadow sm:rounded-lg">
-                            <table className="min-w-full">
-                                <thead>
-                                    <tr>
+                            <table className="min-w-full ">
+                                <thead >
+                                    <tr >
                                         <HeaderItem titulo={"Nombre del Proyecto"} />
                                         <HeaderItem titulo={"Cliente"} />
                                         <HeaderItem titulo={"Fecha de Inicio"} />
@@ -109,20 +120,13 @@ export default function TableProjets() {
                                     {renderProjects()}
                                 </tbody>
                             </table>
-                            {/* <button
-                                className=" p-3 bg-green-600 rounded-lg  border boder-2 border-gray-900 w-20 h-12 self-end m-3 hover:bg-gray-200 shadow-md shadow-gray-900"
-                                onClick={() => { setmodalOpen(true) }}
-                            >
-                                Crear
-                            </button> */}
-
-
                         </div>
                     </div>
                 </div>
             </div>
 
             {showModal()}
+            {showModalFiltrar()}
         </>
     )
 }
