@@ -50,10 +50,15 @@ export default function Tickets() {
                 <thead>
                   <tr>
                     <HeaderItem title="ID" />
-                    <HeaderItem title="Titulo" />
+                    <HeaderItem title="Tipo" />
                     <HeaderItem title="Descripcion" />
                     <HeaderItem title="Estado" />
                     <HeaderItem title="Fecha de creacion" />
+                    <HeaderItem title="Producto asociado" />
+                    <HeaderItem title="Tarea" />
+                    <HeaderItem title="Client" />
+                    <HeaderItem title="Prioridad" />
+                    <HeaderItem title="Severidad" />
                   </tr>
                 </thead>
 

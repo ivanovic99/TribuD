@@ -23,6 +23,11 @@ export interface Tickets {
   description: string
   status: string
   createdAt: string
+  product: string
+  task: string
+  client: string
+  priority: string
+  severity: string
 }
 
 export interface Products {

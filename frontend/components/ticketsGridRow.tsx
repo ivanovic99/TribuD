@@ -7,6 +7,11 @@ type Ticket = {
    description: string;
    status: string;
    createdAt: string;
+   product: string;
+   task: string;
+   client: string;
+   priority: string;
+   severity: string;
 }
 
 type TicketsGridRowProps = {
@@ -35,6 +40,26 @@ export default function TicketsGridRow({ productId, ticket }: TicketsGridRowProp
 
         <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
           <div className="text-sm leading-5 text-gray-900">{ticket.createdAt}</div>
+        </td>
+
+        <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+          <div className="text-sm leading-5 text-gray-900">{ticket.product}</div>
+        </td>
+        
+        <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+          <div className="text-sm leading-5 text-gray-900">{ticket.task}</div>
+        </td>
+
+        <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+          <div className="text-sm leading-5 text-gray-900">{ticket.client}</div>
+        </td>
+
+        <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+          <div className="text-sm leading-5 text-gray-900">{ticket.priority}</div>
+        </td>
+        
+        <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+          <div className="text-sm leading-5 text-gray-900">{ticket.severity}</div>
         </td>
 
         <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">

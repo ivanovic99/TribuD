@@ -37,11 +37,11 @@ const ProductForm: React.FC = () => {
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="title">Titulo:</label>
-          <input type="text" id="title" value={title} onChange={(e) => setTitle(e.target.value)} />
+          <input required type="text" id="title" value={title} onChange={(e) => setTitle(e.target.value)} />
         </div>
         <div className="form-group">
           <label htmlFor="description">Descripcion:</label>
-          <textarea id="description" value={description} onChange={(e) => setDescription(e.target.value)} />
+          <textarea required id="description" value={description} onChange={(e) => setDescription(e.target.value)} />
         </div>
         <div className="form-group">
           <label htmlFor="status">Estado:</label>

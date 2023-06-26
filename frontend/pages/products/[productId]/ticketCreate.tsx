@@ -6,17 +6,21 @@ const TicketForm: React.FC = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [status, setStatus] = useState('Open');
+  const [severity, setSeverity] = useState('S1');
+  const [priority, setPriority] = useState('Alta');
   const [showPopup, setShowPopup] = useState(false);
   const router = useRouter();
   const { productId } = router.query;
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await createTicket(productId as string, { title, description, status });
+      await createTicket(productId as string, { title, description, status,  });
       // Limpiar el formulario después de crear el ticket
       setTitle('');
       setDescription('');
       setStatus('Open');
+      setSeverity('S1');
+      setPriority('Alta');
       // Mostrar el pop-up
       setShowPopup(true);
       // Actualizar la lista de tickets (puedes pasar una función de actualización desde el padre)
@@ -38,12 +42,12 @@ const TicketForm: React.FC = () => {
       <h2>Crear Ticket</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="title">Titulo:</label>
-          <input type="text" id="title" value={title} onChange={(e) => setTitle(e.target.value)} />
+          <label htmlFor="title">Tipo:</label>
+          <input required type="text" id="title" value={title} onChange={(e) => setTitle(e.target.value)} />
         </div>
         <div className="form-group">
           <label htmlFor="description">Descripcion:</label>
-          <textarea id="description" value={description} onChange={(e) => setDescription(e.target.value)} />
+          <textarea required id="description" value={description} onChange={(e) => setDescription(e.target.value)} />
         </div>
         <div className="form-group">
           <label htmlFor="status">Estado:</label>
@@ -51,6 +55,23 @@ const TicketForm: React.FC = () => {
             <option value="Open">Open</option>
             <option value="In Progress">In Progress</option>
             <option value="Closed">Closed</option>
+          </select>
+        </div>
+        <div className="form-group">
+          <label htmlFor="status">Severidad:</label>
+          <select id="status" value={status} onChange={(e) => setSeverity(e.target.value)}>
+            <option value="S1">S1</option>
+            <option value="S2">S2</option>
+            <option value="S3">S3</option>
+            <option value="S4">S4</option>
+          </select>
+        </div>
+        <div className="form-group">
+          <label htmlFor="status">Prioridad:</label>
+          <select id="status" value={status} onChange={(e) => setPriority(e.target.value)}>
+            <option value="Alta">Alta</option>
+            <option value="Media">Media</option>
+            <option value="Baja">Baja</option>
           </select>
         </div>
         <button type="submit" className="btn-create">Crear</button>
