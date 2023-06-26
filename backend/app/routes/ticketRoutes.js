@@ -8,7 +8,7 @@ router.post('/', async (req, res) => {
   try {
     const productId = req.params.productId;
     const { title, description, status, priority, severity, task, client } = req.body;
-    const ticketData = { title, description, status };
+    const ticketData = { title, description, status,priority, severity, task, client };
     const createdTicket = await ticketController.createTicketForProduct(productId, ticketData);
     res.status(201).json(createdTicket);
   } catch (error) {
