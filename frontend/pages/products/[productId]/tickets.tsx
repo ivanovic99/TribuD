@@ -56,7 +56,7 @@ export default function Tickets() {
                     <HeaderItem title="Fecha de creacion" />
                     <HeaderItem title="Producto asociado" />
                     <HeaderItem title="Tarea" />
-                    <HeaderItem title="Client" />
+                    <HeaderItem title="Cliente" />
                     <HeaderItem title="Prioridad" />
                     <HeaderItem title="Severidad" />
                   </tr>

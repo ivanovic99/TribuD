@@ -8,6 +8,7 @@ const TicketForm: React.FC = () => {
   const [status, setStatus] = useState('Open');
   const [severity, setSeverity] = useState('S1');
   const [priority, setPriority] = useState('Alta');
+  const [client, setClient] = useState('');
   const [showPopup, setShowPopup] = useState(false);
   const router = useRouter();
   const { productId } = router.query;
@@ -46,6 +47,10 @@ const TicketForm: React.FC = () => {
           <input required type="text" id="title" value={title} onChange={(e) => setTitle(e.target.value)} />
         </div>
         <div className="form-group">
+          <label htmlFor="client">Cliente:</label>
+          <input required type="text" id="client" value={client} onChange={(e) => setClient(e.target.value)} />
+        </div>
+        <div className="form-group">
           <label htmlFor="description">Descripcion:</label>
           <textarea required id="description" value={description} onChange={(e) => setDescription(e.target.value)} />
         </div>
@@ -58,8 +63,8 @@ const TicketForm: React.FC = () => {
           </select>
         </div>
         <div className="form-group">
-          <label htmlFor="status">Severidad:</label>
-          <select id="status" value={status} onChange={(e) => setSeverity(e.target.value)}>
+          <label htmlFor="severity">Severidad:</label>
+          <select id="severity" value={severity} onChange={(e) => setSeverity(e.target.value)}>
             <option value="S1">S1</option>
             <option value="S2">S2</option>
             <option value="S3">S3</option>
@@ -67,8 +72,8 @@ const TicketForm: React.FC = () => {
           </select>
         </div>
         <div className="form-group">
-          <label htmlFor="status">Prioridad:</label>
-          <select id="status" value={status} onChange={(e) => setPriority(e.target.value)}>
+          <label htmlFor="priority">Prioridad:</label>
+          <select id="priority" value={priority} onChange={(e) => setPriority(e.target.value)}>
             <option value="Alta">Alta</option>
             <option value="Media">Media</option>
             <option value="Baja">Baja</option>
