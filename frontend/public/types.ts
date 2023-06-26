@@ -31,4 +31,5 @@ export interface Products {
   description: string
   status: string
   createdAt: string
+  version: String
 }

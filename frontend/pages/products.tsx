@@ -38,6 +38,7 @@ export default function Products() {
                     <HeaderItem title="Descripcion" />
                     <HeaderItem title="Estado" />
                     <HeaderItem title="Fecha de creacion" />
+                    <HeaderItem title="Version" />
                   </tr>
                 </thead>
 

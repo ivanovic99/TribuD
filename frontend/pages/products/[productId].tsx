@@ -67,6 +67,7 @@ const closeDeleteConfirmation = () => {
                     <HeaderItem title="Descripcion" />
                     <HeaderItem title="Estado" />
                     <HeaderItem title="Fecha de creacion" />
+                    <HeaderItem title="Version" />
                   </tr>
                 </thead>
 
@@ -90,6 +91,10 @@ const closeDeleteConfirmation = () => {
 
                     <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                       <div className="text-sm leading-5 text-gray-900">{product.createdAt}</div>
+                    </td>
+
+                    <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                      <div className="text-sm leading-5 text-gray-900">{product.version}</div>
                     </td>
                   </tr>
                 </tbody>
