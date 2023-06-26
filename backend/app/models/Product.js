@@ -13,6 +13,12 @@ const productSchema = new mongoose.Schema({
   },
   tickets: [{ type: mongoose.Schema.Types.ObjectId, ref: "Ticket" }], //lo pase a version
 //   version: [{ type: mongoose.Schema.Types.ObjectId, ref: "Version" }],
+  version: {
+   type: String,
+   default: function () {
+      return (Math.floor(Math.random() * 3) + 1) + '.' + (Math.floor(Math.random() * 5) + 1) + '.' + (Math.floor(Math.random() * 8) + 1);
+    }
+   },
 });
 
 const Product = mongoose.model('Product', productSchema);
