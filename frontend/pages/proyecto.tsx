@@ -3,6 +3,7 @@ import { TareaProps } from "@/components/types"
 import { useState } from "react"
 import ModalCrearTarea from "@/components/modalCrearTarea";
 import ModalTarea from "@/components/modalTarea";
+import ModalEliminarTarea from "@/components/modalEliminarTarea";
 
 export default function Project() {
 
@@ -17,6 +18,7 @@ export default function Project() {
 
     const [modalOpenProyecto, setModalOpenProyecto] = useState(false);
     const [modalOpenTarea, setModalOpenTarea] = useState(false);
+    const [modalEliminarTarea, setModalEliminarTarea] = useState(false);
     const [tarea, setTarea] = useState(tareaNull);
 
     const HeaderItem = ({ titulo }: { titulo: string }) => {
@@ -112,8 +114,13 @@ export default function Project() {
         setTarea(tarea)
     }
 
+    const eliminarModalTarea = (estado: boolean, tarea: TareaProps) => {
+        setModalEliminarTarea(true)
+        setTarea(tarea)
+    }
+
     const renderTarea = () => {
-        return availableTasks.map((tarea) => <Tarea key={tarea.id} tarea={tarea} abrirModalTarea={abrirModalTarea} />)
+        return availableTasks.map((tarea) => <Tarea key={tarea.id} tarea={tarea} abrirModalTarea={abrirModalTarea} eliminarModalTarea={eliminarModalTarea} />)
     }
 
     const showModalProyecto = () => {
@@ -121,9 +128,13 @@ export default function Project() {
         return <></>
     }
 
-
     const showModalTarea = () => {
         if (modalOpenTarea) return <ModalTarea modalOpen setModalOpen={setModalOpenTarea} tarea={tarea} />
+        return <></>
+    }
+
+    const showModalEliminarTarea = () => {
+        if (modalEliminarTarea) return <ModalEliminarTarea modalOpen setModalOpen={setModalEliminarTarea} tarea={tarea} />
         return <></>
     }
 
@@ -170,7 +181,7 @@ export default function Project() {
 
                 {showModalProyecto()}
                 {showModalTarea()}
-
+                {showModalEliminarTarea()}
             </div>
         </>
     )

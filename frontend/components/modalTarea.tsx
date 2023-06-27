@@ -3,12 +3,10 @@ import { ModalTareaProps } from "./types"
 
 export default function ModalTarea({ modalOpen, setModalOpen, tarea }: ModalTareaProps) {
 
-
-
     return (
         <>
             <div
-                id="loguearHorasModal"
+                id="modalTarea"
                 tabIndex={-1}
                 aria-hidden={!modalOpen}
                 className={`${modalOpen ? "" : "hidden"} absolute inset-0 h-screen flex justify-center items-center bg-black/25`}
@@ -83,7 +81,7 @@ export default function ModalTarea({ modalOpen, setModalOpen, tarea }: ModalTare
 
                                 <div className="relative z-0 w-full mb-6 group">
                                     <div className="flex items-center">
-                                        <select name="floating_last_name" id="floating_last_name" className="block py-2.5 pr-8 pl-0 w-full text-sm text-gray-900 bg-white border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required>
+                                        <select name="floating_last_name" id="floating_last_name" className="block py-2.5 pr-8 pl-0 w-full text-sm text-gray-900 bg-white dark:bg-gray-800 border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required>
                                             <option value="" disabled selected hidden>Estado</option>
                                             <option value="en_curso">En curso</option>
                                             <option value="no_iniciado">No iniciado</option>

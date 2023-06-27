@@ -12,7 +12,7 @@ export default function ModalCrearTarea({ modalOpen, setModalOpen, list }: Modal
             >
                 <div className="relative p-4 w-full max-w-2xl h-full md:h-auto">
                     {/* <!-- Modal content --> */}
-                    <div className="relative p-4 bg-white rounded-lg shadow dark:bg-white sm:p-5">
+                    <div className="relative p-4 rounded-lg shadow bg-white dark:bg-gray-800 sm:p-5">
                         {/* <!-- Modal header --> */}
                         <div className="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600">
                             <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Nueva Tarea</h3>
@@ -79,7 +79,7 @@ export default function ModalCrearTarea({ modalOpen, setModalOpen, list }: Modal
 
                                 <div className="relative z-0 w-full mb-6 group">
                                     <div className="flex items-center">
-                                        <select name="floating_last_name" id="floating_last_name" className="block py-2.5 pr-8 pl-0 w-full text-sm text-gray-900 bg-white border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required>
+                                        <select name="floating_last_name" id="floating_last_name" className="block py-2.5 pr-8 pl-0 w-full text-sm text-gray-900 bg-white dark:bg-gray-800 border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required>
                                             <option value="" disabled selected hidden>Estado</option>
                                             <option value="en_curso">En curso</option>
                                             <option value="no_iniciado">No iniciado</option>
