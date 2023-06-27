@@ -35,6 +35,9 @@ export interface TareaProps {
   descripcion: string;
   estado: string;
   fechaInicio: Date;
-  fechaFinalizacion: Date
-
+  fechaFinalizacion: Date;
+  horasEstimadas: number,
+  esfuerzoEstimado: number,
+  horasReales: number,
+  esfuerzoReal: number,
 }

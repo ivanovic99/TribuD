@@ -9,14 +9,6 @@ export default function ModalExportarProyectos({ modalOpen, setModalOpen }: { mo
     const [fechaFinalizacion, setFechaFinalizacion] = useState(new Date())
     const [estado, setEstado] = useState('Estado')
 
-    console.log({
-        nombre,
-        lider,
-        fechaInicio,
-        fechaFinalizacion,
-        estado
-    })
-
     return (
         <>
             <div

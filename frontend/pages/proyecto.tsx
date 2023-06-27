@@ -14,6 +14,10 @@ export default function Project() {
         estado: "",
         fechaFinalizacion: new Date(1, 1, 2000),
         fechaInicio: new Date(1, 1, 2000),
+        horasEstimadas: 0,
+        esfuerzoEstimado: 0,
+        horasReales: 0,
+        esfuerzoReal: 0,
     }
 
     const [modalOpenProyecto, setModalOpenProyecto] = useState(false);
@@ -31,83 +35,86 @@ export default function Project() {
             nombre: "Crear el diseño de la página de inicio",
             descripcion: "Para crear el diseño de la página de inicio, debes utilizar herramientas de diseño gráfico y considerar los elementos clave, como la disposición de los elementos, la paleta de colores y el uso de imágenes relevantes.",
             estado: "no iniciada",
-            fechaInicio: new Date(2023, 5, 1), // Fecha de inicio aleatoria
-            fechaFinalizacion: new Date(2023, 5, 10) // Fecha de finalización aleatoria
+            fechaInicio: new Date(2023, 5, 1),
+            fechaFinalizacion: new Date(2023, 5, 10),
+            horasReales: 2,
+            horasEstimadas: 2,
+            esfuerzoReal: 5,
+            esfuerzoEstimado: 5,
         },
         {
             id: 2,
             nombre: "Implementar la funcionalidad de inicio de sesión",
             descripcion: "Para implementar la funcionalidad de inicio de sesión, debes utilizar un lenguaje de programación y un framework adecuados. Debes crear formularios de inicio de sesión, validar las credenciales del usuario y gestionar la sesión del usuario.",
             estado: "en progreso",
-            fechaInicio: new Date(2023, 5, 3), // Fecha de inicio aleatoria
-            fechaFinalizacion: new Date(2023, 5, 15) // Fecha de finalización aleatoria
+            fechaInicio: new Date(2023, 5, 3),
+            fechaFinalizacion: new Date(2023, 5, 15),
+            horasReales: 5,
+            horasEstimadas: 5,
+            esfuerzoReal: 5,
+            esfuerzoEstimado: 5,
         },
         {
             id: 3,
             nombre: "Agregar validaciones de entrada de datos",
             descripcion: "Para agregar validaciones de entrada de datos, debes utilizar técnicas de validación en el lenguaje de programación que estés utilizando. Verifica que los datos ingresados por el usuario cumplan con los requisitos establecidos y muestra mensajes de error adecuados en caso de incumplimiento.",
             estado: "completada",
-            fechaInicio: new Date(2023, 5, 8), // Fecha de inicio aleatoria
-            fechaFinalizacion: new Date(2023, 5, 12) // Fecha de finalización aleatoria
+            fechaInicio: new Date(2023, 5, 8),
+            fechaFinalizacion: new Date(2023, 5, 12),
+            horasReales: 5,
+            horasEstimadas: 5,
+            esfuerzoReal: 5,
+            esfuerzoEstimado: 5,
         },
         {
             id: 4,
             nombre: "Optimizar el rendimiento de la aplicación",
             descripcion: "Para optimizar el rendimiento de la aplicación, debes identificar y abordar los cuellos de botella en el código y en la infraestructura. Puedes utilizar técnicas como el caching, la compresión de recursos, la optimización de consultas a la base de datos, entre otros.",
             estado: "no iniciada",
-            fechaInicio: new Date(2023, 5, 2), // Fecha de inicio aleatoria
-            fechaFinalizacion: new Date(2023, 5, 9) // Fecha de finalización aleatoria
+            fechaInicio: new Date(2023, 5, 2),
+            fechaFinalizacion: new Date(2023, 5, 9),
+            horasReales: 5,
+            horasEstimadas: 5,
+            esfuerzoReal: 5,
+            esfuerzoEstimado: 5,
         },
         {
             id: 5,
             nombre: "Realizar pruebas de integración",
             descripcion: "Para realizar pruebas de integración, debes combinar diferentes componentes y módulos de la aplicación y verificar que funcionen correctamente juntos. Puedes utilizar frameworks de pruebas y crear casos de",
             estado: "en progreso",
-            fechaInicio: new Date(2023, 5, 4), // Fecha de inicio aleatoria
-            fechaFinalizacion: new Date(2023, 5, 14) // Fecha de finalización aleatoria
+            fechaInicio: new Date(2023, 5, 4),
+            fechaFinalizacion: new Date(2023, 5, 14),
+            horasReales: 5,
+            horasEstimadas: 5,
+            esfuerzoReal: 5,
+            esfuerzoEstimado: 5,
         },
         {
             id: 6,
             nombre: "Crear la estructura de base de datos",
             descripcion: "Para crear la estructura de base de datos, debes utilizar un sistema de gestión de bases de datos adecuado y diseñar las tablas y relaciones necesarias para almacenar los datos de la aplicación. Puedes utilizar lenguajes de consulta como SQL para crear y modificar la estructura de la base de datos.",
             estado: "completada",
-            fechaInicio: new Date(2023, 5, 6), // Fecha de inicio aleatoria
-            fechaFinalizacion: new Date(2023, 5, 11) // Fecha de finalización aleatoria
+            fechaInicio: new Date(2023, 5, 6),
+            fechaFinalizacion: new Date(2023, 5, 11),
+            horasReales: 5,
+            horasEstimadas: 5,
+            esfuerzoReal: 5,
+            esfuerzoEstimado: 5,
         },
         {
             id: 7,
             nombre: "Desarrollar la funcionalidad de búsqueda",
             descripcion: "Para desarrollar la funcionalidad de búsqueda, debes utilizar técnicas de búsqueda y filtrado en el lenguaje de programación que estés utilizando. Puedes implementar algoritmos de búsqueda eficientes y permitir a los usuarios buscar información relevante en la aplicación.",
             estado: "en progreso",
-            fechaInicio: new Date(2023, 5, 5), // Fecha de inicio aleatoria
-            fechaFinalizacion: new Date(2023, 5, 13) // Fecha de finalización aleatoria
-        },
-        {
-            id: 8,
-            nombre: "Diseñar el logo y la identidad de la marca",
-            descripcion: "Para diseñar el logo y la identidad de la marca, debes utilizar herramientas de diseño gráfico y considerar los valores y la personalidad de la marca. Crea un logo distintivo y diseña elementos visuales que reflejen la identidad de la marca.",
-            estado: "no iniciada",
-            fechaInicio: new Date(2023, 5, 1), // Fecha de inicio aleatoria
-            fechaFinalizacion: new Date(2023, 5, 10) // Fecha de finalización aleatoria
-        },
-        {
-            id: 9,
-            nombre: "Realizar pruebas de rendimiento",
-            descripcion: "Para realizar pruebas de rendimiento, debes simular cargas de trabajo realistas y medir el rendimiento de la aplicación. Puedes utilizar herramientas de prueba de carga y rendimiento para evaluar la capacidad de respuesta y la estabilidad de la aplicación bajo diferentes condiciones de carga.",
-            estado: "no iniciada",
-            fechaInicio: new Date(2023, 5, 2), // Fecha de inicio aleatoria
-            fechaFinalizacion: new Date(2023, 5, 9) // Fecha de finalización aleatoria
-        },
-        {
-            id: 10,
-            nombre: "Documentar el código fuente",
-            descripcion: "Para documentar el código fuente, debes proporcionar comentarios claros y concisos en el código que expliquen su funcionamiento. También puedes generar documentación adicional, como guías de usuario y manuales técnicos, que ayuden a otros desarrolladores a comprender y utilizar el código.",
-            estado: "completada",
-            fechaInicio: new Date(2023, 5, 6), // Fecha de inicio aleatoria
-            fechaFinalizacion: new Date(2023, 5, 11) // Fecha de finalización aleatoria
+            fechaInicio: new Date(2023, 5, 5),
+            fechaFinalizacion: new Date(2023, 5, 13),
+            horasReales: 5,
+            horasEstimadas: 5,
+            esfuerzoReal: 5,
+            esfuerzoEstimado: 5,
         }
-    ];
-
+    ]
 
     const abrirModalTarea = (estado: boolean, tarea: TareaProps) => {
         setModalOpenTarea(true)
