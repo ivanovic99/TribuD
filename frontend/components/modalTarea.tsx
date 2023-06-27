@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { ModalTareaProps, TareaProps } from "./types"
 import ModalEditarTarea from '@/components/modalEditarTarea'
+import ModalCargarHorasTarea from "./modalFinalizarTarea"
 
 
 export default function ModalTarea({ modalOpen, setModalOpen, tarea }: ModalTareaProps) {
@@ -15,6 +16,8 @@ export default function ModalTarea({ modalOpen, setModalOpen, tarea }: ModalTare
     const [estado, setEstado] = useState(tarea.estado)
 
     const [modalOpenEditar, setModalOpenEditar] = useState(false);
+    const [modalOpenFinalizar, setModalOpenFinalizar] = useState(false);
+
 
     const tareaNueva = () => {
         const nuevaTarea: TareaProps = {
@@ -37,6 +40,56 @@ export default function ModalTarea({ modalOpen, setModalOpen, tarea }: ModalTare
             return <ModalEditarTarea modalOpen={modalOpenEditar} setModalOpen={setModalOpenEditar} tarea={tareaNueva()} />
         }
         else return <></>
+    }
+
+    const showModalFinalizar = () => {
+        if (modalOpenFinalizar) {
+            return <ModalCargarHorasTarea modalOpen={modalOpenFinalizar} setModalOpen={setModalOpenFinalizar} tarea={tareaNueva()} />
+        }
+        else return <></>
+    }
+
+    const renderBotones = () => {
+        if (tarea.estado != 'completada') {
+            return (<>
+                <button
+                    type="button"
+                    className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+                    onClick={() => setModalOpenFinalizar(true)}
+                >Marcar como completada
+                </button>
+                <button
+                    type="button"
+                    className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                    onClick={() => setModalOpenEditar(true)}
+                >Editar
+                </button>
+                <button
+                    type="button"
+                    className="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+                    onClick={() => {
+                        setModalOpen(false)
+                    }}>Cancelar
+                </button>
+            </>)
+
+        }
+        return <>
+            <button
+                type="button"
+                className="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+                onClick={() => {
+                    setModalOpen(false)
+                }}>Cerrar
+            </button>
+        </>
+    }
+
+    const esEditable = () => {
+        if (tarea.estado == 'completada') {
+            return true
+        }
+        return false
     }
 
     function formatDate(date: Date) {
@@ -98,6 +151,7 @@ export default function ModalTarea({ modalOpen, setModalOpen, tarea }: ModalTare
                                         placeholder="Nombre"
                                         defaultValue={tarea.nombre}
                                         onChange={(e) => setNombre(e.target.value)}
+                                        disabled={esEditable()}
                                         required />
                                 </div>
                             </div>
@@ -111,34 +165,35 @@ export default function ModalTarea({ modalOpen, setModalOpen, tarea }: ModalTare
                                     placeholder="Descripcion"
                                     rows={10}
                                     defaultValue={tarea.descripcion}
+                                    disabled={esEditable()}
                                     onChange={(e) => setDescripcion(e.target.value)}
                                 ></textarea>
                             </div>
                             <div className="relative z-0 w-full mb-6 group">
-                                <input type="text" name="floating_first_name" id="floating_first_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
+                                <input disabled={esEditable()} type="text" name="floating_first_name" id="floating_first_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
                                 <label htmlFor="floating_first_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                                     Personas asignadas
                                 </label>
                             </div>
                             <div className="grid md:grid-cols-4 md:gap-6">
                                 <div className="relative z-0 w-full mb-6 group">
-                                    <input value={formatDate(fechaInicio)} onChange={(e) => setFechaInicio(new Date(e.target.value))} type="date" name="floating_last_name" id="floating_last_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                                    <input disabled={esEditable()} value={formatDate(fechaInicio)} onChange={(e) => setFechaInicio(new Date(e.target.value))} type="date" name="floating_last_name" id="floating_last_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
                                     <label htmlFor="floating_last_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                                         Fecha Inicio</label>
                                 </div>
                                 <div className="relative z-0 w-full mb-6 group">
-                                    <input defaultValue={horasEstimadas} onChange={(e) => setHorasEstimado(Number(e.target.value))} type="number" name="floating_last_name" id="floating_last_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                                    <input disabled={esEditable()} defaultValue={horasEstimadas} onChange={(e) => setHorasEstimado(Number(e.target.value))} type="number" name="floating_last_name" id="floating_last_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
                                     <label htmlFor="floating_last_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                                         Horas Estimadas</label>
                                 </div>
 
                                 <div className="relative z-0 w-full mb-6 group">
                                     <div className="flex items-center">
-                                        <select defaultValue={estado} onChange={e => setEstado(e.target.value)} name="floating_last_name" id="floating_last_name" className="block py-2.5 pr-8 pl-0 w-full text-sm text-gray-900 bg-white dark:bg-gray-800 border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required>
+                                        <select disabled={esEditable()} defaultValue={estado.replace(' ', '_')} onChange={e => setEstado(e.target.value)} name="floating_last_name" id="floating_last_name" className="block py-2.5 pr-8 pl-0 w-full text-sm text-gray-900 bg-white dark:bg-gray-800 border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required>
                                             <option value="" disabled hidden>Estado</option>
                                             <option value="en_curso">En curso</option>
-                                            <option value="no_iniciado">No iniciado</option>
-                                            <option value="finalizado">Finalizado</option>
+                                            <option value="no_iniciada">No iniciada</option>
+                                            <option value="completada">Completada</option>
                                         </select>
                                         <div className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
                                             <svg className="w-5 h-5 text-gray-400 dark:text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
@@ -153,33 +208,27 @@ export default function ModalTarea({ modalOpen, setModalOpen, tarea }: ModalTare
                             <div className="grid md:grid-cols-4 md:gap-6">
                                 <div className="relative z-0 w-full mb-6 group">
                                     <input type="date"
+                                        disabled={esEditable()}
                                         defaultValue={formatDate(tarea.fechaFinalizacion)}
                                         onChange={e => setFechaFinalizacion(new Date(e.target.value))} name="floating_last_name" id="floating_last_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
                                     <label htmlFor="floating_last_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                                     >Fecha  finalizacion</label>
                                 </div>
                                 <div className="relative z-0 w-full mb-6 group">
-                                    <input defaultValue={esfuerzoEstimado} onChange={(e) => setEsfuerzoEstimado(Number(e.target.value))} type="number" name="floating_last_name" id="floating_last_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                                    <input disabled={esEditable()} defaultValue={esfuerzoEstimado} onChange={(e) => setEsfuerzoEstimado(Number(e.target.value))} type="number" name="floating_last_name" id="floating_last_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
                                     <label htmlFor="floating_last_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                                     >Esfuerzo Estimado</label>
                                 </div>
                             </div>
                             <div className="flex justify-end gap-2">
-                                <button type="button" className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
-                                // onClick={() => setModalOpenEditar(true)}
-                                >Marcar como completada</button>
-                                <button type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                                    onClick={() => setModalOpenEditar(true)}
-                                >Editar</button>
-                                <button type="button" className="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700" onClick={() => {
-                                    setModalOpen(false)
-                                }}>Cancelar</button>
+                                {renderBotones()}
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
 
+            {showModalFinalizar()}
             {showModalTarea()}
         </>
     )

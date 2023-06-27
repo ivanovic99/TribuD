@@ -5,9 +5,22 @@ export default function ModalExportarProyectos({ modalOpen, setModalOpen }: { mo
 
     const [nombre, setNombre] = useState("")
     const [lider, setLider] = useState("")
-    const [fechaInicio, setFechaInicio] = useState(new Date())
-    const [fechaFinalizacion, setFechaFinalizacion] = useState(new Date())
-    const [estado, setEstado] = useState('Estado')
+    const [fechaInicioRangoInicial, setFechaInicioRangoInicial] = useState(new Date())
+    const [fechaInicioRangoFinal, setFechaInicioRangoFinal] = useState(new Date())
+    const [fechaFinalizacionRangoInicial, setFechaFinalizacionRangoInicial] = useState(new Date())
+    const [fechaFinalizacionRangoFinal, setFechaFinalizacionRangoFinal] = useState(new Date())
+
+    const [estado, setEstado] = useState('en_curso')
+
+    console.log(
+        nombre,
+        lider,
+        fechaInicioRangoInicial,
+        fechaInicioRangoFinal,
+        fechaFinalizacionRangoInicial,
+        fechaFinalizacionRangoFinal,
+        estado,
+    )
 
     return (
         <>
@@ -57,15 +70,30 @@ export default function ModalExportarProyectos({ modalOpen, setModalOpen }: { mo
                             <div className="relative z-0 w-full mb-6 flex space-x-20">
 
                                 <div className="relative z-0 w-full mb-6 group">
-                                    <input onChange={(e) => setFechaInicio(new Date(e.target.value))} defaultValue={'dd-mm-aaaa'} type="date" name="floating_last_name" id="floating_last_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="dd-mm-aaaa" />
+                                    <input onChange={(e) => setFechaInicioRangoInicial(new Date(e.target.value))} defaultValue={'dd-mm-aaaa'} type="date" name="floating_last_name" id="floating_last_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="dd-mm-aaaa" />
                                     <label htmlFor="floating_last_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                                    >Fecha inicio</label>
+                                    >Desde la fecha inicio</label>
                                 </div>
 
                                 <div className="relative z-0 w-full mb-6 group">
-                                    <input onChange={(e) => setFechaFinalizacion(new Date(e.target.value))} defaultValue={'dd-mm-aaaa'} type="date" name="floating_last_name" id="floating_last_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="dd-mm-aaaa" />
+                                    <input onChange={(e) => setFechaInicioRangoFinal(new Date(e.target.value))} defaultValue={'dd-mm-aaaa'} type="date" name="floating_last_name" id="floating_last_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="dd-mm-aaaa" />
                                     <label htmlFor="floating_last_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                                    >Fecha finalizacion</label>
+                                    >Hasta la fecha inicio</label>
+                                </div>
+
+                            </div>
+                            <div className="relative z-0 w-full mb-6 flex space-x-20">
+
+                                <div className="relative z-0 w-full mb-6 group">
+                                    <input onChange={(e) => setFechaFinalizacionRangoInicial(new Date(e.target.value))} defaultValue={'dd-mm-aaaa'} type="date" name="floating_last_name" id="floating_last_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="dd-mm-aaaa" />
+                                    <label htmlFor="floating_last_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                                    >Desde la fecha finalizacion</label>
+                                </div>
+
+                                <div className="relative z-0 w-full mb-6 group">
+                                    <input onChange={(e) => setFechaFinalizacionRangoFinal(new Date(e.target.value))} defaultValue={'dd-mm-aaaa'} type="date" name="floating_last_name" id="floating_last_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="dd-mm-aaaa" />
+                                    <label htmlFor="floating_last_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                                    >Hasta la fecha finalizacion</label>
                                 </div>
 
                             </div>
@@ -85,8 +113,8 @@ export default function ModalExportarProyectos({ modalOpen, setModalOpen }: { mo
 
                                 <div className="relative z-0 w-full mb-6 group">
                                     <div className="flex items-center">
-                                        <select onChange={(e) => setEstado(e.target.value)} name="floating_last_name" id="floating_last_name" className="block py-2.5 pr-8 pl-0 w-full text-sm text-gray-900 bg-white dark:bg-gray-800 border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
-                                            <option value="" disabled selected hidden>Estado</option>
+                                        <select value={estado} onChange={(e) => setEstado(e.target.value)} name="floating_last_name" id="floating_last_name" className="block py-2.5 pr-8 pl-0 w-full text-sm text-gray-900 bg-white dark:bg-gray-800 border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" >
+                                            <option value="" disabled hidden>Estado</option>
                                             <option value="en_curso">En curso</option>
                                             <option value="no_iniciado">No iniciado</option>
                                             <option value="finalizado">Finalizado</option>
