@@ -1,11 +1,15 @@
 import Tarea from "@/components/tareaGridRow"
-import { TareaProps } from "@/components/types"
+import { ProyectoInfoProps, TareaProps } from "@/components/types"
 import { useState } from "react"
 import ModalCrearTarea from "@/components/modalCrearTarea";
 import ModalTarea from "@/components/modalTarea";
 import ModalEliminarTarea from "@/components/modalEliminarTarea";
+import ModalProyecto from "@/components/modalProyecto";
 
 export default function Project() {
+
+
+    // const proyecto: ProyectoInfoProps = {}
 
     const tareaNull: TareaProps = {
         id: 0,
@@ -23,6 +27,8 @@ export default function Project() {
     const [modalOpenProyecto, setModalOpenProyecto] = useState(false);
     const [modalOpenTarea, setModalOpenTarea] = useState(false);
     const [modalEliminarTarea, setModalEliminarTarea] = useState(false);
+    const [modalInfoProyecto, setModalInfoProyecto] = useState(false);
+
     const [tarea, setTarea] = useState(tareaNull);
 
     const HeaderItem = ({ titulo }: { titulo: string }) => {
@@ -145,12 +151,29 @@ export default function Project() {
         return <></>
     }
 
+    const showModalInfoProyecto = () => {
+        // if (modalInfoProyecto) return <ModalProyecto modalOpen setModalOpen={setModalInfoProyecto} proyecto={proyecto} />
+        return <></>
+    }
+
     return (
 
         <>
             <div className="container max-w-7xl mx-auto mt-8">
                 <div className="mb-4 flex flex-row justify-between">
-                    <h1 className="text-3xl font-bold decoration-gray-400">Nombre del proyecto</h1>
+                    <div className="flex space-x-2">
+                        <h1 className="text-3xl font-bold decoration-gray-400">Nombre del proyecto</h1>
+                        <button
+                            type="button"
+                            className="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                        // onClick={() => setModalInfoProyecto(true)}
+                        >
+                            <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 9h2v5m-2 0h4M9.408 5.5h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                            </svg>
+                        </button>
+                    </div>
+
                     <div className="flex w-fit justify-between items-center space-x-2   ">
                         <button
                             type="button"
@@ -189,6 +212,7 @@ export default function Project() {
                 {showModalProyecto()}
                 {showModalTarea()}
                 {showModalEliminarTarea()}
+                {showModalInfoProyecto()}
             </div>
         </>
     )

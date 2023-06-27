@@ -2,50 +2,82 @@ import Modal from "@/components/modal";
 import ModalCrearProyecto from "@/components/modalCrearProyecto";
 import ModalFiltrarProyectos from "@/components/modalFiltrarProyectos"
 import ProyectoGridRow from "@/components/proyectoGridRow";
+import { ProyectoInfoProps } from "@/components/types";
 import { useState } from "react";
 
-const projectExamples = [
+const projectExamples: ProyectoInfoProps[] = [
     {
         "id": 1,
         "nombre": "Desarrollo de Sitio Web",
         "cliente": "ABC Company",
-        "fechaInicio": "01-01-2023",
-        "fechaEstimadaFinalizacion": "30-04-2023",
-        "estado": "En progreso"
+        "fechaInicio": new Date("2023-01-01"),
+        "fechaEstimadaFinalizacion": new Date("2023-04-30"),
+        "estado": "En progreso",
+        "esfuerzoEstimado": 3, // Valor numérico para el esfuerzo estimado (Alto: 3)
+        "esfuerzoReal": 2, // Valor numérico para el esfuerzo real (Medio: 2)
+        "descripcion": "Desarrollo y diseño de un sitio web corporativo",
+        "horasEstimadas": 120,
+        "horasReales": 80,
+        "lider": "Juan Pérez" // Nombre del líder del proyecto
     },
     {
         "id": 2,
         "nombre": "Implementación de Sistema de Gestión",
         "cliente": "XYZ Corporation",
-        "fechaInicio": "15-03-2023",
-        "fechaEstimadaFinalizacion": "30-09-2023",
-        "estado": "No iniciado"
+        "fechaInicio": new Date("2023-03-15"),
+        "fechaEstimadaFinalizacion": new Date("2023-09-30"),
+        "estado": "No iniciado",
+        "esfuerzoEstimado": 2, // Valor numérico para el esfuerzo estimado (Medio: 2)
+        "esfuerzoReal": 1, // Valor numérico para el esfuerzo real (Bajo: 1)
+        "descripcion": "Implementación de un sistema de gestión empresarial",
+        "horasEstimadas": 200,
+        "horasReales": 0,
+        "lider": "María López" // Nombre del líder del proyecto
     },
     {
         "id": 3,
         "nombre": "Diseño de Identidad Corporativa",
         "cliente": "Acme Corporation",
-        "fechaInicio": "01-05-2023",
-        "fechaEstimadaFinalizacion": "30-06-2023",
-        "estado": "Completado"
+        "fechaInicio": new Date("2023-05-01"),
+        "fechaEstimadaFinalizacion": new Date("2023-06-30"),
+        "estado": "Completado",
+        "esfuerzoEstimado": 1, // Valor numérico para el esfuerzo estimado (Bajo: 1)
+        "esfuerzoReal": 1, // Valor numérico para el esfuerzo real (Bajo: 1)
+        "descripcion": "Diseño de logotipo, paleta de colores y elementos visuales de la marca",
+        "horasEstimadas": 40,
+        "horasReales": 40,
+        "lider": "Pedro Gómez" // Nombre del líder del proyecto
     },
     {
         "id": 4,
         "nombre": "Desarrollo de Aplicación Móvil",
         "cliente": "PQR Solutions",
-        "fechaInicio": "10-02-2023",
-        "fechaEstimadaFinalizacion": "31-08-2023",
-        "estado": "En progreso"
+        "fechaInicio": new Date("2023-02-10"),
+        "fechaEstimadaFinalizacion": new Date("2023-08-31"),
+        "estado": "En progreso",
+        "esfuerzoEstimado": 3, // Valor numérico para el esfuerzo estimado (Alto: 3)
+        "esfuerzoReal": 3, // Valor numérico para el esfuerzo real (Alto: 3)
+        "descripcion": "Desarrollo de una aplicación móvil multiplataforma",
+        "horasEstimadas": 300,
+        "horasReales": 240,
+        "lider": "Ana Torres" // Nombre del líder del proyecto
     },
     {
         "id": 5,
         "nombre": "Consultoría en Optimización de Procesos",
         "cliente": "Alpha Industries",
-        "fechaInicio": "01-07-2023",
-        "fechaEstimadaFinalizacion": "31-10-2023",
-        "estado": "En progreso"
+        "fechaInicio": new Date("2023-07-01"),
+        "fechaEstimadaFinalizacion": new Date("2023-10-31"),
+        "estado": "En progreso",
+        "esfuerzoEstimado": 2, // Valor numérico para el esfuerzo estimado (Medio: 2)
+        "esfuerzoReal": 2, // Valor numérico para el esfuerzo real (Medio: 2)
+        "descripcion": "Análisis y recomendaciones para optimizar los procesos internos de la empresa",
+        "horasEstimadas": 80,
+        "horasReales": 60,
+        "lider": "Carlos Ramírez" // Nombre del líder del proyecto
     }
-]
+];
+
 
 export default function TableProjets() {
     const [modalOpen, setmodalOpen] = useState(false);
@@ -60,6 +92,7 @@ export default function TableProjets() {
         let htmlReturn = []
 
         for (let proyecto of projectExamples) {
+            console.log(proyecto)
             htmlReturn.push(<ProyectoGridRow key={proyecto.id} proyecto={proyecto} />)
         }
 

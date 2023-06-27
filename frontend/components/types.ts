@@ -19,14 +19,18 @@ export interface ModalTareaProps {
 }
 
 export interface ProyectoInfoProps {
-  proyecto: {
-    id: number;
-    nombre: string;
-    cliente: string;
-    fechaInicio: string;
-    fechaEstimadaFinalizacion: string;
-    estado: string;
-  }
+  id: number;
+  nombre: string;
+  cliente: string;
+  descripcion: string;
+  lider: string;
+  fechaInicio: Date;
+  fechaEstimadaFinalizacion: Date;
+  estado: string;
+  horasEstimadas: number,
+  esfuerzoEstimado: number,
+  horasReales: number,
+  esfuerzoReal: number,
 }
 
 export interface TareaProps {
