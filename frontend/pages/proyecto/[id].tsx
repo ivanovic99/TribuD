@@ -1,15 +1,31 @@
 import Tarea from "@/components/tareaGridRow"
 import { ProyectoInfoProps, TareaProps } from "@/components/types"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import ModalCrearTarea from "@/components/modalCrearTarea";
 import ModalTarea from "@/components/modalTarea";
 import ModalEliminarTarea from "@/components/modalEliminarTarea";
+import { useRouter } from 'next/router';
+import { getProyecto } from "../api/proyectoServices";
 import ModalProyecto from "@/components/modalProyecto";
 
 export default function Project() {
+    const router = useRouter();
+
+    const [modalOpenProyecto, setModalOpenProyecto] = useState(false);
+    const [modalOpenTarea, setModalOpenTarea] = useState(false);
+    const [modalEliminarTarea, setModalEliminarTarea] = useState(false);
+    const [modalInfoProyecto, setModalInfoProyecto] = useState(false);
+    const [proyecto, setProyecto] = useState<ProyectoInfoProps>()
 
 
-    // const proyecto: ProyectoInfoProps = {}
+    useEffect(() => {
+        const { id } = router.query;
+
+        if (id) {
+            getProyecto(id as string, setProyecto)
+        }
+
+    }, [router.query])
 
     const tareaNull: TareaProps = {
         id: 0,
@@ -23,11 +39,6 @@ export default function Project() {
         horasReales: 0,
         esfuerzoReal: 0,
     }
-
-    const [modalOpenProyecto, setModalOpenProyecto] = useState(false);
-    const [modalOpenTarea, setModalOpenTarea] = useState(false);
-    const [modalEliminarTarea, setModalEliminarTarea] = useState(false);
-    const [modalInfoProyecto, setModalInfoProyecto] = useState(false);
 
     const [tarea, setTarea] = useState(tareaNull);
 
@@ -152,7 +163,7 @@ export default function Project() {
     }
 
     const showModalInfoProyecto = () => {
-        // if (modalInfoProyecto) return <ModalProyecto modalOpen setModalOpen={setModalInfoProyecto} proyecto={proyecto} />
+        if (modalInfoProyecto) return <ModalProyecto modalOpen setModalOpen={setModalInfoProyecto} proyecto={proyecto as ProyectoInfoProps} />
         return <></>
     }
 
@@ -162,11 +173,11 @@ export default function Project() {
             <div className="container max-w-7xl mx-auto mt-8">
                 <div className="mb-4 flex flex-row justify-between">
                     <div className="flex space-x-2">
-                        <h1 className="text-3xl font-bold decoration-gray-400">Nombre del proyecto</h1>
+                        <h1 className="text-3xl font-bold decoration-gray-400">{proyecto?.nombre}</h1>
                         <button
                             type="button"
                             className="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-                        // onClick={() => setModalInfoProyecto(true)}
+                            onClick={() => setModalInfoProyecto(true)}
                         >
                             <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                                 <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 9h2v5m-2 0h4M9.408 5.5h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
@@ -174,12 +185,7 @@ export default function Project() {
                         </button>
                     </div>
 
-                    <div className="flex w-fit justify-between items-center space-x-2   ">
-                        {/* <button
-                            type="button"
-                            className="text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800"
-                        >Filtrar</button> */}
-
+                    <div className="flex w-fit justify-between items-center space-x-2">
                         <button
                             type="button"
                             className="text-white bg-gradient-to-r font-bold from-green-500 via-green-600 to-green-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 rounded-lg text-sm px-5 py-2.5 text-center"
