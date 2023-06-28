@@ -25,7 +25,7 @@ export interface ProyectoInfoProps {
   descripcion: string;
   lider: string;
   fechaInicio: Date;
-  fechaEstimadaFinalizacion: Date;
+  fechaFinalizacion: Date;
   estado: string;
   horasEstimadas: number,
   esfuerzoEstimado: number,

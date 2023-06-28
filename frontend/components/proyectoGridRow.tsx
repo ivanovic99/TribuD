@@ -1,9 +1,15 @@
 import Link from "next/link";
 import { ProyectoInfoProps } from "./types";
 
+const ESTADO_COMPLETADO = 'Completado'
+const ESTADO_EN_PROGRESO = 'En progreso'
+const ESTADO_NO_INICIADO = 'No iniciado'
+
 export default function ProyectoGridRow({ proyecto }: { proyecto: ProyectoInfoProps }) {
 
     function formatDate(date: Date) {
+        date = new Date(date)
+
         const year = date.getFullYear();
         const month = String(date.getMonth() + 1).padStart(2, '0');
         const day = String(date.getDate()).padStart(2, '0');
@@ -11,30 +17,19 @@ export default function ProyectoGridRow({ proyecto }: { proyecto: ProyectoInfoPr
         return `${year}-${month}-${day}`;
     }
 
-    const renderState = () => {
-        if (proyecto.estado == 'No iniciado')
-            return (
-                <span className="inline-flex items-center bg-red-100 text-red-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300">
-                    <span className="w-2 h-2 mr-1 bg-red-500 rounded-full"></span>
-                    No iniciada
-                </span>
-            )
+    const getColorEstado = (estado: string) => {
+        if (estado == ESTADO_COMPLETADO) return 'red'
+        if (estado == ESTADO_EN_PROGRESO) return 'orange'
+        if (estado == ESTADO_NO_INICIADO) return 'green'
+    }
 
-        if (proyecto.estado == "En progreso")
-            return (
-                <span className="inline-flex items-center bg-orange-100 text-orange-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-orange-900 dark:text-orange-300">
-                    <span className="w-2 h-2 mr-1 bg-orange-500 rounded-full"></span>
-                    En progreso
-                </span>
-            )
-
-        if (proyecto.estado == "Completado")
-            return (
-                <span className="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
-                    <span className="w-2 h-2 mr-1 bg-green-500 rounded-full"></span>
-                    Completada
-                </span>
-            )
+    const renderState = (estado: string) => {
+        return (
+            <span className={`inline-flex items-center bg-${getColorEstado(estado)}-100 text-${getColorEstado(estado)}-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-${getColorEstado(estado)}-900 dark:text-${getColorEstado(estado)}-300`}>
+                <span className={`w-2 h-2 mr-1 bg-${getColorEstado(estado)}-500 rounded-full`}></span>
+                {estado}
+            </span>
+        )
     }
 
     return (
@@ -49,11 +44,11 @@ export default function ProyectoGridRow({ proyecto }: { proyecto: ProyectoInfoPr
                 <div className="flex items-center">{formatDate(proyecto.fechaInicio)}</div>
             </td>
             <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                <div className="flex items-center">{formatDate(proyecto.fechaEstimadaFinalizacion)}</div>
+                <div className="flex items-center">{formatDate(proyecto.fechaFinalizacion)}</div>
             </td>
 
             <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                <div className="flex items-center">{renderState()}</div>
+                <div className="flex items-center">{renderState(proyecto.estado)}</div>
             </td>
 
             <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">

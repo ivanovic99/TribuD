@@ -3,6 +3,9 @@ import { ModalTareaProps, TareaProps } from "./types"
 import ModalEditarTarea from '@/components/modalEditarTarea'
 import ModalCargarHorasTarea from "./modalFinalizarTarea"
 
+const ESTADO_COMPLETADO = 'completada'
+const ESTADO_EN_PROGRESO = 'en curso'
+const ESTADO_NO_INICIADO = 'no iniciada'
 
 export default function ModalTarea({ modalOpen, setModalOpen, tarea }: ModalTareaProps) {
 
@@ -49,44 +52,32 @@ export default function ModalTarea({ modalOpen, setModalOpen, tarea }: ModalTare
         else return <></>
     }
 
-    const renderBotones = () => {
-        if (tarea.estado != 'completada') {
-            return (<>
-                <button
-                    type="button"
-                    className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
-                    onClick={() => setModalOpenFinalizar(true)}
-                >Marcar como completada
-                </button>
-                <button
-                    type="button"
-                    className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                    onClick={() => setModalOpenEditar(true)}
-                >Editar
-                </button>
-                <button
-                    type="button"
-                    className="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
-                    onClick={() => {
-                        setModalOpen(false)
-                    }}>Cancelar
-                </button>
-            </>)
-
-        }
-        return <>
+    const Boton = ({ nombre, color, setModal, estado }: { nombre: string, color: string, setModal: (estado: boolean) => void, estado: boolean }) => {
+        return (
             <button
                 type="button"
-                className="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
-                onClick={() => {
-                    setModalOpen(false)
-                }}>Cerrar
+                className={`text-auto bg-${color}-500 hover:bg-${color}-700 border border-${color}-800 focus:ring-4 focus:outline-none focus:ring-${color}-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-${color}-600 dark:hover:bg-${color}-700 dark:focus:ring-${color}-800`}
+                onClick={() => setModal(estado)}
+            > {nombre}
             </button>
+        )
+    }
+
+    const renderBotones = () => {
+        if (tarea.estado != ESTADO_COMPLETADO) {
+            return (<>
+                <Boton nombre="Marcar como completada" color="red" setModal={setModalOpenFinalizar} estado={true} />
+                <Boton nombre="Editar" color="blue" setModal={setModalOpenEditar} estado={true} />
+                <Boton nombre="Cancelar" color="black" setModal={setModalOpen} estado={false} />
+            </>)
+        }
+        return <>
+            <Boton nombre="Cerrar" color="black" setModal={setModalOpen} estado={false} />
         </>
     }
 
     const esEditable = () => {
-        if (tarea.estado == 'completada') {
+        if (tarea.estado == ESTADO_COMPLETADO) {
             return true
         }
         return false
