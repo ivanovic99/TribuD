@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { createTicket } from '@/pages/api/ticketsServices';
 import { useRouter } from 'next/router';
+import { Cliente } from '@/public/types';
 
 const TicketForm: React.FC = () => {
   const [title, setTitle] = useState('');
@@ -9,10 +10,31 @@ const TicketForm: React.FC = () => {
   const [severity, setSeverity] = useState('S1');
   const [priority, setPriority] = useState('Alta');
   const [task, setTask] = useState('');
-  const [client, setClient] = useState('');
+  const [client, setClient] = useState("");
+  const [clients, setClients] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
   const router = useRouter();
   const { productId } = router.query;
+
+
+   useEffect(() => {
+      const fetchClients = async () => {
+      try {
+         const response = await fetch("https://tribud.onrender.com/api/clients"); 
+         const data = await response.json();
+         setClients(data);
+      } catch (error) {
+         console.error('Error fetching clients:', error);
+      }
+      };
+
+      fetchClients();
+   }, []);
+
+   useEffect(() => {
+   }, [clients]);
+
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -49,7 +71,12 @@ const TicketForm: React.FC = () => {
         </div>
         <div className="form-group">
           <label htmlFor="client">Cliente:</label>
-          <input required type="text" id="client" value={client} onChange={(e) => setClient(e.target.value)} />
+          <select required id="client" value={client} onChange={(e) => setClient(e.target.value)}>
+            <option value="">Seleccionar cliente</option>
+              {clients.map((client: Cliente) => (
+              <option key={client.id} value={client['razon social']}>{client['razon social']}</option>
+              ))}
+          </select>
         </div>
         <div className="form-group">
           <label htmlFor="task">Tarea:</label>

@@ -13,8 +13,8 @@ export interface ResourceTask {
 
 export interface Cliente {
   id: string
-  razon_social: string
-  cuit: number
+  "razon social": string
+  CUIT: number
 }
 
 export interface Tickets {

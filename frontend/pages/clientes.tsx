@@ -12,15 +12,11 @@ export default function Clientes() {
     useEffect(() => {
         fetch("https://tribud.onrender.com/api/clients")
             .then((res) => {
-                console.log("res", res)
                 return res.json()
             })
             .then((data) => {
-                console.log("data", data)
                 setList(data)
-                console.log("List 1")
-                console.log(list)
-                console.log("List 2")
+ 
             })
     }, [list])
 
