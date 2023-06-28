@@ -81,7 +81,7 @@ const projectExamples: ProyectoInfoProps[] = [
 
 export default function TableProjets() {
     const [modalOpen, setmodalOpen] = useState(false);
-    const [modalFiltrarOpen, setModalFiltrarOpen] = useState(false);
+    // const [modalFiltrarOpen, setModalFiltrarOpen] = useState(false);
 
     const HeaderItem = ({ titulo }: { titulo: string }) => {
         return <th className="px-6 py-3 text-sm text-left text-gray-500 border-b border-gray-200 bg-gray-50">{titulo}</th>
@@ -106,12 +106,12 @@ export default function TableProjets() {
         return <></>
     }
 
-    const showModalFiltrar = () => {
-        if (modalFiltrarOpen) {
-            return <ModalFiltrarProyectos modalOpen={modalFiltrarOpen} setModalOpen={setModalFiltrarOpen} />
-        }
-        return <></>
-    }
+    // const showModalFiltrar = () => {
+    //     if (modalFiltrarOpen) {
+    //         return <ModalFiltrarProyectos modalOpen={modalFiltrarOpen} setModalOpen={setModalFiltrarOpen} />
+    //     }
+    //     return <></>
+    // }
 
 
     return (
@@ -120,11 +120,11 @@ export default function TableProjets() {
                 <div className="mb-4 flex flex-row justify-between">
                     <h1 className="text-3xl font-bold decoration-gray-400">Lista de Proyectos</h1>
                     <div className="flex w-fit justify-between items-center space-x-2   ">
-                        <button
+                        {/* <button
                             type="button"
                             className="text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800"
                             onClick={() => setModalFiltrarOpen(true)}
-                        >Filtrar</button>
+                        >Filtrar</button> */}
 
                         <button
                             type="button"
@@ -159,7 +159,7 @@ export default function TableProjets() {
             </div>
 
             {showModal()}
-            {showModalFiltrar()}
+            {/* {showModalFiltrar()} */}
         </>
     )
 }
