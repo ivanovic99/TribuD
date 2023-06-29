@@ -30,12 +30,16 @@ export default function Layout({ children }: { children: any }) {
       href: "/resources/addHours",
       title: "Cargar horas",
     },
+    {
+      href: "/proyectos",
+      title: "Proyectos",
+    }
   ];
 
   const router = useRouter();
 
   return (
-    <div className="min-h-screen flex flex-col bg-white">
+    <div className="min-h-screen flex flex-col bg-white dark:bg-gray-800">
       <header className="bg-black sticky top-0 h-14 flex justify-center items-center font-semibold uppercase text-white">
         PSA
       </header>
@@ -49,10 +53,10 @@ export default function Layout({ children }: { children: any }) {
             </ul>
           </nav>
         </aside>
-         <main className="flex-1">
-            {/* {router.pathname === "/tickets/:id" && <TicketsDetails ticketId={router.query.id} />} */}
-            {children}
-         </main>
+        <main className="flex-1">
+          {/* {router.pathname === "/tickets/:id" && <TicketsDetails ticketId={router.query.id} />} */}
+          {children}
+        </main>
       </div>
     </div>
   );
