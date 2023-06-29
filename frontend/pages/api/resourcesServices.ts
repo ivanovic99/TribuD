@@ -2,6 +2,13 @@ import axios from "axios";
 
 const BASE_URL_RESOURCE = 'https://api-recursos.onrender.com'; // La URL del servidor backend
 
+interface AddHoursData {
+  legajo: string;
+  tarea: string;
+  cantidadHoras: string;
+  fecha: string;
+}
+
 // Obtener lista de recursos
 export const getResources = async () => {
   try {
@@ -14,9 +21,15 @@ export const getResources = async () => {
 };
 
 // Asigna horas a un recurso
-export const addHours = async (data: {}) => {
+export const addHours = async (data: AddHoursData) => {
+  let params = new URLSearchParams();
+  params.append('legajo', data.legajo);
+  params.append('tarea', data.tarea);
+  params.append('cantidadHoras', data.cantidadHoras);
+  params.append('fecha', data.fecha);
+
   try {
-    const response = await axios.post(`${BASE_URL_RESOURCE}/cargaHoras`, data);
+    const response = await axios.post(`${BASE_URL_RESOURCE}/cargaHoras?${params.toString()}`);
     return response.data;
   } catch (error) {
     console.error('Error al cargar horas al recurso:', error);

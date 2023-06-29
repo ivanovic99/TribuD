@@ -1,10 +1,11 @@
-import React, {useEffect, useState} from "react";
+import React, {FormEvent, useEffect, useState} from "react";
 import {getProducts} from "@/pages/api/productsServices";
 import {Products, Resource} from "@/public/types";
-import {getResources} from "@/pages/api/resourcesServices";
+import {addHours, getResources} from "@/pages/api/resourcesServices";
 
 const AddHours: React.FC = () => {
     const [hours, setHours] = useState('');
+    const [date, setDate] = useState('');
     const [task, setTask] = useState('');
     const [resources, setResources] = useState<Resource[]>([]);
     const [resource, setResource] = useState('');
@@ -25,8 +26,20 @@ const AddHours: React.FC = () => {
         getProducts(setProducts);
     }, []);
 
-    const handleSubmit = () => {
-        console.log("Recurso: ",resource, "Proyecto: ", project, "Horas: ", hours)
+    const handleSubmit = async (e: FormEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        const formatDate = (new Date(date)).toISOString().split('T')[0];
+        const confirmAction = window.confirm('¿Estás seguro que deseas realizar la carga de horas al recurso?');
+        if (confirmAction) {
+            await addHours({
+                legajo: resource,
+                tarea: '1',
+                cantidadHoras: hours,
+                fecha: formatDate
+            });
+
+            //document.getElementById("add-hours-form").reset();
+        }
     }
 
     if (resources.length === 0 || products.length === 0) {
@@ -39,7 +52,7 @@ const AddHours: React.FC = () => {
                 <h1 className="text-3xl font-bold decoration-gray-400">Recursos</h1>
             </div>
             <h2>Asignación de horas</h2>
-            <form>
+            <form id="add-hours-form">
                 <div className="form-group">
                     <label htmlFor="project">Proyecto:</label>
                     <select id="project" onChange={(e) => setProject(e.target.value)}>
@@ -69,6 +82,21 @@ const AddHours: React.FC = () => {
                             </option>
                         ))}
                     </select>
+                </div>
+
+                <div className="form-group">
+                    <label htmlFor="date">
+                        Fecha
+                    </label>
+                    <input
+                        type="date"
+                        name="date"
+                        id="date"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                        placeholder="Fecha"
+                        onChange={(e) => setDate(e.target.value)}
+                        required
+                    />
                 </div>
 
                 <div className="form-group">
