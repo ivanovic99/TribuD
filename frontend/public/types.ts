@@ -1,6 +1,6 @@
 export interface Resource {
-  Nombre: string
-  Apellido: string
+  nombre: string
+  apellido: string
   legajo: number
 }
 

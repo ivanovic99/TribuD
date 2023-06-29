@@ -1,31 +1,28 @@
 import { useEffect, useState } from "react"
 import ResourceGridRow from "@/components/resourceGridRow"
 import {Resource} from "@/public/types";
-//import {getResources} from "@/pages/api/resourcesServices";
+import {getResources} from "@/pages/api/resourcesServices";
 
 function HeaderItem({ title }: { title: string }) {
   return <th className="px-6 py-3 text-sm text-left text-gray-500 border-b border-gray-200 bg-gray-50">{title}</th>
 }
 
 export default function Resources() {
-  const [resources, setResources] = useState([
-    {"legajo":1,"Nombre":"Mario","Apellido":"Mendoza"},
-    {"legajo":2,"Nombre":"Maria","Apellido":"Perez"},
-    {"legajo":3,"Nombre":"Patricia","Apellido":"Gaona"}
-  ])
+  const [resources, setResources] = useState<Resource[]>([]);
 
-  /*useEffect(() => {
+  useEffect(() => {
     getResources()
         .then((res) => {
-          return res.json()
-        })
-        .then((data) => {
-          setResources(data)
+          setResources(res)
         })
         .catch((error) => {
           console.log(error.message)
         });
-  }, []);*/
+  }, []);
+
+  if (resources.length === 0) {
+    return <div>Cargando...</div>;
+  }
 
   return (
     <>
@@ -48,7 +45,7 @@ export default function Resources() {
 
                 <tbody>
                   {resources.map((resource: Resource) => (
-                    <ResourceGridRow key={`${resource.Nombre}-${resource.Apellido}`} resource={resource} />
+                    <ResourceGridRow key={`${resource.nombre}-${resource.apellido}`} resource={resource} />
                   ))}
                 </tbody>
               </table>
