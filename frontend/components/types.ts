@@ -31,10 +31,12 @@ export interface ProyectoInfoProps {
   esfuerzoEstimado: number,
   horasReales: number,
   esfuerzoReal: number,
+  tareas: TareaProps[]
 }
 
 export interface TareaProps {
   id: number;
+  idProyecto: number;
   nombre: string;
   descripcion: string;
   estado: string;
@@ -44,4 +46,11 @@ export interface TareaProps {
   esfuerzoEstimado: number,
   horasReales: number,
   esfuerzoReal: number,
+  recursosAsignados: Recurso[]
+}
+
+export interface Recurso {
+  legajo: number,
+  Nombre: string,
+  Apellido: string
 }

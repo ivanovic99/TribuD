@@ -1,3 +1,4 @@
+import { editTarea } from "@/pages/api/proyectoServices";
 import { TareaProps } from "./types";
 
 
@@ -11,10 +12,7 @@ export default function ModalEditarTarea({ modalOpen, setModalOpen, tarea }:
 
     const editarTarea = () => {
         setModalOpen(false);
-
-        // editar nodo tarea por id aca
-
-        // aca va la api
+        editTarea(tarea.id, tarea)
     }
 
     return (

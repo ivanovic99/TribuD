@@ -1,17 +1,20 @@
-import { useState } from "react"
-import { ModalTareaProps, TareaProps } from "./types"
+import { useState, useEffect } from "react"
+import { ModalTareaProps, Recurso, TareaProps } from "./types"
 import ModalEditarTarea from '@/components/modalEditarTarea'
 import ModalCargarHorasTarea from "./modalFinalizarTarea"
+import SeleccionarRecurso from "@/components/seleccionarRecurso"
+import { getRecursos } from "@/pages/api/proyectoServices"
 
-const ESTADO_COMPLETADO = 'completada'
-const ESTADO_EN_PROGRESO = 'en curso'
-const ESTADO_NO_INICIADO = 'no iniciada'
+const ESTADO_COMPLETADO = 'COMPLETADO'
+const ESTADO_EN_PROGRESO = 'EN_CURSO'
+const ESTADO_NO_INICIADO = 'NO_INICIADO'
 
 export default function ModalTarea({ modalOpen, setModalOpen, tarea }: ModalTareaProps) {
 
     const [nombre, setNombre] = useState(tarea.nombre)
     const [descripcion, setDescripcion] = useState(tarea.descripcion)
-    const [lider, setLider] = useState('')
+    const [recursosDisponibles, setRecursosDisponibles] = useState<Recurso[]>([])
+    const [recursosSeleccionados, setRecursosSeleccionados] = useState<Recurso[]>(tarea.recursosAsignados)
     const [fechaInicio, setFechaInicio] = useState(tarea.fechaInicio)
     const [fechaFinalizacion, setFechaFinalizacion] = useState(tarea.fechaFinalizacion)
     const [esfuerzoEstimado, setEsfuerzoEstimado] = useState(tarea.esfuerzoEstimado)
@@ -22,14 +25,22 @@ export default function ModalTarea({ modalOpen, setModalOpen, tarea }: ModalTare
     const [modalOpenFinalizar, setModalOpenFinalizar] = useState(false);
 
 
+    useEffect(() => {
+        // getRecursos(setRecursosDisponibles)
+        setRecursosDisponibles([{ "legajo": 1, "Nombre": "Mario", "Apellido": "Mendoza" }, { "legajo": 2, "Nombre": "Maria", "Apellido": "Perez" }, { "legajo": 3, "Nombre": "Patricia", "Apellido": "Gaona" }, { "legajo": 4, "Nombre": "Marcos", "Apellido": "Rivero" }])
+    }, [])
+
+
     const tareaNueva = () => {
         const nuevaTarea: TareaProps = {
             id: tarea.id,
+            idProyecto: tarea.idProyecto,
             nombre,
             descripcion,
             fechaInicio,
             fechaFinalizacion,
             esfuerzoEstimado,
+            recursosAsignados: recursosSeleccionados,
             horasEstimadas,
             estado,
             horasReales: 0,
@@ -98,9 +109,9 @@ export default function ModalTarea({ modalOpen, setModalOpen, tarea }: ModalTare
                 id="modalTarea"
                 tabIndex={-1}
                 aria-hidden={!modalOpen}
-                className={`${modalOpen ? "" : "hidden"} absolute inset-0 h-screen flex justify-center items-center bg-black/25`}
+                className={`${modalOpen ? "" : "hidden"} absolute inset-0 z-0 h-screen flex justify-center items-center bg-black/25`}
             >
-                <div className="relative p-4 w-full max-w-2xl h-full md:h-auto">
+                <div className="relative p-4 w-full max-w-2xl h-full z-0 md:h-auto">
                     {/* <!-- Modal content --> */}
                     <div className="relative p-4 bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
                         {/* <!-- Modal header --> */}
@@ -160,11 +171,12 @@ export default function ModalTarea({ modalOpen, setModalOpen, tarea }: ModalTare
                                     onChange={(e) => setDescripcion(e.target.value)}
                                 ></textarea>
                             </div>
-                            <div className="relative z-0 w-full mb-6 group">
-                                <input disabled={esEditable()} type="text" name="floating_first_name" id="floating_first_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
+                            <div className="relative z-10 w-full mb-6 group">
+                                {/* <input disabled={esEditable()} type="text" name="floating_first_name" id="floating_first_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
                                 <label htmlFor="floating_first_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                                     Personas asignadas
-                                </label>
+                                </label> */}
+                                <SeleccionarRecurso recursosDisponibles={recursosDisponibles} selecciones={recursosSeleccionados} setRecursosSeleccionados={setRecursosSeleccionados} />
                             </div>
                             <div className="grid md:grid-cols-4 md:gap-6">
                                 <div className="relative z-0 w-full mb-6 group">

@@ -1,7 +1,83 @@
 
-import { ModalProps } from "./types"
+import { createTarea } from "@/pages/api/proyectoServices"
+import { ModalProps, Recurso, TareaProps } from "./types"
+import { useState, useEffect } from "react"
+import SeleccionarRecurso from "@/components/seleccionarRecurso"
 
-export default function ModalCrearTarea({ modalOpen, setModalOpen, list }: ModalProps) {
+export default function ModalCrearTarea({ modalOpen, setModalOpen, idProyecto }: { modalOpen: boolean, setModalOpen: (estado: boolean) => void, idProyecto: number }) {
+
+    const [nombre, setNombre] = useState('')
+    const [descripcion, setDescripcion] = useState('')
+    const [recursosDisponibles, setRecursosDisponibles] = useState<Recurso[]>([])
+    const [recursosSeleccionados, setRecursosSeleccionados] = useState<Recurso[]>([])
+    const [fechaInicio, setFechaInicio] = useState(new Date())
+    const [fechaFinalizacion, setFechaFinalizacion] = useState(new Date())
+    const [esfuerzoEstimado, setEsfuerzoEstimado] = useState(0)
+    const [horasEstimadas, setHorasEstimado] = useState(0)
+    const [estado, setEstado] = useState('no iniciada')
+
+    const configTarea = () => {
+        const tarea: TareaProps = {
+            id: 0,
+            nombre,
+            idProyecto,
+            descripcion,
+            recursosAsignados: recursosSeleccionados,
+            fechaInicio,
+            fechaFinalizacion,
+            esfuerzoEstimado,
+            horasEstimadas,
+            estado,
+            horasReales: 0,
+            esfuerzoReal: 0
+        }
+        return tarea
+    }
+
+    const preloadedOptions = [
+        {
+            "legajo": 1,
+            "Nombre": "Mario",
+            "Apellido": "Mendoza"
+        },
+        {
+            "legajo": 2,
+            "Nombre": "Maria",
+            "Apellido": "Perez"
+        },
+        {
+            "legajo": 3,
+            "Nombre": "Patricia",
+            "Apellido": "Gaona"
+        },
+        {
+            "legajo": 4,
+            "Nombre": "Marcos",
+            "Apellido": "Rivero"
+        }
+    ]
+
+    useEffect(() => {
+        setRecursosDisponibles(preloadedOptions)
+    }, [])
+
+    const crearTarea = () => {
+        createTarea(configTarea())
+    }
+
+    console.log(nombre,
+        descripcion,
+        recursosDisponibles,
+        recursosSeleccionados,
+        fechaInicio,
+        fechaFinalizacion,
+        esfuerzoEstimado,
+        horasEstimadas,
+        estado
+    )
+
+
+
     return (
         <>
             <div
@@ -10,7 +86,7 @@ export default function ModalCrearTarea({ modalOpen, setModalOpen, list }: Modal
                 aria-hidden={!modalOpen}
                 className={`${modalOpen ? "" : "hidden"} absolute inset-0 h-screen flex justify-center items-center bg-black/25 w-full`}
             >
-                <div className="relative p-4 w-full max-w-2xl h-full md:h-auto">
+                <div className="relative p-4 w-full max-w-3xl h-full md:h-auto">
                     {/* <!-- Modal content --> */}
                     <div className="relative p-4 rounded-lg shadow bg-white dark:bg-gray-800 sm:p-5">
                         {/* <!-- Modal header --> */}
@@ -43,44 +119,73 @@ export default function ModalCrearTarea({ modalOpen, setModalOpen, list }: Modal
                         {/* <!-- Modal body --> */}
                         <form>
                             <div className="relative z-0 w-full mb-6 group">
-                                <input type="text" name="floating_email" id="floating_email" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                                <label htmlFor="floating_email" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Nombre de la tarea</label>
+                                <input
+                                    type="text" name="floating_email" id="floating_email" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required
+                                    value={nombre}
+                                    onChange={(e) => setNombre(e.target.value)}
+                                />
+                                <label htmlFor="floating_email" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                                >Nombre de la tarea</label>
                             </div>
                             <div className="relative z-0 w-full mb-6 group">
 
-                                <label htmlFor="message" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Descripcion de la tarea</label>
-                                <textarea id="message" className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Descripcion..."></textarea>
+                                <label htmlFor="message" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                >Descripcion de la tarea</label>
+                                <textarea value={descripcion}
+                                    onChange={(e) => setDescripcion(e.target.value)}
+                                    id="message" className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Descripcion..."
+                                ></textarea>
+
 
                             </div>
                             <div className="grid md:grid-cols-4 md:gap-6">
-                                <div className="relative z-0 w-full mb-6 group">
-                                    <input type="text" name="floating_first_name" id="floating_first_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                                    <label htmlFor="floating_first_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Personas asignadas</label>
-                                </div>
+                                <SeleccionarRecurso recursosDisponibles={recursosDisponibles} selecciones={recursosSeleccionados} setRecursosSeleccionados={setRecursosSeleccionados} />
 
                                 <div className="relative z-0 w-full mb-6 group">
-                                    <input type="number" name="floating_last_name" id="floating_last_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                                    <label htmlFor="floating_last_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Horas Estimadas</label>
-                                </div>
-                                {/* <div className="relative z-0 w-full mb-6 group">
-                                    <input type="select" name="floating_last_name" id="floating_last_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                                    <label htmlFor="floating_last_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Estado</label>
-                                </div> */}
-                                {/* <div className="relative z-0 w-full mb-6 group">
-                                    <select name="floating_last_name" id="floating_last_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer dark:bg-gray-800" required>
-                                        <option value="" disabled selected hidden>Selecciona un estado</option>
-                                        <option value="en_curso">En curso</option>
-                                        <option value="no_iniciado">No iniciado</option>
-                                        <option value="finalizado">Finalizado</option>
-                                    </select>
-                                    <label htmlFor="floating_last_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Estado</label>
+                                    <div className="relative z-0 w-full mb-6 group">
+                                        <input
+                                            value={horasEstimadas}
+                                            onChange={(e) => setHorasEstimado(Number(e.target.value))}
+                                            type="number" name="floating_last_name" id="floating_last_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                                        <label htmlFor="floating_last_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                                        >Horas Estimadas</label>
+                                    </div>
+                                    <div className="relative z-0 w-full mb-6 group">
 
-                                </div> */}
+                                        <input
+                                            value={esfuerzoEstimado}
+                                            onChange={(e) => setEsfuerzoEstimado(Number(e.target.value))}
+                                            type="number" name="floating_last_name" id="floating_last_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                                        <label htmlFor="floating_last_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                                        >Esfuerzo Estimado</label>
+                                    </div>
+                                </div>
+
+
+                                <div className="relative z-0 w-full mb-6 group">
+                                    <div className="relative z-0 w-full mb-6 group">
+                                        <input
+                                            onChange={(e) => setFechaInicio(new Date(e.target.value))} defaultValue={'dd-mm-aaaa'} type="date" name="floating_last_name" id="floating_last_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                                        <label htmlFor="floating_last_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                                            Fecha Inicio</label>
+                                    </div>
+                                    <div className="relative z-0 w-full mb-6 group">
+                                        <input
+                                            onChange={(e) => setFechaFinalizacion(new Date(e.target.value))} defaultValue={'dd-mm-aaaa'} type="date" name="floating_last_name" id="floating_last_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                                        <label htmlFor="floating_last_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                                            Fecha Finalizacion</label>
+                                    </div>
+                                </div>
+
+
 
                                 <div className="relative z-0 w-full mb-6 group">
                                     <div className="flex items-center">
-                                        <select name="floating_last_name" id="floating_last_name" className="block py-2.5 pr-8 pl-0 w-full text-sm text-gray-900 bg-white dark:bg-gray-800 border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required>
-                                            <option value="" disabled selected hidden>Estado</option>
+                                        <select
+                                            value={estado}
+                                            onChange={(e) => setEstado(e.target.value)}
+                                            name="floating_last_name" id="floating_last_name" className="block py-2.5 pr-8 pl-0 w-full text-sm text-gray-900 bg-white dark:bg-gray-800 border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required>
+                                            <option value="" disabled hidden>Estado</option>
                                             <option value="en_curso">En curso</option>
                                             <option value="no_iniciado">No iniciado</option>
                                             <option value="finalizado">Finalizado</option>
@@ -91,14 +196,18 @@ export default function ModalCrearTarea({ modalOpen, setModalOpen, list }: Modal
                                             </svg>
                                         </div>
                                     </div>
+
                                     <label htmlFor="floating_last_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Estado</label>
+
+
                                 </div>
+
 
 
                             </div>
                             <div className="flex justify-end gap-2">
                                 <button
-                                    type="submit"
+                                    type="button"
                                     className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                                 > Crear</button>
 

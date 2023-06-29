@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { ProyectoInfoProps } from "./types";
 
-const ESTADO_COMPLETADO = 'Completado'
-const ESTADO_EN_PROGRESO = 'En progreso'
-const ESTADO_NO_INICIADO = 'No iniciado'
+const ESTADO_COMPLETADO = 'COMPLETADO'
+const ESTADO_EN_PROGRESO = 'EN_CURSO'
+const ESTADO_NO_INICIADO = 'NO_INICIADO'
 
 export default function ProyectoGridRow({ proyecto }: { proyecto: ProyectoInfoProps }) {
 
@@ -59,9 +59,7 @@ export default function ProyectoGridRow({ proyecto }: { proyecto: ProyectoInfoPr
                         pathname: "/proyecto/[id]",
                         query: { id: proyecto.id }
                     }}
-
                     passHref
-
                 >
                     <button
                         type="button"
