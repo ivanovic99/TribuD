@@ -28,6 +28,7 @@ export interface Tickets {
   client: string
   priority: string
   severity: string
+  time_remaining: string
 }
 
 export interface Products {

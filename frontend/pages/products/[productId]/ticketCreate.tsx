@@ -13,9 +13,25 @@ const TicketForm: React.FC = () => {
   const [client, setClient] = useState("");
   const [clients, setClients] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
+  const [timeRemaining, setTimeRemaining] = useState(0);
   const router = useRouter();
   const { productId } = router.query;
 
+
+  useEffect(() => {
+    const calculateTimeRemaining = () => {
+      if (severity === 'S1') {
+        setTimeRemaining(7);
+      } else if (severity === 'S2') {
+        setTimeRemaining(30);
+      } else if (severity === 'S3') {
+        setTimeRemaining(90);
+      } else if (severity === 'S4') {
+        setTimeRemaining(360);
+      }
+    calculateTimeRemaining();
+    }
+  }, [severity, priority]);
 
    useEffect(() => {
       const fetchClients = async () => {
@@ -38,7 +54,7 @@ const TicketForm: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await createTicket(productId as string, { title, description, status, priority, severity, task, client });
+      await createTicket(productId as string, { title, description, status, priority, severity, task, client, timeRemaining });
       // Limpiar el formulario después de crear el ticket
       setTitle('');
       setDescription('');
@@ -65,6 +81,7 @@ const TicketForm: React.FC = () => {
     <div className="ticket-form">
       <h2>Crear Ticket</h2>
       <form onSubmit={handleSubmit}>
+        
         <div className="form-group">
           <label htmlFor="title">Tipo:</label>
           <input required type="text" id="title" value={title} onChange={(e) => setTitle(e.target.value)} />
@@ -92,6 +109,15 @@ const TicketForm: React.FC = () => {
             <option value="Open">Open</option>
             <option value="In Progress">In Progress</option>
             <option value="Closed">Closed</option>
+            
+          </select>
+        </div>
+        <div className="form-group">
+          <label htmlFor="priority">Prioridad:</label>
+          <select id="priority" value={priority} onChange={(e) => setPriority(e.target.value)}>
+            <option value="Alta">Alta</option>
+            <option value="Media">Media</option>
+            <option value="Baja">Baja</option>
           </select>
         </div>
         <div className="form-group">
@@ -104,12 +130,13 @@ const TicketForm: React.FC = () => {
           </select>
         </div>
         <div className="form-group">
-          <label htmlFor="priority">Prioridad:</label>
-          <select id="priority" value={priority} onChange={(e) => setPriority(e.target.value)}>
-            <option value="Alta">Alta</option>
-            <option value="Media">Media</option>
-            <option value="Baja">Baja</option>
-          </select>
+          <label htmlFor="timeRemaining">Tiempo Restante:</label>
+            <div>
+            {severity === 'S1' && <span>7 días</span>}
+            {severity === 'S2' && <span>30 días</span>}
+            {severity === 'S3' && <span>90 días</span>}
+            {severity === 'S4' && <span>360 días</span>}
+          </div>
         </div>
         <button type="submit" className="btn-create">Crear</button>
       </form>

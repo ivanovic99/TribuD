@@ -64,6 +64,7 @@ const closeDeleteConfirmation = () => {
                     <HeaderItem title="Titulo" />
                     <HeaderItem title="Descripcion" />
                     <HeaderItem title="Estado" />
+                    <HeaderItem title="Severidad" />
                     <HeaderItem title="Fecha de creacion" />
                   </tr>
                 </thead>
@@ -87,7 +88,11 @@ const closeDeleteConfirmation = () => {
                     </td>
 
                     <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                      <div className="text-sm leading-5 text-gray-900">{ticket.createdAt}</div>
+                      <div className="text-sm leading-5 text-gray-900">{ticket.severity}</div>
+                    </td>
+
+                    <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                      <div className="text-sm leading-5 text-gray-900">{ticket.createdAt.slice(0,10)}</div>
                     </td>
                   </tr>
                 </tbody>
