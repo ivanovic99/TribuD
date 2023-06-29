@@ -135,10 +135,8 @@ export default function Project() {
         const { id } = router.query;
 
         if (id) {
-            // getProyecto(id as string, setProyecto)
-            // setTareas(proyecto?.tareas)
+            getProyecto(id as string, setProyecto)
         }
-        setTareas(availableTasks)
 
     }, [])
 

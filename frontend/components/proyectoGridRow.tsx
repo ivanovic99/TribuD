@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { ProyectoInfoProps } from "./types";
 
-const ESTADO_COMPLETADO = 'COMPLETADO'
-const ESTADO_EN_PROGRESO = 'EN_CURSO'
-const ESTADO_NO_INICIADO = 'NO_INICIADO'
+const ESTADO_COMPLETADO = 'FINALIZACION'
+const ESTADO_EN_PROGRESO = 'IMPLEMENTACION'
+const ESTADO_NO_INICIADO = 'INICIO'
 
 export default function ProyectoGridRow({ proyecto }: { proyecto: ProyectoInfoProps }) {
 
