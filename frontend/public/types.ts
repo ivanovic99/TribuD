@@ -1,14 +1,14 @@
 export interface Resource {
-  Nombre: string
-  Apellido: string
+  nombre: string
+  apellido: string
   legajo: number
 }
 
 export interface ResourceTask {
-  resource: string
-  name: string
-  hours: number
-  date: string
+  legajo: number
+  tarea: number
+  cantidadHoras: number
+  fecha: string
 }
 
 export interface Cliente {
