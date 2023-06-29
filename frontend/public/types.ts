@@ -29,6 +29,7 @@ export interface Tickets {
   priority: string
   severity: string
   time_remaining: string
+  resource: string
 }
 
 export interface Products {

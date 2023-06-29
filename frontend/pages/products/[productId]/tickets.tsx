@@ -69,6 +69,7 @@ export default function Tickets() {
                   {/*  <HeaderItem title="Producto asociado" /> */}
                     <HeaderItem title="Tarea" />
                     <HeaderItem title="Cliente" />
+                    <HeaderItem title="Resource" />
                     <HeaderItem title="Prioridad" />
                     <HeaderItem title="Severidad" />
                   </tr>
@@ -76,7 +77,7 @@ export default function Tickets() {
 
                 <tbody>
                   {tickets.map((ticket) => (
-                     <TicketsGridRow key={ticket._id} productId={productId as string} ticket={ticket} />
+                      <TicketsGridRow key={ticket._id} productId={productId as string} ticket={ticket} />
                   ))}
                 </tbody>
               </table>

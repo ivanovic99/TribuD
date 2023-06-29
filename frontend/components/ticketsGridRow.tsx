@@ -11,6 +11,7 @@ type Ticket = {
    product: string;
    task: string;
    client: string;
+   resource: string;
    priority: string;
    severity: string;
    time_remaining: string;
@@ -83,6 +84,10 @@ export default function TicketsGridRow({ productId, ticket }: TicketsGridRowProp
 
         <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
           <div className="text-sm leading-5 text-gray-900">{ticket.client}</div>
+        </td>
+
+        <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+          <div className="text-sm leading-5 text-gray-900">{ticket.resource}</div>
         </td>
 
         <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">

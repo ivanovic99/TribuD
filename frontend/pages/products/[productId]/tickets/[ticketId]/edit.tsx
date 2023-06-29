@@ -8,17 +8,19 @@ const TicketForm: React.FC = () => {
   const [status, setStatus] = useState('Open');
   const [showPopup, setShowPopup] = useState(false);
   const [severity, setSeverity] = useState('S1');
+  const [resource, setResource] = useState('Mario Mendoza');
 
   const router = useRouter();
   const { productId, ticketId } = router.query;
 
   const setFormData = (data: { title: string, description: string, 
-                          status: string, severity: string}) => {
-      const { title, description, status } = data;
+                          status: string, severity: string, resource: string}) => {
+      const { title, description, status, severity, resource } = data;
       setTitle(title);
       setDescription(description);
       setStatus(status);
       setSeverity(severity);
+      setResource(resource);
   }
 
   useEffect(() => {
@@ -40,7 +42,7 @@ const TicketForm: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await updateTicket(productId as string, ticketId as string, { title, description, status, severity });
+      await updateTicket(productId as string, ticketId as string, { title, description, status, severity, resource });
       // Limpiar el formulario después de crear el ticket
       setTitle('');
       setDescription('');
@@ -48,6 +50,7 @@ const TicketForm: React.FC = () => {
       // Mostrar el pop-up
       setShowPopup(true);
       setSeverity('S1');
+      setResource('');
       // Actualizar la lista de tickets (puedes pasar una función de actualización desde el padre)
       // updateTicketList();
     } catch (error) {
@@ -92,6 +95,11 @@ const TicketForm: React.FC = () => {
             <option value="S4">S4</option>
           </select>
         </div>
+        <div className="form-group">
+          <label htmlFor="Recurso">Recurso:</label>
+          <input type="text" id="recurso" value={resource} onChange={(e) => setResource(e.target.value)} />
+        </div>
+
         <button type="submit" className="btn-create">Editar</button>
       </form>
 

@@ -11,6 +11,7 @@ const TicketForm: React.FC = () => {
   const [priority, setPriority] = useState('Alta');
   const [task, setTask] = useState('');
   const [client, setClient] = useState("");
+  const [resource, setResource] = useState('');
   const [clients, setClients] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState(0);
@@ -54,13 +55,15 @@ const TicketForm: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await createTicket(productId as string, { title, description, status, priority, severity, task, client, timeRemaining });
+      await createTicket(productId as string, { title, description, status, priority, severity, task, client, resource, timeRemaining });
+      
       // Limpiar el formulario después de crear el ticket
       setTitle('');
       setDescription('');
       setStatus('Open');
       setSeverity('S1');
       setPriority('Alta');
+      setResource('');
       // Mostrar el pop-up
       setShowPopup(true);
       // Actualizar la lista de tickets (puedes pasar una función de actualización desde el padre)
@@ -98,6 +101,10 @@ const TicketForm: React.FC = () => {
         <div className="form-group">
           <label htmlFor="task">Tarea:</label>
           <input required type="text" id="task" value={task} onChange={(e) => setTask(e.target.value)} />
+        </div>
+        <div className="form-group">
+          <label htmlFor="resource">Resource:</label>
+          <input required type="text" id="resource" value={resource} onChange={(e) => setResource(e.target.value)} />
         </div>
         <div className="form-group">
           <label htmlFor="description">Descripcion:</label>

@@ -21,6 +21,14 @@ function ResourceDetail() {
             date: '2023-06-23',
         }
     ])
+    /*const [resource, setResource] = useState([
+        {
+            resource: 'Mario Mendoza',
+        },
+        {
+            resource: 'Mario Mendoza',
+        }
+    ])*/
 
     /*useEffect(() => {
         getTasksForResourceId(id)
@@ -45,6 +53,7 @@ function ResourceDetail() {
         </div>
     );
 }
+
 
 export default ResourceDetail;
 
