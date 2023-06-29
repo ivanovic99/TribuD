@@ -24,7 +24,9 @@ const ticketSchema = new mongoose.Schema({
   task: String,
   
   client: String,
-         
+
+  resource: String,
+
 });
 
 const Ticket = mongoose.model('Ticket', ticketSchema);
