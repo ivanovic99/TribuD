@@ -22,15 +22,19 @@ export default function Tickets() {
   
   useEffect(() => {
     (async () => {
-      const product = await getProductById(productId as string);
-      setProductTitle(product.title);
-      await getTickets(productId as string, setTickets);
+      if (productId != null) {
+        const product = await getProductById(productId as string);
+        setProductTitle(product.title);
+        await getTickets(productId as string, setTickets);
+      }
     })()
   }, [router.query]);
   
   useEffect(() => {
      (async () => {
-        await getTickets(productId as string, setTickets);
+        if (productId != null) {
+          await getTickets(productId as string, setTickets);
+        }
       })()
    }, [router.query]);
    if (!tickets.length) {  

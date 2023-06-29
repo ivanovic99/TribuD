@@ -95,11 +95,12 @@ const TicketForm: React.FC = () => {
             <option value="S4">S4</option>
           </select>
         </div>
+        {
         <div className="form-group">
           <label htmlFor="Recurso">Recurso:</label>
           <input type="text" id="recurso" value={resource} onChange={(e) => setResource(e.target.value)} />
         </div>
-
+        }
         <button type="submit" className="btn-create">Editar</button>
       </form>
 
