@@ -1,3 +1,4 @@
+import { deleteTarea } from "@/pages/api/proyectoServices";
 import { TareaProps } from "./types";
 
 
@@ -7,11 +8,10 @@ export default function ModalEliminarTarea({ modalOpen, setModalOpen, tarea }:
 
     const eliminarTarea = () => {
         setModalOpen(false);
+
         document.getElementById(`tarea-${tarea.id}`)?.remove()
 
-
-        // aca va la api
-
+        deleteTarea(tarea.id)
     }
 
     return (

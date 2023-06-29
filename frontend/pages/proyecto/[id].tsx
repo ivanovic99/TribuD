@@ -147,8 +147,6 @@ export default function Project() {
         return <th className="px-6 py-3 text-sm text-left text-gray-500 border-b border-gray-200 bg-gray-50">{titulo}</th>
     }
 
-
-
     const abrirModalTarea = (estado: boolean, tarea: TareaProps) => {
         setModalOpenTarea(true)
         setTarea(tarea)
@@ -165,7 +163,9 @@ export default function Project() {
         if (tareas) {
             return tareas.map((tarea) => <Tarea key={tarea.id} tarea={tarea} abrirModalTarea={abrirModalTarea} eliminarModalTarea={eliminarModalTarea} />)
         }
-        return <>No hay tareas disponibles</>
+        return (
+            <tr>No hay tareas disponibles</tr>
+        )
     }
 
     const showModalProyecto = () => {

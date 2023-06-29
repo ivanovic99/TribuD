@@ -1,9 +1,7 @@
 import { ProyectoInfoProps, TareaProps } from "@/components/types";
 import axios from "axios";
-import { Dispatch, SetStateAction } from "react";
 
 const BASE_URL = 'http://localhost:8080'; // La URL del servidor backend
-
 
 // Obtener todos los proyectos
 export const getProyectos = async (setProyectos: React.Dispatch<React.SetStateAction<any[]>>) => {
@@ -87,6 +85,15 @@ export const deleteTarea = async (id: number) => {
         .then(response => response.data)
         .catch(error => {
             throw error;
+        })
+}
+
+
+export const putFinalizarTarea = async (id: number, horasReales: number, esfuerzoReal: number) => {
+    await axios.put(`${BASE_URL}/finalizarTarea/${id}/${horasReales}/${esfuerzoReal}`)
+        .then(response => response.data)
+        .catch(error => {
+            throw error
         })
 }
 
