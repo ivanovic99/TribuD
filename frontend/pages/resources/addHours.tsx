@@ -1,9 +1,37 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
+import {getProducts} from "@/pages/api/productsServices";
+import {Products, Resource} from "@/public/types";
+import {getResources} from "@/pages/api/resourcesServices";
 
 const AddHours: React.FC = () => {
-    const [project, setProject] = useState('');
+    const [hours, setHours] = useState('');
     const [task, setTask] = useState('');
+    const [resources, setResources] = useState<Resource[]>([]);
     const [resource, setResource] = useState('');
+    const [products, setProducts] = useState<Products[]>([]);
+    const [project, setProject] = useState('');
+
+    useEffect(() => {
+        getResources()
+            .then((res) => {
+                setResources(res)
+            })
+            .catch((error) => {
+                console.log(error.message)
+            });
+    }, []);
+
+    useEffect(() => {
+        getProducts(setProducts);
+    }, []);
+
+    const handleSubmit = () => {
+        console.log("Recurso: ",resource, "Proyecto: ", project, "Horas: ", hours)
+    }
+
+    if (resources.length === 0 || products.length === 0) {
+        return <div>Cargando...</div>;
+    }
 
     return (
         <div className="container max-w-7xl mx-auto mt-8">
@@ -14,8 +42,13 @@ const AddHours: React.FC = () => {
             <form>
                 <div className="form-group">
                     <label htmlFor="project">Proyecto:</label>
-                    <select id="project" value="default" onChange={(e) => setProject(e.target.value)}>
-                        <option value="default">Seleccione el projecto</option>
+                    <select id="project" onChange={(e) => setProject(e.target.value)}>
+                        <option selected>Seleccione el proyecto</option>
+                        {products.map((item: Products) => (
+                            <option value={`${item._id}`} key={`${item._id}`}>
+                                {item.title}
+                            </option>
+                        ))}
                     </select>
                 </div>
 
@@ -28,8 +61,13 @@ const AddHours: React.FC = () => {
 
                 <div className="form-group">
                     <label htmlFor="resource">Recurso:</label>
-                    <select id="resource" value="default" onChange={(e) => setResource(e.target.value)}>
-                        <option value="default">Seleccione el recurso</option>
+                    <select id="resource" onChange={(e) => setResource(e.target.value)}>
+                        <option selected>Seleccione el recurso</option>
+                        {resources.map((item: Resource) => (
+                            <option value={`${item.legajo}`} key={`${item.legajo}`}>
+                                {item.nombre} {item.apellido}
+                            </option>
+                        ))}
                     </select>
                 </div>
 
@@ -43,10 +81,11 @@ const AddHours: React.FC = () => {
                         id="hours"
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                         placeholder="Horas trabajadas"
+                        onChange={(e) => setHours(e.target.value)}
                         required
                     />
                 </div>
-                <button type="submit" className="btn-create mt-10">Cargar horas</button>
+                <button type="submit" className="btn-create mt-10" onClick={handleSubmit}>Cargar horas</button>
             </form>
 
             <style jsx>{`
