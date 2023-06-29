@@ -1,21 +1,23 @@
 import React from 'react';
-import {ResourceTask} from "@/public/types";
+import {Resource, ResourceTask} from "@/public/types";
 
 type ResourceTaskProps = {
-    task: ResourceTask;
+    task: ResourceTask,
+    resource: Resource
 }
 
-const Card = ({ task }: ResourceTaskProps) => {
-    if (!task) {
-        return <div>Loading...</div>;
+const Card = ({ task, resource }: ResourceTaskProps) => {
+
+    if (!task || !resource) {
+        return <div>No se encontraron resultados</div>;
     }
 
     return (
         <div className="bg-white rounded shadow p-4">
-            <h2 className="text-lg font-bold mb-2">{task.resource}</h2>
-            <p className="text-gray-600 mb-2">Tarea: {task.name}</p>
-            <p className="text-gray-600 mb-2">Horas trabajadas: {task.hours}</p>
-            <p className="text-gray-600">Fecha: {task.date}</p>
+            <h2 className="text-lg font-bold mb-2">{resource.nombre + ' ' + resource.apellido}</h2>
+            <p className="text-gray-600 mb-2">Tarea: {task.tarea}</p>
+            <p className="text-gray-600 mb-2">Horas trabajadas: {task.cantidadHoras}</p>
+            <p className="text-gray-600">Fecha: {task.fecha}</p>
         </div>
     );
 };

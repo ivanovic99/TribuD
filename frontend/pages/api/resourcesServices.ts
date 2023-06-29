@@ -20,6 +20,26 @@ export const getResources = async () => {
   }
 };
 
+export const getResourceById = async (resourceId: String) => {
+  try {
+    const response = await axios.get(`${BASE_URL_RESOURCE}/recursos/${resourceId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error al obtener el recurso:', error);
+    throw error;
+  }
+};
+
+export const getHoursByResource = async (resourceId: String) => {
+  try {
+    const response = await axios.get(`${BASE_URL_RESOURCE}/cargaHoras/${resourceId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error al obtener las horas del recurso:', error);
+    throw error;
+  }
+};
+
 // Asigna horas a un recurso
 export const addHours = async (data: AddHoursData) => {
   let params = new URLSearchParams();

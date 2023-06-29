@@ -5,10 +5,10 @@ export interface Resource {
 }
 
 export interface ResourceTask {
-  resource: string
-  name: string
-  hours: number
-  date: string
+  legajo: number
+  tarea: number
+  cantidadHoras: number
+  fecha: string
 }
 
 export interface Cliente {
