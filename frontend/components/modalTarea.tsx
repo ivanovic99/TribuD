@@ -16,7 +16,7 @@ export default function ModalTarea({ modalOpen, setModalOpen, tarea }: ModalTare
     const [recursosDisponibles, setRecursosDisponibles] = useState<Recurso[]>([])
     const [recursosSeleccionados, setRecursosSeleccionados] = useState<Recurso[]>(tarea.recursosAsignados)
     const [fechaInicio, setFechaInicio] = useState(tarea.fechaInicio)
-    const [fechaFinalizacion, setFechaFinalizacion] = useState(tarea.fechaFinalizacion)
+    const [fechaFinal, setFechaFinalizacion] = useState(tarea.fechaFinal)
     const [esfuerzoEstimado, setEsfuerzoEstimado] = useState(tarea.esfuerzoEstimado)
     const [horasEstimadas, setHorasEstimado] = useState(tarea.horasEstimadas)
     const [estado, setEstado] = useState(tarea.estado)
@@ -26,8 +26,8 @@ export default function ModalTarea({ modalOpen, setModalOpen, tarea }: ModalTare
 
 
     useEffect(() => {
-        // getRecursos(setRecursosDisponibles)
-        setRecursosDisponibles([{ "legajo": 1, "Nombre": "Mario", "Apellido": "Mendoza" }, { "legajo": 2, "Nombre": "Maria", "Apellido": "Perez" }, { "legajo": 3, "Nombre": "Patricia", "Apellido": "Gaona" }, { "legajo": 4, "Nombre": "Marcos", "Apellido": "Rivero" }])
+        getRecursos(setRecursosDisponibles)
+        // setRecursosDisponibles([{ "legajo": 1, "Nombre": "Mario", "Apellido": "Mendoza" }, { "legajo": 2, "Nombre": "Maria", "Apellido": "Perez" }, { "legajo": 3, "Nombre": "Patricia", "Apellido": "Gaona" }, { "legajo": 4, "Nombre": "Marcos", "Apellido": "Rivero" }])
     }, [])
 
 
@@ -38,7 +38,7 @@ export default function ModalTarea({ modalOpen, setModalOpen, tarea }: ModalTare
             nombre,
             descripcion,
             fechaInicio,
-            fechaFinalizacion,
+            fechaFinal,
             esfuerzoEstimado,
             recursosAsignados: recursosSeleccionados,
             horasEstimadas,
@@ -180,7 +180,7 @@ export default function ModalTarea({ modalOpen, setModalOpen, tarea }: ModalTare
                             </div>
                             <div className="grid md:grid-cols-4 md:gap-6">
                                 <div className="relative z-0 w-full mb-6 group">
-                                    <input disabled={esEditable()} value={formatDate(fechaInicio)} onChange={(e) => setFechaInicio(new Date(e.target.value))} type="date" name="floating_last_name" id="floating_last_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                                    <input disabled={esEditable()} value={fechaInicio} onChange={(e) => setFechaInicio(e.target.value)} type="date" name="floating_last_name" id="floating_last_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
                                     <label htmlFor="floating_last_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                                         Fecha Inicio</label>
                                 </div>
@@ -212,8 +212,8 @@ export default function ModalTarea({ modalOpen, setModalOpen, tarea }: ModalTare
                                 <div className="relative z-0 w-full mb-6 group">
                                     <input type="date"
                                         disabled={esEditable()}
-                                        defaultValue={formatDate(tarea.fechaFinalizacion)}
-                                        onChange={e => setFechaFinalizacion(new Date(e.target.value))} name="floating_last_name" id="floating_last_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                                        defaultValue={tarea.fechaFinal}
+                                        onChange={e => setFechaFinalizacion(e.target.value)} name="floating_last_name" id="floating_last_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
                                     <label htmlFor="floating_last_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                                     >Fecha  finalizacion</label>
                                 </div>

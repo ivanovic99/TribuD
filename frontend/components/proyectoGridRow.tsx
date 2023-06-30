@@ -44,10 +44,10 @@ export default function ProyectoGridRow({ proyecto }: { proyecto: ProyectoInfoPr
                 <div className="flex items-center">{proyecto.cliente}</div>
             </td>
             <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                <div className="flex items-center">{formatDate(proyecto.fechaInicio)}</div>
+                <div className="flex items-center">{proyecto.fechaInicio}</div>
             </td>
             <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                <div className="flex items-center">{formatDate(proyecto.fechaFinalizacion)}</div>
+                <div className="flex items-center">{proyecto.fechaFinalizacion}</div>
             </td>
 
             <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">

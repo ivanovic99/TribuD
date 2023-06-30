@@ -1,8 +1,10 @@
 import { ProyectoInfoProps, TareaProps } from "@/components/types";
 import axios from "axios";
+import formatearFecha from '@/components/formatearFecha'
 
-// const BASE_URL = 'https://proyectos-psa-sq13.onrender.com'; // La URL del servidor backend;
-const BASE_URL = 'http://localhost:8090'; // La URL del servidor backend;
+const BASE_URL = 'https://proyectos-psa-sq13.onrender.com'; // La URL del servidor backend;
+// const BASE_URL = 'http://localhost:8090'; // La URL del servidor backend;
+
 
 const headers = {
     'Method': 'POST',
@@ -44,7 +46,8 @@ export const deleteProyecto = async (id: string, setProyecto: React.Dispatch<Rea
 }
 
 export const createProyecto = async (proyecto: ProyectoInfoProps) => {
-    await axios.post(`${BASE_URL}/proyecto`, proyecto, { headers })
+
+    await axios.post(`${BASE_URL}/proyecto`, JSON.stringify(proyecto), { headers })
         .then(response => response.data)
         .catch(error => {
             throw error;

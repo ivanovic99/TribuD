@@ -24,8 +24,8 @@ export interface ProyectoInfoProps {
   cliente: string;
   descripcion: string;
   lider: string;
-  fechaInicio: Date;
-  fechaFinalizacion: Date;
+  fechaInicio: string;
+  fechaFinalizacion: string;
   estado: string;
   horasEstimadas: number,
   esfuerzoEstimado: number,
@@ -40,8 +40,8 @@ export interface TareaProps {
   nombre: string;
   descripcion: string;
   estado: string;
-  fechaInicio: Date;
-  fechaFinal: Date;
+  fechaInicio: string;
+  fechaFinal: string;
   horasEstimadas: number,
   esfuerzoEstimado: number,
   horasReales: number,

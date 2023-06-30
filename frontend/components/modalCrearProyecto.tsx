@@ -15,8 +15,8 @@ export default function ModalCreate({ modalOpen, setModalOpen, list }: ModalProp
     const [descripcion, setDescripcion] = useState("")
     const [lider, setLider] = useState("")
     const [cliente, setCliente] = useState("")
-    const [fechaInicio, setFechaInicio] = useState(new Date())
-    const [fechaFinalizacion, setFechaFinalizacion] = useState(new Date())
+    const [fechaInicio, setFechaInicio] = useState('')
+    const [fechaFinalizacion, setFechaFinalizacion] = useState('')
     const [esfuerzoEstimado, setEsfuerzoEstimado] = useState(0)
     const [horasEstimadas, setHorasEstimado] = useState(0)
     const [estado, setEstado] = useState(ESTADO_NO_INICIADO)
@@ -37,8 +37,8 @@ export default function ModalCreate({ modalOpen, setModalOpen, list }: ModalProp
             descripcion,
             cliente,
             lider,
-            fechaInicio: formatearFecha(fechaInicio),
-            fechaFinalizacion: formatearFecha(fechaFinalizacion),
+            fechaInicio,
+            fechaFinalizacion,
             esfuerzoReal: 0,
             esfuerzoEstimado,
             horasReales: 0,
@@ -130,7 +130,7 @@ export default function ModalCreate({ modalOpen, setModalOpen, list }: ModalProp
                             <div className="grid md:grid-cols-4 md:gap-6">
                                 <div className="relative z-0 w-full mb-6 group">
                                     <input
-                                        onChange={(e) => setFechaInicio(new Date(e.target.value))} defaultValue={'dd-mm-aaaa'} type="date" name="floating_last_name" id="floating_last_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                                        onChange={(e) => setFechaInicio(e.target.value)} defaultValue={'dd-mm-aaaa'} type="date" name="floating_last_name" id="floating_last_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
                                     <label htmlFor="floating_last_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                                         Fecha Inicio</label>
                                 </div>
@@ -163,7 +163,7 @@ export default function ModalCreate({ modalOpen, setModalOpen, list }: ModalProp
                             <div className="grid md:grid-cols-4 md:gap-6">
                                 <div className="relative z-0 w-full mb-6 group">
                                     <input
-                                        onChange={(e) => setFechaFinalizacion(new Date(e.target.value))}
+                                        onChange={(e) => setFechaFinalizacion(e.target.value)}
                                         defaultValue={'dd-mm-aaaa'} type="date" name="floating_last_name" id="floating_last_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="dd-mm-aaaa" required />
                                     <label htmlFor="floating_last_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                                     >Fecha finalizacion</label>

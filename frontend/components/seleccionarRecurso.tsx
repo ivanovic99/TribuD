@@ -17,7 +17,7 @@ const BuscadorConLista = ({ recursosDisponibles, selecciones, setRecursosSelecci
 
         // Filtrar las opciones precargadas basado en la búsqueda
         const filteredOptions = recursosDisponibles.filter((option) =>
-            option.Nombre.toLowerCase().includes(inputValue.toLowerCase())
+            option.nombre.toLowerCase().includes(inputValue.toLowerCase())
         );
         setOpciones(filteredOptions);
 
@@ -69,7 +69,7 @@ const BuscadorConLista = ({ recursosDisponibles, selecciones, setRecursosSelecci
                         onClick={() => handleAgregarSeleccion(opcion)}
                         className="p-2 cursor-pointer text-sm font-medium hover:bg-gray-200"
                     >
-                        {opcion.Nombre + ' ' + opcion.Apellido}
+                        {opcion.nombre + ' ' + opcion.apellido}
                     </li>
                 ))}
             </ul>
@@ -83,7 +83,7 @@ const BuscadorConLista = ({ recursosDisponibles, selecciones, setRecursosSelecci
                         className="p-2 cursor-pointer text-sm font-medium hover:bg-gray-200 w-fit"
                     >
                         <div className='flex flex-row justify-between space-x-4 w-fit'>
-                            <h3 className='w-fit'>{seleccion?.Nombre + ' ' + seleccion?.Apellido}</h3>
+                            <h3 className='w-fit'>{seleccion?.nombre + ' ' + seleccion?.apellido}</h3>
                             <h3
                                 className='cursor-pointer'
                                 onClick={() => handleEliminarSeleccion(seleccion)}
