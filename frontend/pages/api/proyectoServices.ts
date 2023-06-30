@@ -3,7 +3,7 @@ import axios from "axios";
 import formatearFecha from '@/components/formatearFecha'
 
 const BASE_URL = 'https://proyectos-psa-sq13.onrender.com'; // La URL del servidor backend;
-// const BASE_URL = 'http://localhost:8090'; // La URL del servidor backend;
+// const BASE_URL = 'http://localhost:8080'; // La URL del servidor backend;k
 
 
 const headers = {
@@ -15,7 +15,7 @@ const headers = {
 
 // Obtener todos los proyectos
 export const getProyectos = async (setProyectos: React.Dispatch<React.SetStateAction<any[]>>) => {
-    await axios.get(`${BASE_URL}/proyecto/listar`, { headers })
+    await axios.get(`${BASE_URL}/proyecto/listar`)
         .then(response => {
             setProyectos(response.data)
         }).catch(error => {
@@ -46,7 +46,6 @@ export const deleteProyecto = async (id: string, setProyecto: React.Dispatch<Rea
 }
 
 export const createProyecto = async (proyecto: ProyectoInfoProps) => {
-
     await axios.post(`${BASE_URL}/proyecto`, JSON.stringify(proyecto), { headers })
         .then(response => response.data)
         .catch(error => {
@@ -58,6 +57,9 @@ export const createProyecto = async (proyecto: ProyectoInfoProps) => {
 export const createTarea = async (tarea: TareaProps) => {
     await axios.post(`${BASE_URL}/tarea`, tarea)
         .then(response => response.data)
+        .then(data => {
+            putAsignarTareaAProyecto(tarea.id, tarea.idProyecto)
+        })
         .catch(error => {
             throw error;
         })
@@ -111,17 +113,27 @@ export const putFinalizarTarea = async (id: number, horasReales: number, esfuerz
 
 
 export const getRecursos = async (setRecursos: React.Dispatch<React.SetStateAction<any[]>>) => {
-    // await axios.get(`${BASE_URL}/tarea/obtenerRecursos`)
+    // await axios.get('https://anypoint.mulesoft.com/mocking/api/v1/sources/exchange/assets/754f50e8-20d8-4223-bbdc-56d50131d0ae/recursos-psa/1.0.1/m/api/recursos')
     //     .then(response => {
+    //         console.log(response.data)
     //         setRecursos(response.data)
     //     }).catch(error => {
     //         throw error;
     //     })
 
-    await axios.get('https://anypoint.mulesoft.com/mocking/api/v1/sources/exchange/assets/754f50e8-20d8-4223-bbdc-56d50131d0ae/recursos-psa/1.0.1/m/api/recursos')
+    await axios.get(`${BASE_URL}/proyecto/obtenerRecursos`)
+        .then(response => {
+            setRecursos(response.data)
+        }).catch(error => {
+            throw error;
+        })
+
+}
+
+export const putAsignarTareaAProyecto = async (idTarea: number, idProyecto: number) => {
+    await axios.put(`${BASE_URL}/proyecto/agregarTarea/${idProyecto}/${idTarea}`)
         .then(response => {
             console.log(response.data)
-            setRecursos(response.data)
         }).catch(error => {
             throw error;
         })

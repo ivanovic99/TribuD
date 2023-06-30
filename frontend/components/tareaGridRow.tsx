@@ -1,5 +1,8 @@
 import { TareaProps } from "./types";
 
+const ESTADO_COMPLETADO = 'COMPLETADO'
+const ESTADO_EN_PROGRESO = 'EN_CURSO'
+const ESTADO_NO_INICIADO = 'NO_INICIADO'
 
 export default function Tarea({ tarea, abrirModalTarea, eliminarModalTarea }:
     {
@@ -9,7 +12,7 @@ export default function Tarea({ tarea, abrirModalTarea, eliminarModalTarea }:
     }) {
 
     const renderState = () => {
-        if (tarea.estado == '')
+        if (tarea.estado == ESTADO_NO_INICIADO)
             return (
                 <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                     <span className="inline-flex items-center bg-red-100 text-red-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300 border-red-500 border">
@@ -20,7 +23,7 @@ export default function Tarea({ tarea, abrirModalTarea, eliminarModalTarea }:
                 </td>
             )
 
-        if (tarea.estado == "en progreso")
+        if (tarea.estado == ESTADO_EN_PROGRESO)
             return (
                 <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                     <span className="inline-flex items-center bg-orange-100 text-orange-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-orange-900 dark:text-orange-300 border-orange-600 border">
@@ -30,7 +33,7 @@ export default function Tarea({ tarea, abrirModalTarea, eliminarModalTarea }:
                 </td>
             )
 
-        if (tarea.estado == "completada")
+        if (tarea.estado == ESTADO_COMPLETADO)
             return (
                 <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                     <span className="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300 border-green-600 border">

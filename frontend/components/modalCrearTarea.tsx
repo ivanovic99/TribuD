@@ -25,7 +25,7 @@ export default function ModalCrearTarea({ modalOpen, setModalOpen, idProyecto }:
 
     const configTarea = () => {
         const tarea: TareaProps = {
-            id: 0,
+            id: 4,
             nombre,
             idProyecto,
             descripcion,
@@ -69,7 +69,9 @@ export default function ModalCrearTarea({ modalOpen, setModalOpen, idProyecto }:
     }, [])
 
     const crearTarea = () => {
-        createTarea(configTarea()).then(res => console.log(res))
+        // console.log(configTarea())
+        createTarea(configTarea())
+            .then(() => setModalOpen(false))
     }
 
     return (

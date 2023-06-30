@@ -134,16 +134,16 @@ export default function Project() {
         if (router.asPath !== router.route) {
             const { id } = router.query
 
-            console.log(id)
-
             getProyecto(id as string, setProyecto)
             getTareas(id as string, setTareas)
+
+            console.log(proyecto)
             // .then(() => {
             //     console.log(proyecto?.tareas)
             //     setTareas(proyecto?.tareas)
             // });
         }
-    }, [router, modalOpenProyecto])
+    }, [router, modalOpenTarea])
 
 
     const HeaderItem = ({ titulo }: { titulo: string }) => {
