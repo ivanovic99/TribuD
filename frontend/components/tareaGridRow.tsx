@@ -9,7 +9,7 @@ export default function Tarea({ tarea, abrirModalTarea, eliminarModalTarea }:
     }) {
 
     const renderState = () => {
-        if (tarea.estado == 'no iniciada')
+        if (tarea.estado == '')
             return (
                 <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                     <span className="inline-flex items-center bg-red-100 text-red-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300 border-red-500 border">
@@ -45,9 +45,9 @@ export default function Tarea({ tarea, abrirModalTarea, eliminarModalTarea }:
     return (
 
         <tr id={"tarea-" + tarea.id.toString()} key={tarea.id} className="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
-            <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+            <th className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                 <div className="flex items-center">{tarea.id}</div>
-            </td>
+            </th>
             <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                 <div className="flex items-center">{tarea.nombre}</div>
             </td>

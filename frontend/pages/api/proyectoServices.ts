@@ -1,7 +1,9 @@
 import { ProyectoInfoProps, TareaProps } from "@/components/types";
 import axios from "axios";
 
-const BASE_URL = 'https://proyectos-psa-sq13.onrender.com'; // La URL del servidor backend;
+// const BASE_URL = 'https://proyectos-psa-sq13.onrender.com'; // La URL del servidor backend;
+const BASE_URL = 'http://localhost:8090'; // La URL del servidor backend;
+
 const headers = {
     'Method': 'POST',
     'Content-Type': 'application/json',
@@ -9,13 +11,9 @@ const headers = {
     'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE', // Configura los métodos HTTP permitidos
 };
 
-
-
-
-
 // Obtener todos los proyectos
 export const getProyectos = async (setProyectos: React.Dispatch<React.SetStateAction<any[]>>) => {
-    await axios.get(`${BASE_URL}/proyecto/listar`)
+    await axios.get(`${BASE_URL}/proyecto/listar`, { headers })
         .then(response => {
             setProyectos(response.data)
         }).catch(error => {
@@ -29,6 +27,8 @@ export const getProyecto = async (id: string, setProyecto: React.Dispatch<React.
     await axios.get(`${BASE_URL}/proyecto/${id}`)
         .then(response => {
             setProyecto(response.data)
+            console.log(response.data.tareas)
+            return true
         }).catch(error => {
             throw error;
         })
@@ -44,41 +44,21 @@ export const deleteProyecto = async (id: string, setProyecto: React.Dispatch<Rea
 }
 
 export const createProyecto = async (proyecto: ProyectoInfoProps) => {
-    // await axios.post(`${BASE_URL}/proyecto`, proyecto, { headers })
-    //     .then(response => response.data)
-    //     .catch(error => {
-    //         throw error;
-    //     })
-
-
-    // await fetch(`${BASE_URL}/proyecto`, { headers })
-
-
-
-    let url = `${BASE_URL}/proyecto`;
-    try {
-        let headers = { 'Content-Type': 'application/json' }
-        let method = 'POST';
-        let body = JSON.stringify(proyecto)
-        const resp = await fetch(url, { headers, body, method });
-        const data = await resp.json()
-        return data;
-    } catch (error) {
-        console.log(error);
-        return null;
-    }
-
-}
-
-
-export const createTarea = async (tarea: TareaProps) => {
-    await axios.put(`${BASE_URL}/tarea`, tarea)
+    await axios.post(`${BASE_URL}/proyecto`, proyecto, { headers })
         .then(response => response.data)
         .catch(error => {
             throw error;
         })
 }
 
+
+export const createTarea = async (tarea: TareaProps) => {
+    await axios.post(`${BASE_URL}/tarea`, tarea)
+        .then(response => response.data)
+        .catch(error => {
+            throw error;
+        })
+}
 
 export const editTarea = async (id: number, tarea: TareaProps) => {
     await axios.put(`${BASE_URL}/tarea/${id}`, tarea)
@@ -88,8 +68,8 @@ export const editTarea = async (id: number, tarea: TareaProps) => {
         })
 }
 
-export const getTareas = async (id: number, setTareas: React.Dispatch<React.SetStateAction<any>>) => {
-    await axios.get(`${BASE_URL}/tarea/listar`)
+export const getTareas = async (id: string, setTareas: React.Dispatch<React.SetStateAction<any>>) => {
+    await axios.get(`${BASE_URL}/proyecto/${id}/listarTareas`)
         .then(response => {
             setTareas(response.data)
         }).catch(error => {
@@ -127,15 +107,20 @@ export const putFinalizarTarea = async (id: number, horasReales: number, esfuerz
 }
 
 
-
 export const getRecursos = async (setRecursos: React.Dispatch<React.SetStateAction<any[]>>) => {
-    await axios.get(`${BASE_URL}/tarea/obtenerRecursos`)
+    // await axios.get(`${BASE_URL}/tarea/obtenerRecursos`)
+    //     .then(response => {
+    //         setRecursos(response.data)
+    //     }).catch(error => {
+    //         throw error;
+    //     })
+
+    await axios.get('https://anypoint.mulesoft.com/mocking/api/v1/sources/exchange/assets/754f50e8-20d8-4223-bbdc-56d50131d0ae/recursos-psa/1.0.1/m/api/recursos')
         .then(response => {
             console.log(response.data)
             setRecursos(response.data)
-        }
-        )
-        .catch(error => {
+        }).catch(error => {
             throw error;
         })
+
 }

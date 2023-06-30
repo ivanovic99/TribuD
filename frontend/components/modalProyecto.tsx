@@ -19,7 +19,6 @@ export default function ModalProyecto({ modalOpen, setModalOpen, proyecto }:
     const [esfuerzoEstimado, setEsfuerzoEstimado] = useState(proyecto.esfuerzoEstimado)
     const [horasEstimadas, setHorasEstimado] = useState(proyecto.horasEstimadas)
     const [estado, setEstado] = useState(proyecto.estado)
-    // const [estado, setEstado] = useState('en progreso')
 
 
     const [modalOpenEditar, setModalOpenEditar] = useState(false);

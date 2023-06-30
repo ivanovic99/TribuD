@@ -5,119 +5,119 @@ import ModalCrearTarea from "@/components/modalCrearTarea";
 import ModalTarea from "@/components/modalTarea";
 import ModalEliminarTarea from "@/components/modalEliminarTarea";
 import { useRouter } from 'next/router';
-import { getProyecto } from "../api/proyectoServices";
+import { getProyecto, getTareas } from "../api/proyectoServices";
 import ModalProyecto from "@/components/modalProyecto";
 
-const availableTasks: TareaProps[] = [
-    {
-        id: 1,
-        idProyecto: 1,
-        nombre: "Crear el diseño de la página de inicio",
-        descripcion: "Para crear el diseño de la página de inicio, debes utilizar herramientas de diseño gráfico y considerar los elementos clave, como la disposición de los elementos, la paleta de colores y el uso de imágenes relevantes.",
-        estado: "no iniciada",
-        fechaInicio: new Date(2023, 5, 1),
-        fechaFinalizacion: new Date(2023, 5, 10),
-        horasReales: 2,
-        horasEstimadas: 2,
-        esfuerzoReal: 5,
-        esfuerzoEstimado: 5,
-        recursosAsignados: [{
-            "legajo": 1,
-            "Nombre": "Mario",
-            "Apellido": "Mendoza"
-        }]
-    },
-    {
-        id: 2,
-        idProyecto: 1,
-        nombre: "Implementar la funcionalidad de inicio de sesión",
-        descripcion: "Para implementar la funcionalidad de inicio de sesión, debes utilizar un lenguaje de programación y un framework adecuados. Debes crear formularios de inicio de sesión, validar las credenciales del usuario y gestionar la sesión del usuario.",
-        estado: "en progreso",
-        fechaInicio: new Date(2023, 5, 3),
-        fechaFinalizacion: new Date(2023, 5, 15),
-        horasReales: 5,
-        horasEstimadas: 5,
-        esfuerzoReal: 5,
-        esfuerzoEstimado: 5,
-        recursosAsignados: [{ 'legajo': 1, 'Nombre': "Pepe", 'Apellido': 'Pepecito' }]
+// const availableTasks: TareaProps[] = [
+//     {
+//         id: 1,
+//         idProyecto: 1,
+//         nombre: "Crear el diseño de la página de inicio",
+//         descripcion: "Para crear el diseño de la página de inicio, debes utilizar herramientas de diseño gráfico y considerar los elementos clave, como la disposición de los elementos, la paleta de colores y el uso de imágenes relevantes.",
+//         estado: "no iniciada",
+//         fechaInicio: new Date(2023, 5, 1),
+//         fechaFinalizacion: new Date(2023, 5, 10),
+//         horasReales: 2,
+//         horasEstimadas: 2,
+//         esfuerzoReal: 5,
+//         esfuerzoEstimado: 5,
+//         recursosAsignados: [{
+//             "legajo": 1,
+//             "Nombre": "Mario",
+//             "Apellido": "Mendoza"
+//         }]
+//     },
+//     {
+//         id: 2,
+//         idProyecto: 1,
+//         nombre: "Implementar la funcionalidad de inicio de sesión",
+//         descripcion: "Para implementar la funcionalidad de inicio de sesión, debes utilizar un lenguaje de programación y un framework adecuados. Debes crear formularios de inicio de sesión, validar las credenciales del usuario y gestionar la sesión del usuario.",
+//         estado: "en progreso",
+//         fechaInicio: new Date(2023, 5, 3),
+//         fechaFinalizacion: new Date(2023, 5, 15),
+//         horasReales: 5,
+//         horasEstimadas: 5,
+//         esfuerzoReal: 5,
+//         esfuerzoEstimado: 5,
+//         recursosAsignados: [{ 'legajo': 1, 'Nombre': "Pepe", 'Apellido': 'Pepecito' }]
 
-    },
-    {
-        id: 3,
-        idProyecto: 1,
-        nombre: "Agregar validaciones de entrada de datos",
-        descripcion: "Para agregar validaciones de entrada de datos, debes utilizar técnicas de validación en el lenguaje de programación que estés utilizando. Verifica que los datos ingresados por el usuario cumplan con los requisitos establecidos y muestra mensajes de error adecuados en caso de incumplimiento.",
-        estado: "completada",
-        fechaInicio: new Date(2023, 5, 8),
-        fechaFinalizacion: new Date(2023, 5, 12),
-        horasReales: 5,
-        horasEstimadas: 5,
-        esfuerzoReal: 5,
-        esfuerzoEstimado: 5,
-        recursosAsignados: [{ 'legajo': 1, 'Nombre': "Pepe", 'Apellido': 'Pepecito' }]
+//     },
+//     {
+//         id: 3,
+//         idProyecto: 1,
+//         nombre: "Agregar validaciones de entrada de datos",
+//         descripcion: "Para agregar validaciones de entrada de datos, debes utilizar técnicas de validación en el lenguaje de programación que estés utilizando. Verifica que los datos ingresados por el usuario cumplan con los requisitos establecidos y muestra mensajes de error adecuados en caso de incumplimiento.",
+//         estado: "completada",
+//         fechaInicio: new Date(2023, 5, 8),
+//         fechaFinalizacion: new Date(2023, 5, 12),
+//         horasReales: 5,
+//         horasEstimadas: 5,
+//         esfuerzoReal: 5,
+//         esfuerzoEstimado: 5,
+//         recursosAsignados: [{ 'legajo': 1, 'Nombre': "Pepe", 'Apellido': 'Pepecito' }]
 
-    },
-    {
-        id: 4,
-        idProyecto: 1,
-        nombre: "Optimizar el rendimiento de la aplicación",
-        descripcion: "Para optimizar el rendimiento de la aplicación, debes identificar y abordar los cuellos de botella en el código y en la infraestructura. Puedes utilizar técnicas como el caching, la compresión de recursos, la optimización de consultas a la base de datos, entre otros.",
-        estado: "no iniciada",
-        fechaInicio: new Date(2023, 5, 2),
-        fechaFinalizacion: new Date(2023, 5, 9),
-        horasReales: 5,
-        horasEstimadas: 5,
-        esfuerzoReal: 5,
-        esfuerzoEstimado: 5,
-        recursosAsignados: [{ 'legajo': 1, 'Nombre': "Pepe", 'Apellido': 'Pepecito' }]
+//     },
+//     {
+//         id: 4,
+//         idProyecto: 1,
+//         nombre: "Optimizar el rendimiento de la aplicación",
+//         descripcion: "Para optimizar el rendimiento de la aplicación, debes identificar y abordar los cuellos de botella en el código y en la infraestructura. Puedes utilizar técnicas como el caching, la compresión de recursos, la optimización de consultas a la base de datos, entre otros.",
+//         estado: "no iniciada",
+//         fechaInicio: new Date(2023, 5, 2),
+//         fechaFinalizacion: new Date(2023, 5, 9),
+//         horasReales: 5,
+//         horasEstimadas: 5,
+//         esfuerzoReal: 5,
+//         esfuerzoEstimado: 5,
+//         recursosAsignados: [{ 'legajo': 1, 'Nombre': "Pepe", 'Apellido': 'Pepecito' }]
 
-    },
-    {
-        id: 5,
-        idProyecto: 1,
-        nombre: "Realizar pruebas de integración",
-        descripcion: "Para realizar pruebas de integración, debes combinar diferentes componentes y módulos de la aplicación y verificar que funcionen correctamente juntos. Puedes utilizar frameworks de pruebas y crear casos de",
-        estado: "en progreso",
-        fechaInicio: new Date(2023, 5, 4),
-        fechaFinalizacion: new Date(2023, 5, 14),
-        horasReales: 5,
-        horasEstimadas: 5,
-        esfuerzoReal: 5,
-        esfuerzoEstimado: 5,
-        recursosAsignados: [{ 'legajo': 1, 'Nombre': "Pepe", 'Apellido': 'Pepecito' }]
+//     },
+//     {
+//         id: 5,
+//         idProyecto: 1,
+//         nombre: "Realizar pruebas de integración",
+//         descripcion: "Para realizar pruebas de integración, debes combinar diferentes componentes y módulos de la aplicación y verificar que funcionen correctamente juntos. Puedes utilizar frameworks de pruebas y crear casos de",
+//         estado: "en progreso",
+//         fechaInicio: new Date(2023, 5, 4),
+//         fechaFinalizacion: new Date(2023, 5, 14),
+//         horasReales: 5,
+//         horasEstimadas: 5,
+//         esfuerzoReal: 5,
+//         esfuerzoEstimado: 5,
+//         recursosAsignados: [{ 'legajo': 1, 'Nombre': "Pepe", 'Apellido': 'Pepecito' }]
 
-    },
-    {
-        id: 6,
-        idProyecto: 1,
+//     },
+//     {
+//         id: 6,
+//         idProyecto: 1,
 
-        nombre: "Crear la estructura de base de datos",
-        descripcion: "Para crear la estructura de base de datos, debes utilizar un sistema de gestión de bases de datos adecuado y diseñar las tablas y relaciones necesarias para almacenar los datos de la aplicación. Puedes utilizar lenguajes de consulta como SQL para crear y modificar la estructura de la base de datos.",
-        estado: "completada",
-        fechaInicio: new Date(2023, 5, 6),
-        fechaFinalizacion: new Date(2023, 5, 11),
-        horasReales: 5,
-        horasEstimadas: 5,
-        esfuerzoReal: 5,
-        esfuerzoEstimado: 5,
-        recursosAsignados: [{ 'legajo': 1, 'Nombre': "Pepe", 'Apellido': 'Pepecito' }]
+//         nombre: "Crear la estructura de base de datos",
+//         descripcion: "Para crear la estructura de base de datos, debes utilizar un sistema de gestión de bases de datos adecuado y diseñar las tablas y relaciones necesarias para almacenar los datos de la aplicación. Puedes utilizar lenguajes de consulta como SQL para crear y modificar la estructura de la base de datos.",
+//         estado: "completada",
+//         fechaInicio: new Date(2023, 5, 6),
+//         fechaFinalizacion: new Date(2023, 5, 11),
+//         horasReales: 5,
+//         horasEstimadas: 5,
+//         esfuerzoReal: 5,
+//         esfuerzoEstimado: 5,
+//         recursosAsignados: [{ 'legajo': 1, 'Nombre': "Pepe", 'Apellido': 'Pepecito' }]
 
-    },
-    {
-        id: 7,
-        idProyecto: 1,
-        nombre: "Desarrollar la funcionalidad de búsqueda",
-        descripcion: "Para desarrollar la funcionalidad de búsqueda, debes utilizar técnicas de búsqueda y filtrado en el lenguaje de programación que estés utilizando. Puedes implementar algoritmos de búsqueda eficientes y permitir a los usuarios buscar información relevante en la aplicación.",
-        estado: "en progreso",
-        fechaInicio: new Date(2023, 5, 5),
-        fechaFinalizacion: new Date(2023, 5, 13),
-        horasReales: 5,
-        horasEstimadas: 5,
-        esfuerzoReal: 5,
-        esfuerzoEstimado: 5,
-        recursosAsignados: [{ 'legajo': 1, 'Nombre': "Pepe", 'Apellido': 'Pepecito' }]
-    }
-]
+//     },
+//     {
+//         id: 7,
+//         idProyecto: 1,
+//         nombre: "Desarrollar la funcionalidad de búsqueda",
+//         descripcion: "Para desarrollar la funcionalidad de búsqueda, debes utilizar técnicas de búsqueda y filtrado en el lenguaje de programación que estés utilizando. Puedes implementar algoritmos de búsqueda eficientes y permitir a los usuarios buscar información relevante en la aplicación.",
+//         estado: "en progreso",
+//         fechaInicio: new Date(2023, 5, 5),
+//         fechaFinalizacion: new Date(2023, 5, 13),
+//         horasReales: 5,
+//         horasEstimadas: 5,
+//         esfuerzoReal: 5,
+//         esfuerzoEstimado: 5,
+//         recursosAsignados: [{ 'legajo': 1, 'Nombre': "Pepe", 'Apellido': 'Pepecito' }]
+//     }
+// ]
 
 export default function Project() {
     const router = useRouter();
@@ -130,15 +130,20 @@ export default function Project() {
     const [tarea, setTarea] = useState<TareaProps>();
     const [tareas, setTareas] = useState<TareaProps[]>();
 
-
     useEffect(() => {
-        const { id } = router.query;
+        if (router.asPath !== router.route) {
+            const { id } = router.query
 
-        if (id) {
+            console.log(id)
+
             getProyecto(id as string, setProyecto)
+            getTareas(id as string, setTareas)
+            // .then(() => {
+            //     console.log(proyecto?.tareas)
+            //     setTareas(proyecto?.tareas)
+            // });
         }
-
-    }, [])
+    }, [router, modalOpenProyecto])
 
 
     const HeaderItem = ({ titulo }: { titulo: string }) => {
@@ -155,34 +160,33 @@ export default function Project() {
         setTarea(tarea)
     }
 
-    const renderTareas = (tareas: TareaProps[]) => {
-        // return availableTasks.map((tarea) => <Tarea key={tarea.id} tarea={tarea} abrirModalTarea={abrirModalTarea} eliminarModalTarea={eliminarModalTarea} />)
+    const renderTareas = () => {
+        return tareas?.map((tarea) => <Tarea key={tarea.id} tarea={tarea} abrirModalTarea={abrirModalTarea} eliminarModalTarea={eliminarModalTarea} />)
 
-        if (tareas) {
-            return tareas.map((tarea) => <Tarea key={tarea.id} tarea={tarea} abrirModalTarea={abrirModalTarea} eliminarModalTarea={eliminarModalTarea} />)
-        }
-        return (
-            <tr>No hay tareas disponibles</tr>
-        )
+        // if (tareas) {
+        // }
+        // return (
+        //     <td>No hay tareas disponibles</td>
+        // )
     }
 
     const showModalProyecto = () => {
-        if (modalOpenProyecto) return <ModalCrearTarea modalOpen setModalOpen={setModalOpenProyecto} idProyecto={proyecto?.id as number} />
+        if (modalOpenProyecto) return <ModalCrearTarea modalOpen={modalOpenProyecto} setModalOpen={setModalOpenProyecto} idProyecto={proyecto?.id as number} />
         return <></>
     }
 
     const showModalTarea = () => {
-        if (modalOpenTarea) return <ModalTarea modalOpen setModalOpen={setModalOpenTarea} tarea={tarea as TareaProps} />
+        if (modalOpenTarea) return <ModalTarea modalOpen={modalOpenTarea} setModalOpen={setModalOpenTarea} tarea={tarea as TareaProps} />
         return <></>
     }
 
     const showModalEliminarTarea = () => {
-        if (modalEliminarTarea) return <ModalEliminarTarea modalOpen setModalOpen={setModalEliminarTarea} tarea={tarea as TareaProps} />
+        if (modalEliminarTarea) return <ModalEliminarTarea modalOpen={modalEliminarTarea} setModalOpen={setModalEliminarTarea} tarea={tarea as TareaProps} />
         return <></>
     }
 
     const showModalInfoProyecto = () => {
-        if (modalInfoProyecto) return <ModalProyecto modalOpen setModalOpen={setModalInfoProyecto} proyecto={proyecto as ProyectoInfoProps} />
+        if (modalInfoProyecto) return <ModalProyecto modalOpen={modalInfoProyecto} setModalOpen={setModalInfoProyecto} proyecto={proyecto as ProyectoInfoProps} />
         return <></>
     }
 
@@ -227,7 +231,8 @@ export default function Project() {
                                 </thead>
 
                                 <tbody>
-                                    {renderTareas(tareas as TareaProps[])}
+
+                                    {renderTareas()}
                                 </tbody>
                             </table>
                         </div>

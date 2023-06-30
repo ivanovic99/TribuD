@@ -41,7 +41,7 @@ export interface TareaProps {
   descripcion: string;
   estado: string;
   fechaInicio: Date;
-  fechaFinalizacion: Date;
+  fechaFinal: Date;
   horasEstimadas: number,
   esfuerzoEstimado: number,
   horasReales: number,
@@ -51,6 +51,6 @@ export interface TareaProps {
 
 export interface Recurso {
   legajo: number,
-  Nombre: string,
-  Apellido: string
+  nombre: string,
+  apellido: string
 }

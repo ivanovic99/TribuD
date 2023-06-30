@@ -4,6 +4,8 @@ import { ProyectoInfoProps } from "./types";
 const ESTADO_COMPLETADO = 'FINALIZACION'
 const ESTADO_EN_PROGRESO = 'IMPLEMENTACION'
 const ESTADO_NO_INICIADO = 'INICIO'
+const ESTADO_DESARROLLO = 'DESARROLLO'
+
 
 export default function ProyectoGridRow({ proyecto }: { proyecto: ProyectoInfoProps }) {
 
@@ -21,6 +23,7 @@ export default function ProyectoGridRow({ proyecto }: { proyecto: ProyectoInfoPr
         if (estado == ESTADO_COMPLETADO) return 'red'
         if (estado == ESTADO_EN_PROGRESO) return 'orange'
         if (estado == ESTADO_NO_INICIADO) return 'green'
+        if (estado == ESTADO_DESARROLLO) return 'gray'
     }
 
     const renderState = (estado: string) => {

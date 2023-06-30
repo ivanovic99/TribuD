@@ -1,7 +1,13 @@
-import { createProyecto } from "@/pages/api/proyectoServices"
-import { ModalProps, ProyectoInfoProps } from "./types"
-import { useState } from "react"
+import { createProyecto, getRecursos } from "@/pages/api/proyectoServices"
+import { ModalProps, ProyectoInfoProps, Recurso } from "./types"
+import { useEffect, useState } from "react"
+import SeleccionarRecurso from "@/components/seleccionarRecurso"
+import formatearFecha from "@/components/formatearFecha"
 
+const ESTADO_COMPLETADO = 'FINALIZACION'
+const ESTADO_EN_PROGRESO = 'IMPLEMENTACION'
+const ESTADO_NO_INICIADO = 'INICIO'
+const ESTADO_DESARROLLO = 'DESARROLLO'
 
 export default function ModalCreate({ modalOpen, setModalOpen, list }: ModalProps) {
 
@@ -13,9 +19,16 @@ export default function ModalCreate({ modalOpen, setModalOpen, list }: ModalProp
     const [fechaFinalizacion, setFechaFinalizacion] = useState(new Date())
     const [esfuerzoEstimado, setEsfuerzoEstimado] = useState(0)
     const [horasEstimadas, setHorasEstimado] = useState(0)
-    const [estado, setEstado] = useState('Estado')
+    const [estado, setEstado] = useState(ESTADO_NO_INICIADO)
+
+    const [recursosDisponibles, setRecursosDisponibles] = useState<Recurso[]>([])
+    const [recursosSeleccionados, setRecursosSeleccionados] = useState<Recurso[]>([])
 
     const [error, setError] = useState("")
+
+    useEffect(() => {
+        getRecursos(setRecursosDisponibles)
+    }, [])
 
     const instanciaProyecto = () => {
         const instancia: ProyectoInfoProps = {
@@ -24,8 +37,8 @@ export default function ModalCreate({ modalOpen, setModalOpen, list }: ModalProp
             descripcion,
             cliente,
             lider,
-            fechaInicio,
-            fechaFinalizacion,
+            fechaInicio: formatearFecha(fechaInicio),
+            fechaFinalizacion: formatearFecha(fechaFinalizacion),
             esfuerzoReal: 0,
             esfuerzoEstimado,
             horasReales: 0,
@@ -43,6 +56,9 @@ export default function ModalCreate({ modalOpen, setModalOpen, list }: ModalProp
                 console.log(error.message)
                 setError(error.message)
             })
+        if (!error) {
+            setModalOpen(false)
+        }
     }
 
     const showError = () => {
@@ -106,11 +122,9 @@ export default function ModalCreate({ modalOpen, setModalOpen, list }: ModalProp
                             </div>
 
                             <div className="relative z-0 w-full mb-6 group">
-                                <input
-                                    value={lider}
-                                    onChange={(e) => setLider(e.target.value)} type="text" name="floating_first_name" id="floating_first_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                                <label htmlFor="floating_first_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                                    Lider asignado</label>
+
+                                <SeleccionarRecurso recursosDisponibles={recursosDisponibles} setRecursosSeleccionados={setRecursosSeleccionados} selecciones={recursosSeleccionados} />
+
                             </div>
 
                             <div className="grid md:grid-cols-4 md:gap-6">
@@ -131,9 +145,10 @@ export default function ModalCreate({ modalOpen, setModalOpen, list }: ModalProp
                                     <div className="flex items-center">
                                         <select value={estado} onChange={(e) => setEstado(e.target.value)} name="floating_last_name" id="floating_last_name" className="block py-2.5 pr-8 pl-0 w-full text-sm text-gray-900 bg-white dark:bg-gray-800 border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required>
                                             <option value="" disabled hidden>Estado</option>
-                                            <option value="en_curso">En curso</option>
-                                            <option value="no_iniciado">No iniciado</option>
-                                            <option value="finalizado">Finalizado</option>
+                                            <option value={ESTADO_EN_PROGRESO}>En curso</option>
+                                            <option value={ESTADO_NO_INICIADO}>No iniciado</option>
+                                            <option value={ESTADO_DESARROLLO}>En desarrollo</option>
+                                            <option value={ESTADO_COMPLETADO}>Finalizado</option>
                                         </select>
                                         <div className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
                                             <svg className="w-5 h-5 text-gray-400 dark:text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">

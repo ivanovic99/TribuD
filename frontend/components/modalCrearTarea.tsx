@@ -3,6 +3,13 @@ import { createTarea, getRecursos } from "@/pages/api/proyectoServices"
 import { ModalProps, Recurso, TareaProps } from "./types"
 import { useState, useEffect } from "react"
 import SeleccionarRecurso from "@/components/seleccionarRecurso"
+import formatearFecha from '@/components/formatearFecha'
+
+
+const ESTADO_COMPLETADO = 'COMPLETADO'
+const ESTADO_EN_PROGRESO = 'EN_CURSO'
+const ESTADO_NO_INICIADO = 'NO_INICIADO'
+
 
 export default function ModalCrearTarea({ modalOpen, setModalOpen, idProyecto }: { modalOpen: boolean, setModalOpen: (estado: boolean) => void, idProyecto: number }) {
 
@@ -14,7 +21,7 @@ export default function ModalCrearTarea({ modalOpen, setModalOpen, idProyecto }:
     const [fechaFinalizacion, setFechaFinalizacion] = useState(new Date())
     const [esfuerzoEstimado, setEsfuerzoEstimado] = useState(0)
     const [horasEstimadas, setHorasEstimado] = useState(0)
-    const [estado, setEstado] = useState('no iniciada')
+    const [estado, setEstado] = useState(ESTADO_NO_INICIADO)
 
     const configTarea = () => {
         const tarea: TareaProps = {
@@ -23,8 +30,8 @@ export default function ModalCrearTarea({ modalOpen, setModalOpen, idProyecto }:
             idProyecto,
             descripcion,
             recursosAsignados: recursosSeleccionados,
-            fechaInicio,
-            fechaFinalizacion,
+            fechaInicio: formatearFecha(fechaInicio),
+            fechaFinal: formatearFecha(fechaFinalizacion),
             esfuerzoEstimado,
             horasEstimadas,
             estado,
@@ -58,25 +65,12 @@ export default function ModalCrearTarea({ modalOpen, setModalOpen, idProyecto }:
     ]
 
     useEffect(() => {
-        getRecursos(setRecursosDisponibles)
+        getRecursos(setRecursosDisponibles).then(() => console.log(recursosDisponibles))
     }, [])
 
     const crearTarea = () => {
-        createTarea(configTarea())
+        createTarea(configTarea()).then(res => console.log(res))
     }
-
-    console.log(nombre,
-        descripcion,
-        recursosDisponibles,
-        recursosSeleccionados,
-        fechaInicio,
-        fechaFinalizacion,
-        esfuerzoEstimado,
-        horasEstimadas,
-        estado
-    )
-
-
 
     return (
         <>
@@ -186,9 +180,9 @@ export default function ModalCrearTarea({ modalOpen, setModalOpen, idProyecto }:
                                             onChange={(e) => setEstado(e.target.value)}
                                             name="floating_last_name" id="floating_last_name" className="block py-2.5 pr-8 pl-0 w-full text-sm text-gray-900 bg-white dark:bg-gray-800 border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required>
                                             <option value="" disabled hidden>Estado</option>
-                                            <option value="en_curso">En curso</option>
-                                            <option value="no_iniciado">No iniciado</option>
-                                            <option value="finalizado">Finalizado</option>
+                                            <option value={ESTADO_EN_PROGRESO}>En curso</option>
+                                            <option value={ESTADO_NO_INICIADO}>No iniciado</option>
+                                            <option value={ESTADO_COMPLETADO}>Finalizado</option>
                                         </select>
                                         <div className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
                                             <svg className="w-5 h-5 text-gray-400 dark:text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
