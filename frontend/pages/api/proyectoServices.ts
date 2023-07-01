@@ -3,7 +3,7 @@ import axios from "axios";
 import formatearFecha from '@/components/formatearFecha'
 
 const BASE_URL = 'https://proyectos-psa-sq13.onrender.com'; // La URL del servidor backend;
-// const BASE_URL = 'http://localhost:8080'; // La URL del servidor backend;k
+// const BASE_URL = 'http://localho.st:8080'; // La URL del servidor backend;k
 
 
 const headers = {
@@ -58,7 +58,9 @@ export const createTarea = async (tarea: TareaProps) => {
     await axios.post(`${BASE_URL}/tarea`, tarea)
         .then(response => response.data)
         .then(data => {
-            putAsignarTareaAProyecto(tarea.id, tarea.idProyecto)
+            // console.log("Respuesta: ", data)
+            putAsignarTareaAProyecto(data.id, data.idProyecto)
+            return true;
         })
         .catch(error => {
             throw error;

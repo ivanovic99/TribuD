@@ -131,6 +131,7 @@ export default function Project() {
     const [tareas, setTareas] = useState<TareaProps[]>();
 
     useEffect(() => {
+        console.log("Refresh")
         if (router.asPath !== router.route) {
             const { id } = router.query
 
@@ -143,7 +144,7 @@ export default function Project() {
             //     setTareas(proyecto?.tareas)
             // });
         }
-    }, [router, modalOpenTarea])
+    }, [router, modalOpenProyecto])
 
 
     const HeaderItem = ({ titulo }: { titulo: string }) => {
