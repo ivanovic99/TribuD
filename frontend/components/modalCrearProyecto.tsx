@@ -28,7 +28,8 @@ export default function ModalCreate({ modalOpen, setModalOpen, list }: ModalProp
 
     useEffect(() => {
         getRecursos(setRecursosDisponibles)
-    }, [])
+        
+    }, [modalOpen])
 
     const instanciaProyecto = () => {
         const instancia: ProyectoInfoProps = {
@@ -121,9 +122,10 @@ export default function ModalCreate({ modalOpen, setModalOpen, list }: ModalProp
                                     Cliente</label>
                             </div>
 
-                            <div className="relative z-0 w-full mb-6 group">
+                            <div className="relative z-10 bg-white w-full mb-6 group">
 
-                                <SeleccionarRecurso recursosDisponibles={recursosDisponibles} setRecursosSeleccionados={setRecursosSeleccionados} selecciones={recursosSeleccionados} />
+                                {/* <SeleccionarRecurso recursosDisponibles={recursosDisponibles} setRecursosSeleccionados={setRecursosSeleccionados} selecciones={recursosSeleccionados} /> */}
+                                <SeleccionarRecurso recursosDisponibles={recursosDisponibles} selecciones={recursosSeleccionados} setRecursosSeleccionados={setRecursosSeleccionados} />
 
                             </div>
 
