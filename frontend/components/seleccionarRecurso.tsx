@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import { Recurso } from './types';
 
-const BuscadorConLista = ({ recursosDisponibles, selecciones, setRecursosSeleccionados }:
+const BuscadorConLista = ({ recursosDisponibles, selecciones, setRecursosSeleccionados, maximasSelecciones = 9999, editable }:
     {
         recursosDisponibles: Recurso[],
         selecciones: Recurso[],
-        setRecursosSeleccionados: (listaRecursos: Recurso[]) => void
+        setRecursosSeleccionados: (listaRecursos: Recurso[]) => void,
+        maximasSelecciones: number,
+        editable: boolean
     }) => {
 
     const [busqueda, setBusqueda] = useState('');
@@ -25,7 +27,7 @@ const BuscadorConLista = ({ recursosDisponibles, selecciones, setRecursosSelecci
     };
 
     const handleAgregarSeleccion = (opcion: Recurso) => {
-        if (!selecciones.find((seleccion) => seleccion.legajo === opcion.legajo)) {
+        if (!selecciones.find((seleccion) => seleccion.legajo === opcion.legajo) && selecciones.length < maximasSelecciones) {
             setRecursosSeleccionados([...selecciones, opcion]);
             setBusqueda('');
             setOpciones([]);
@@ -43,6 +45,7 @@ const BuscadorConLista = ({ recursosDisponibles, selecciones, setRecursosSelecci
     }
 
 
+
     return (
         <div className='relative'>
             <div className="relative z-0 w-full mb-6 group">
@@ -51,6 +54,7 @@ const BuscadorConLista = ({ recursosDisponibles, selecciones, setRecursosSelecci
                     value={busqueda}
                     onChange={handleBusquedaChange}
                     placeholder=""
+                    disabled={editable}
                     className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                 />
                 <div className='absolute right-2 top-2 cursor-pointer'

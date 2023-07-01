@@ -14,7 +14,7 @@ export default function ModalTarea({ modalOpen, setModalOpen, tarea }: ModalTare
     const [nombre, setNombre] = useState(tarea.nombre)
     const [descripcion, setDescripcion] = useState(tarea.descripcion)
     const [recursosDisponibles, setRecursosDisponibles] = useState<Recurso[]>([])
-    const [recursosSeleccionados, setRecursosSeleccionados] = useState<Recurso[]>(tarea.recursosAsignados)
+    const [recursosSeleccionados, setRecursosSeleccionados] = useState<Recurso[]>(tarea.recursosAsignados || [])
     const [fechaInicio, setFechaInicio] = useState(tarea.fechaInicio)
     const [fechaFinal, setFechaFinalizacion] = useState(tarea.fechaFinal)
     const [esfuerzoEstimado, setEsfuerzoEstimado] = useState(tarea.esfuerzoEstimado)
@@ -26,7 +26,7 @@ export default function ModalTarea({ modalOpen, setModalOpen, tarea }: ModalTare
 
 
     useEffect(() => {
-        getRecursos(setRecursosDisponibles)
+        getRecursos(setRecursosDisponibles || [])
     }, [])
 
 
@@ -171,7 +171,7 @@ export default function ModalTarea({ modalOpen, setModalOpen, tarea }: ModalTare
                                 ></textarea>
                             </div>
                             <div className="relative z-10 w-full mb-6 group">
-                                {/* <SeleccionarRecurso recursosDisponibles={recursosDisponibles} selecciones={recursosSeleccionados} setRecursosSeleccionados={setRecursosSeleccionados} /> */}
+                                <SeleccionarRecurso recursosDisponibles={recursosDisponibles} selecciones={recursosSeleccionados} setRecursosSeleccionados={setRecursosSeleccionados} maximasSelecciones={999} editable={esEditable()}/>
                             </div>
                             <div className="grid md:grid-cols-4 md:gap-6">
                                 <div className="relative z-0 w-full mb-6 group">
@@ -187,11 +187,11 @@ export default function ModalTarea({ modalOpen, setModalOpen, tarea }: ModalTare
 
                                 <div className="relative z-0 w-full mb-6 group">
                                     <div className="flex items-center">
-                                        <select disabled={esEditable()} defaultValue={estado.replace(' ', '_')} onChange={e => setEstado(e.target.value)} name="floating_last_name" id="floating_last_name" className="block py-2.5 pr-8 pl-0 w-full text-sm text-gray-900 bg-white dark:bg-gray-800 border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required>
+                                        <select disabled={esEditable()} defaultValue={estado} onChange={e => setEstado(e.target.value)} name="floating_last_name" id="floating_last_name" className="block py-2.5 pr-8 pl-0 w-full text-sm text-gray-900 bg-white dark:bg-gray-800 border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required>
                                             <option value="" disabled hidden>Estado</option>
-                                            <option value="en_curso">En curso</option>
-                                            <option value="no_iniciada">No iniciada</option>
-                                            <option value="completada">Completada</option>
+                                            <option value={ESTADO_EN_PROGRESO}>En curso</option>
+                                            <option value={ESTADO_NO_INICIADO}>No iniciada</option>
+                                            {/* <option value={ESTADO_COMPLETADO}>Completada</option> */}
                                         </select>
                                         <div className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
                                             <svg className="w-5 h-5 text-gray-400 dark:text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">

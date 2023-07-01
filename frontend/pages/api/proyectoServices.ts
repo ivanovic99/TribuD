@@ -3,7 +3,7 @@ import axios from "axios";
 import formatearFecha from '@/components/formatearFecha'
 
 const BASE_URL = 'https://proyectos-psa-sq13.onrender.com'; // La URL del servidor backend;
-// const BASE_URL = 'http://localho.st:8080'; // La URL del servidor backend;k
+// const BASE_URL = 'http://localhost:8080'; // La URL del servidor backend;k
 
 
 const headers = {
@@ -15,7 +15,11 @@ const headers = {
 
 // Obtener todos los proyectos
 export const getProyectos = async (setProyectos: React.Dispatch<React.SetStateAction<any[]>>) => {
-    await axios.get(`${BASE_URL}/proyecto/listar`)
+    await axios.get(`${BASE_URL}/proyecto/listar`, {headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*', // Configura el origen permitido para las solicitudes (puede ser '*' para permitir cualquier origen)
+        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE', // Configura los métodos HTTP permitidos
+    }})
         .then(response => {
             setProyectos(response.data)
         }).catch(error => {
@@ -106,11 +110,17 @@ export const deleteTarea = async (id: number) => {
 
 
 export const putFinalizarTarea = async (id: number, horasReales: number, esfuerzoReal: number) => {
-    await axios.put(`${BASE_URL}/finalizarTarea/${id}/${horasReales}/${esfuerzoReal}`)
+    await axios.put(`${BASE_URL}/tarea/finalizarTarea/${id}/${horasReales}/${esfuerzoReal}`, { headers: {
+        'Method': 'PUT',
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*', // Configura el origen permitido para las solicitudes (puede ser '*' para permitir cualquier origen)
+        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE', // Configura los métodos HTTP permitidos
+    }})
         .then(response => response.data)
         .catch(error => {
             throw error
         })
+
 }
 
 

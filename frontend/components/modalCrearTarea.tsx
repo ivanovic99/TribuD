@@ -135,7 +135,7 @@ export default function ModalCrearTarea({ modalOpen, setModalOpen, idProyecto }:
 
                             </div>
                             <div className="grid md:grid-cols-4 md:gap-6">
-                                <SeleccionarRecurso recursosDisponibles={recursosDisponibles} selecciones={recursosSeleccionados} setRecursosSeleccionados={setRecursosSeleccionados} />
+                                <SeleccionarRecurso editable={true} recursosDisponibles={recursosDisponibles} selecciones={recursosSeleccionados} setRecursosSeleccionados={setRecursosSeleccionados} maximasSelecciones={999} />
 
                                 <div className="relative z-0 w-full mb-6 group">
                                     <div className="relative z-0 w-full mb-6 group">

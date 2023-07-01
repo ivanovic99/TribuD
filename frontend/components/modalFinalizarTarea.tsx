@@ -12,6 +12,8 @@ export default function ModalCargarHorasTarea({ modalOpen, setModalOpen, tarea }
 
     const completarTarea = () => {
         putFinalizarTarea(tarea.id, horasReales, esfuerzoReal)
+            .then(() => setModalOpen(false))
+
     }
 
 
