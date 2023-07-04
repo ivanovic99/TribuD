@@ -26,13 +26,15 @@ function ResourceDetail() {
             .then((res) => {
                 const result = res
                 result.map(async (item: ResourceTask) => {
-                    item.tarea = 'updateo tarea id por nombre'
-                    /*try{
+                    try{
                         await getTarea(item.tarea as string, setTask)
-                        item.tarea = task.nombre
+
+                        if(task){
+                            item.tarea = task.nombre
+                        }
                     }catch(error){
-                        console.log(error.message)
-                    }*/
+
+                    }
                 })
                 setTasks(result)
             })
