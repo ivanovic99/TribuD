@@ -2,15 +2,19 @@ import React, {FormEvent, useEffect, useState} from "react";
 import {getProducts} from "@/pages/api/productsServices";
 import {Products, Resource} from "@/public/types";
 import {addHours, getResources} from "@/pages/api/resourcesServices";
+import {getTareas} from "@/pages/api/proyectoServices";
+import ProductsGridRow from "@/components/productsGridRow";
+import {TareaProps} from "@/components/types";
 
 const AddHours: React.FC = () => {
     const [hours, setHours] = useState('');
     const [date, setDate] = useState('');
     const [task, setTask] = useState('');
-    const [resources, setResources] = useState<Resource[]>([]);
+    const [project, setProject] = useState<String>();
     const [resource, setResource] = useState('');
+    const [resources, setResources] = useState<Resource[]>([]);
     const [products, setProducts] = useState<Products[]>([]);
-    const [project, setProject] = useState('');
+    const [tasks, setTasks] = useState<TareaProps[]>([]);
 
     useEffect(() => {
         getResources()
@@ -37,9 +41,18 @@ const AddHours: React.FC = () => {
                 cantidadHoras: hours,
                 fecha: formatDate
             });
-
-            //document.getElementById("add-hours-form").reset();
         }
+    }
+
+    const handleProject = (projectId: String) => {
+        setProject(projectId)
+        getTareas(projectId as string, setTasks)
+            .then((res) => {
+
+            })
+            .catch(error => {
+                console.log(error.message)
+            })
     }
 
     if (resources.length === 0 || products.length === 0) {
@@ -55,7 +68,7 @@ const AddHours: React.FC = () => {
             <form id="add-hours-form">
                 <div className="form-group">
                     <label htmlFor="project">Proyecto:</label>
-                    <select id="project" onChange={(e) => setProject(e.target.value)}>
+                    <select id="project" onChange={(e) => handleProject(e.target.value)}>
                         <option selected>Seleccione el proyecto</option>
                         {products.map((item: Products) => (
                             <option value={`${item._id}`} key={`${item._id}`}>
@@ -69,6 +82,11 @@ const AddHours: React.FC = () => {
                     <label htmlFor="task">Tarea:</label>
                     <select id="task" value="default" onChange={(e) => setTask(e.target.value)}>
                         <option value="default">Seleccione la tarea</option>
+                        {tasks.map((task) => (
+                            <option value={`${task.id}`} key={`${task.id}-${task.nombre}`}>
+                                {task.nombre}
+                            </option>
+                        ))}
                     </select>
                 </div>
 

@@ -6,7 +6,7 @@ export interface Resource {
 
 export interface ResourceTask {
   legajo: number
-  tarea: number
+  tarea: string
   cantidadHoras: number
   fecha: string
 }

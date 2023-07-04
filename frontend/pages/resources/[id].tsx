@@ -3,11 +3,14 @@ import Card from './card';
 import {Resource, ResourceTask} from "@/public/types";
 import React, {useEffect, useState} from "react";
 import {getHoursByResource, getResourceById} from "@/pages/api/resourcesServices";
+import {getTarea} from "@/pages/api/proyectoServices";
+import {TareaProps} from "@/components/types";
 
 function ResourceDetail() {
     const router = useRouter();
     const { id } = router.query;
     const [resource, setResource] = useState();
+    const [task, setTask] = useState<TareaProps>();
     const [tasks, setTasks] = useState([])
 
     useEffect(() => {
@@ -18,19 +21,27 @@ function ResourceDetail() {
             .catch((error) => {
                 console.log(error.message)
             });
-    }, [id]);
 
-    useEffect(() => {
         getHoursByResource(id as string)
             .then((res) => {
-                setTasks(res)
+                const result = res
+                result.map(async (item: ResourceTask) => {
+                    item.tarea = 'updateo tarea id por nombre'
+                    /*try{
+                        await getTarea(item.tarea as string, setTask)
+                        item.tarea = task.nombre
+                    }catch(error){
+                        console.log(error.message)
+                    }*/
+                })
+                setTasks(result)
             })
             .catch((error) => {
                 console.log(error.message)
             });
     }, [id]);
 
-    if (tasks.length === 0 || !resource) {
+    if (!id || !tasks || !resource) {
         return <div>Cargando...</div>;
     }
 
