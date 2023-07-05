@@ -31,7 +31,24 @@ export interface ProyectoInfoProps {
   esfuerzoEstimado: number,
   horasReales: number,
   esfuerzoReal: number,
-  tareas: TareaProps[]
+  tareas: TareaProps[],
+}
+
+export interface CrearProyectoProps {
+  id: number;
+  nombre: string;
+  // cliente: string;
+  descripcion: string;
+  lider: string;
+  fechaInicio: string;
+  fechaFinalizacion: string;
+  estado: string;
+  // horasEstimadas: number,
+  // esfuerzoEstimado: number,
+  // horasReales: number,
+  // esfuerzoReal: number,
+  tareas: TareaProps[],
+  // recursos: string[]
 }
 
 export interface TareaProps {
@@ -46,7 +63,22 @@ export interface TareaProps {
   esfuerzoEstimado: number,
   horasReales: number,
   esfuerzoReal: number,
-  recursosAsignados: Recurso[]
+  recursos: Recurso[]
+}
+
+export interface CrearTareaProps {
+  id: number;
+  idProyecto: number;
+  nombre: string;
+  descripcion: string;
+  estado: string;
+  fechaInicio: string;
+  fechaFinal: string;
+  horasEstimadas: number,
+  esfuerzoEstimado: number,
+  horasReales: number,
+  esfuerzoReal: number,
+  recursos: string[]
 }
 
 export interface Recurso {

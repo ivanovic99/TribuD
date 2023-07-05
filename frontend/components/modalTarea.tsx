@@ -14,7 +14,7 @@ export default function ModalTarea({ modalOpen, setModalOpen, tarea }: ModalTare
     const [nombre, setNombre] = useState(tarea.nombre)
     const [descripcion, setDescripcion] = useState(tarea.descripcion)
     const [recursosDisponibles, setRecursosDisponibles] = useState<Recurso[]>([])
-    const [recursosSeleccionados, setRecursosSeleccionados] = useState<Recurso[]>(tarea.recursosAsignados || [])
+    const [recursosSeleccionados, setRecursosSeleccionados] = useState<Recurso[]>(tarea.recursos || [])
     const [fechaInicio, setFechaInicio] = useState(tarea.fechaInicio)
     const [fechaFinal, setFechaFinalizacion] = useState(tarea.fechaFinal)
     const [esfuerzoEstimado, setEsfuerzoEstimado] = useState(tarea.esfuerzoEstimado)
@@ -27,7 +27,8 @@ export default function ModalTarea({ modalOpen, setModalOpen, tarea }: ModalTare
 
     useEffect(() => {
         getRecursos(setRecursosDisponibles || [])
-    }, [])
+        console.log(tarea)
+    }, [modalOpen, tarea])
 
 
     const tareaNueva = () => {
@@ -39,7 +40,7 @@ export default function ModalTarea({ modalOpen, setModalOpen, tarea }: ModalTare
             fechaInicio,
             fechaFinal,
             esfuerzoEstimado,
-            recursosAsignados: recursosSeleccionados,
+            recursos: recursosSeleccionados,
             horasEstimadas,
             estado,
             horasReales: 0,
@@ -171,7 +172,7 @@ export default function ModalTarea({ modalOpen, setModalOpen, tarea }: ModalTare
                                 ></textarea>
                             </div>
                             <div className="relative z-10 w-full mb-6 group">
-                                <SeleccionarRecurso recursosDisponibles={recursosDisponibles} selecciones={recursosSeleccionados} setRecursosSeleccionados={setRecursosSeleccionados} maximasSelecciones={999} editable={esEditable()}/>
+                                <SeleccionarRecurso recursosDisponibles={recursosDisponibles} selecciones={recursosSeleccionados} setRecursosSeleccionados={setRecursosSeleccionados} maximasSelecciones={999} editable={esEditable()} />
                             </div>
                             <div className="grid md:grid-cols-4 md:gap-6">
                                 <div className="relative z-0 w-full mb-6 group">

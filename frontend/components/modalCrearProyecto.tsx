@@ -1,5 +1,5 @@
 import { createProyecto, getRecursos } from "@/pages/api/proyectoServices"
-import { ModalProps, ProyectoInfoProps, Recurso } from "./types"
+import { CrearProyectoProps, ModalProps, ProyectoInfoProps, Recurso } from "./types"
 import { useEffect, useState } from "react"
 import SeleccionarRecurso from "@/components/seleccionarRecurso"
 import formatearFecha from "@/components/formatearFecha"
@@ -31,23 +31,21 @@ export default function ModalCreate({ modalOpen, setModalOpen, list }: ModalProp
     }, [])
 
     const instanciaProyecto = () => {
-        const instancia: ProyectoInfoProps = {
+        const instancia: CrearProyectoProps = {
             id: 0,
             nombre,
             descripcion,
-            cliente,
             lider,
             fechaInicio,
             fechaFinalizacion,
-            esfuerzoReal: 0,
-            esfuerzoEstimado,
-            horasReales: 0,
-            horasEstimadas,
             estado,
-            tareas: []
+            tareas: [],
         }
         return instancia
     }
+
+
+
 
     const handleSubmit = () => {
         console.log(instanciaProyecto())

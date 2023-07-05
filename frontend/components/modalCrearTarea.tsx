@@ -1,6 +1,6 @@
 
 import { createTarea, getRecursos } from "@/pages/api/proyectoServices"
-import { ModalProps, Recurso, TareaProps } from "./types"
+import { CrearTareaProps, ModalProps, Recurso, TareaProps } from "./types"
 import { useState, useEffect } from "react"
 import SeleccionarRecurso from "@/components/seleccionarRecurso"
 import formatearFecha from '@/components/formatearFecha'
@@ -24,52 +24,30 @@ export default function ModalCrearTarea({ modalOpen, setModalOpen, idProyecto }:
     const [estado, setEstado] = useState(ESTADO_NO_INICIADO)
 
     const configTarea = () => {
-        const tarea: TareaProps = {
+        const tarea: CrearTareaProps = {
             id: 0,
             nombre,
-            idProyecto,
             descripcion,
-            recursosAsignados: recursosSeleccionados,
+            horasEstimadas,
+            horasReales: 0,
+            estado,
             fechaInicio,
             fechaFinal,
             esfuerzoEstimado,
-            horasEstimadas,
-            estado,
-            horasReales: 0,
-            esfuerzoReal: 0
+            esfuerzoReal: 0,
+            recursos: recursosSeleccionados.map(recurso => JSON.stringify(recurso)),
+            idProyecto
         }
         return tarea
     }
 
-    const preloadedOptions = [
-        {
-            "legajo": 1,
-            "Nombre": "Mario",
-            "Apellido": "Mendoza"
-        },
-        {
-            "legajo": 2,
-            "Nombre": "Maria",
-            "Apellido": "Perez"
-        },
-        {
-            "legajo": 3,
-            "Nombre": "Patricia",
-            "Apellido": "Gaona"
-        },
-        {
-            "legajo": 4,
-            "Nombre": "Marcos",
-            "Apellido": "Rivero"
-        }
-    ]
 
     useEffect(() => {
         getRecursos(setRecursosDisponibles)
-    }, [])
+    }, [modalOpen])
 
     const crearTarea = () => {
-        // console.log(configTarea())
+        console.log("TAREA ", configTarea())
         createTarea(configTarea())
             .then(() => setModalOpen(false))
     }

@@ -95,10 +95,10 @@ export default function ModalProyecto({ modalOpen, setModalOpen, proyecto }:
     }
 
     const esEditable = () => {
+        return false
         if (proyecto.estado == 'completada') {
             return true
         }
-        return false
     }
 
     function formatDate(date: Date) {
@@ -125,7 +125,7 @@ export default function ModalProyecto({ modalOpen, setModalOpen, proyecto }:
                     <div className="relative p-4 bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
                         {/* <!-- Modal header --> */}
                         <div className="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600">
-                            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Tarea</h3>
+                            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Información del proyecto</h3>
                             <button
                                 type="button"
                                 className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
@@ -181,22 +181,26 @@ export default function ModalProyecto({ modalOpen, setModalOpen, proyecto }:
                                 ></textarea>
                             </div>
                             <div className="relative z-0 w-full mb-6 group">
-                                <input disabled={esEditable()} type="text" name="floating_first_name" id="floating_first_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
-                                <label htmlFor="floating_first_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                                    Personas asignadas
-                                </label>
+                                <div className="mb-6">
+                                    <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cliente</label>
+                                    <input
+                                        type="text"
+                                        id="email"
+                                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                        placeholder="Nombre"
+                                        defaultValue={proyecto.cliente}
+                                        onChange={(e) => setNombre(e.target.value)}
+                                        disabled={esEditable()}
+                                        required />
+                                </div>
                             </div>
+
                             <div className="grid md:grid-cols-4 md:gap-6">
                                 <div className="relative z-0 w-full mb-6 group">
                                     <input disabled={esEditable()} value={fechaInicio} onChange={(e) => setFechaInicio(e.target.value)} type="date" name="floating_last_name" id="floating_last_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
                                     <label htmlFor="floating_last_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                                         Fecha Inicio</label>
                                 </div>
-                                {/* <div className="relative z-0 w-full mb-6 group">
-                                    <input disabled={esEditable()} defaultValue={horasEstimadas} onChange={(e) => setHorasEstimado(Number(e.target.value))} type="number" name="floating_last_name" id="floating_last_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                                    <label htmlFor="floating_last_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                                        Horas Estimadas</label>
-                                </div> */}
 
                                 <div className="relative z-0 w-full mb-6 group">
                                     <div className="flex items-center">
@@ -225,11 +229,11 @@ export default function ModalProyecto({ modalOpen, setModalOpen, proyecto }:
                                     <label htmlFor="floating_last_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                                     >Fecha  finalizacion</label>
                                 </div>
-                                <div className="relative z-0 w-full mb-6 group">
+                                {/* <div className="relative z-0 w-full mb-6 group">
                                     <input disabled={esEditable()} defaultValue={esfuerzoEstimado} onChange={(e) => setEsfuerzoEstimado(Number(e.target.value))} type="number" name="floating_last_name" id="floating_last_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
                                     <label htmlFor="floating_last_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                                     >Esfuerzo Estimado</label>
-                                </div>
+                                </div> */}
                             </div>
                             <div className="flex justify-end gap-2">
                                 {/* {renderBotones()} */}
