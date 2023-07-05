@@ -1,13 +1,20 @@
-export interface Usuario {
+export interface Resource {
   nombre: string
   apellido: string
   legajo: number
 }
 
+export interface ResourceTask {
+  legajo: number
+  tarea: string
+  cantidadHoras: number
+  fecha: string
+}
+
 export interface Cliente {
   id: string
-  razon_social: string
-  cuit: number
+  "razon social": string
+  CUIT: number
 }
 
 export interface Tickets {
@@ -16,6 +23,13 @@ export interface Tickets {
   description: string
   status: string
   createdAt: string
+  product: string
+  task: string
+  client: string
+  priority: string
+  severity: string
+  time_remaining: string
+  resource: string
 }
 
 export interface Products {
@@ -24,4 +38,5 @@ export interface Products {
   description: string
   status: string
   createdAt: string
+  version: String
 }

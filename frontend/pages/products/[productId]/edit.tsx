@@ -19,14 +19,6 @@ const ProductForm: React.FC = () => {
   }
 
   useEffect(() => {
-   // (async () => {
-   //    try {
-   //       const data = await getProductById(productId);
-   //       setFormData(data);
-
-   //    } catch (error) {
-   //       console.error('Error al obtener los detalles del producto:', error);
-   //    }
       getProductById(productId as string)
       .then((data) => setFormData(data))
       .catch((error) => {

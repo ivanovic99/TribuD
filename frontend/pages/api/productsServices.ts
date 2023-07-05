@@ -31,6 +31,7 @@ export const createProduct = async (productData: {}) => {
 export const getProductById = async (productId: String) => {
    try {
      const response = await axios.get(`${BASE_URL_PRODUCT}/products/${productId}`);
+     console.log(response.data)
      return response.data;
    } catch (error) {
       // if (error.response.status !== 404) console.error(`Error al obtener el producto con ID ${productId}:`, error);

@@ -7,15 +7,20 @@ const TicketForm: React.FC = () => {
   const [description, setDescription] = useState('');
   const [status, setStatus] = useState('Open');
   const [showPopup, setShowPopup] = useState(false);
+  const [severity, setSeverity] = useState('S1');
+  const [resource, setResource] = useState('Mario Mendoza');
 
   const router = useRouter();
   const { productId, ticketId } = router.query;
 
-  const setFormData = (data: { title: string, description: string, status: string}) => {
-      const { title, description, status } = data;
+  const setFormData = (data: { title: string, description: string, 
+                          status: string, severity: string, resource: string}) => {
+      const { title, description, status, severity, resource } = data;
       setTitle(title);
       setDescription(description);
       setStatus(status);
+      setSeverity(severity);
+      setResource(resource);
   }
 
   useEffect(() => {
@@ -37,13 +42,15 @@ const TicketForm: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await updateTicket(productId as string, ticketId as string, { title, description, status });
+      await updateTicket(productId as string, ticketId as string, { title, description, status, severity, resource });
       // Limpiar el formulario después de crear el ticket
       setTitle('');
       setDescription('');
       setStatus('Open');
       // Mostrar el pop-up
       setShowPopup(true);
+      setSeverity('S1');
+      setResource('');
       // Actualizar la lista de tickets (puedes pasar una función de actualización desde el padre)
       // updateTicketList();
     } catch (error) {
@@ -78,6 +85,22 @@ const TicketForm: React.FC = () => {
             <option value="Closed">Closed</option>
           </select>
         </div>
+
+        <div className="form-group">
+          <label htmlFor="severity">Severidad:</label>
+          <select id="severity" value={severity} onChange={(e) => setSeverity(e.target.value)}>
+            <option value="S1">S1</option>
+            <option value="S2">S2</option>
+            <option value="S3">S3</option>
+            <option value="S4">S4</option>
+          </select>
+        </div>
+        {
+        <div className="form-group">
+          <label htmlFor="Recurso">Recurso:</label>
+          <input type="text" id="recurso" value={resource} onChange={(e) => setResource(e.target.value)} />
+        </div>
+        }
         <button type="submit" className="btn-create">Editar</button>
       </form>
 

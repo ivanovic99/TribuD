@@ -15,28 +15,36 @@ export default function Layout({ children }: { children: any }) {
       title: "Clientes",
     },
     {
-      href: "/usuarios",
-      title: "Usuarios",
-    },
-    {
       href: "/products",
       title: "Productos",
     },
-    {
+    /*{
       href: "/productCreate",
       title: "Crear producto",
+  },*/
+    {
+      href: "/resources",
+      title: "Recursos",
+    },
+    {
+      href: "/resources/addHours",
+      title: "Cargar horas",
+    },
+    {
+      href: "/proyectos",
+      title: "Proyectos",
     }
   ];
 
   const router = useRouter();
 
   return (
-    <div className="min-h-screen flex flex-col bg-white">
+    <div className="min-h-screen flex flex-col bg-white dark:bg-gray-800">
       <header className="bg-black sticky top-0 h-14 flex justify-center items-center font-semibold uppercase text-white">
         PSA
       </header>
       <div className="flex flex-col md:flex-row flex-1">
-        <aside className="bg-grey-100 w-full md:w-60">
+        <aside className="bg-gray-100 w-full md:w-60">
           <nav>
             <ul>
               {menuItems.map((item) => (
@@ -45,10 +53,10 @@ export default function Layout({ children }: { children: any }) {
             </ul>
           </nav>
         </aside>
-         <main className="flex-1">
-            {/* {router.pathname === "/tickets/:id" && <TicketsDetails ticketId={router.query.id} />} */}
-            {children}
-         </main>
+        <main className="flex-1">
+          {/* {router.pathname === "/tickets/:id" && <TicketsDetails ticketId={router.query.id} />} */}
+          {children}
+        </main>
       </div>
     </div>
   );

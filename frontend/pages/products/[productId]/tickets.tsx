@@ -4,6 +4,7 @@ import { getTickets } from "@/pages/api/ticketsServices";
 import TicketsGridRow from "@/components/ticketsGridRow";
 import { Tickets } from "@/public/types";
 import { useRouter } from 'next/router';
+import { getProductById } from "@/pages/api/productsServices";
 
 function HeaderItem({ title }: { title: string }) {
   return (
@@ -16,10 +17,24 @@ function HeaderItem({ title }: { title: string }) {
 export default function Tickets() {
   const router = useRouter();
   const [tickets, setTickets] = useState<Tickets[]>([]);
+  const [productTitle, setProductTitle] = useState("");
   var { productId } = router.query;
+  
+  useEffect(() => {
+    (async () => {
+      if (productId != null) {
+        const product = await getProductById(productId as string);
+        setProductTitle(product.title);
+        await getTickets(productId as string, setTickets);
+      }
+    })()
+  }, [router.query]);
+  
   useEffect(() => {
      (async () => {
-        await getTickets(productId as string, setTickets);
+        if (productId != null) {
+          await getTickets(productId as string, setTickets);
+        }
       })()
    }, [router.query]);
    if (!tickets.length) {  
@@ -41,7 +56,7 @@ export default function Tickets() {
 
       <div className="container max-w-7xl mx-auto mt-8">
         <div className="mb-4">
-          <h1 className="text-3xl font-bold decoration-gray-400">Tickets</h1>
+          <h1 className="text-3xl font-bold decoration-gray-400">Tickets {productTitle} </h1>
         </div>
         <div className="flex flex-col">
           <div className="overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
@@ -50,16 +65,23 @@ export default function Tickets() {
                 <thead>
                   <tr>
                     <HeaderItem title="ID" />
-                    <HeaderItem title="Titulo" />
-                    <HeaderItem title="Descripcion" />
+                    <HeaderItem title="Tipo" />
+                  {/*  <HeaderItem title="Descripcion" /> */}
                     <HeaderItem title="Estado" />
                     <HeaderItem title="Fecha de creacion" />
+                    <HeaderItem title="Dias restantes" />
+                  {/*  <HeaderItem title="Producto asociado" /> */}
+                    <HeaderItem title="Tarea" />
+                    <HeaderItem title="Cliente" />
+                    <HeaderItem title="Resource" />
+                    <HeaderItem title="Prioridad" />
+                    <HeaderItem title="Severidad" />
                   </tr>
                 </thead>
 
                 <tbody>
                   {tickets.map((ticket) => (
-                     <TicketsGridRow key={ticket._id} productId={productId as string} ticket={ticket} />
+                      <TicketsGridRow key={ticket._id} productId={productId as string} ticket={ticket} />
                   ))}
                 </tbody>
               </table>
