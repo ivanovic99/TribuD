@@ -61,7 +61,7 @@ export const createProyecto = async (proyecto: CrearProyectoProps) => {
 
 
 export const createTarea = async (tarea: CrearTareaProps) => {
-    await axios.post(`${BASE_URL}/tarea`, tarea)
+    await axios.post(`${BASE_URL}/tarea`, tarea, { headers })
         .then(response => response.data)
         .then(data => {
             putAsignarTareaAProyecto(data.id, data.idProyecto)

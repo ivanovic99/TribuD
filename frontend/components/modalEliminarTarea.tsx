@@ -9,7 +9,9 @@ export default function ModalEliminarTarea({ modalOpen, setModalOpen, tarea }:
     const eliminarTarea = () => {
         setModalOpen(false);
 
-        document.getElementById(`tarea-${tarea.id}`)?.remove()
+        let element = document.getElementById(`tarea-${tarea.id}`) as Node
+
+        document.getElementById('tabla-tareas')?.removeChild(element)
 
         deleteTarea(tarea.id)
     }
