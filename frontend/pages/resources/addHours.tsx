@@ -1,20 +1,17 @@
 import React, {FormEvent, useEffect, useState} from "react";
-import {getProducts} from "@/pages/api/productsServices";
-import {Products, Resource} from "@/public/types";
+import {Resource} from "@/public/types";
 import {addHours, getResources} from "@/pages/api/resourcesServices";
-import {getTareas} from "@/pages/api/proyectoServices";
-import ProductsGridRow from "@/components/productsGridRow";
-import {TareaProps} from "@/components/types";
+import {getProyectos} from "@/pages/api/proyectoServices";
+import {ProyectoInfoProps, TareaProps} from "@/components/types";
 
 const AddHours: React.FC = () => {
     const [hours, setHours] = useState('');
     const [date, setDate] = useState('');
     const [task, setTask] = useState('');
-    const [project, setProject] = useState<String>();
     const [resource, setResource] = useState('');
+    const [project, setProject] = useState<ProyectoInfoProps>();
     const [resources, setResources] = useState<Resource[]>([]);
-    const [products, setProducts] = useState<Products[]>([]);
-    const [tasks, setTasks] = useState<TareaProps[]>([]);
+    const [projects, setProjects] = useState<ProyectoInfoProps[]>([]);
 
     useEffect(() => {
         getResources()
@@ -27,8 +24,14 @@ const AddHours: React.FC = () => {
     }, []);
 
     useEffect(() => {
-        getProducts(setProducts);
-    }, []);
+        getProyectos(setProjects)
+            .then((res) => {
+
+            })
+            .catch((error) => {
+
+            });
+    }, [projects]);
 
     const handleSubmit = async (e: FormEvent<HTMLButtonElement>) => {
         e.preventDefault();
@@ -37,26 +40,19 @@ const AddHours: React.FC = () => {
         if (confirmAction) {
             await addHours({
                 legajo: resource,
-                tarea: '1',
+                tarea: task,
                 cantidadHoras: hours,
                 fecha: formatDate
             });
         }
     }
 
-    const handleProject = (projectId: String) => {
-        setProject(projectId)
-        getTareas(projectId as string, setTasks)
-            .then((res) => {
-
-            })
-            .catch(error => {
-                console.log(error.message)
-            })
+    if (!projects || !resources) {
+        return <div>Cargando...</div>;
     }
 
-    if (resources.length === 0 || products.length === 0) {
-        return <div>Cargando...</div>;
+    if (projects.length === 0) {
+        return <h2 className="text-lg font-bold mb-2">No hay proyectos disponibles para asignar horas a tareas</h2>;
     }
 
     return (
@@ -68,11 +64,11 @@ const AddHours: React.FC = () => {
             <form id="add-hours-form">
                 <div className="form-group">
                     <label htmlFor="project">Proyecto:</label>
-                    <select id="project" onChange={(e) => handleProject(e.target.value)}>
+                    <select id="project" onChange={(e) => setProject(projects.find(o => o.id === parseInt(e.target.value)))}>
                         <option selected>Seleccione el proyecto</option>
-                        {products.map((item: Products) => (
-                            <option value={`${item._id}`} key={`${item._id}`}>
-                                {item.title}
+                        {projects.map((item: ProyectoInfoProps) => (
+                            <option value={`${item.id}`} key={`${item.id}-${item.nombre}`}>
+                                {item.nombre}
                             </option>
                         ))}
                     </select>
@@ -80,9 +76,9 @@ const AddHours: React.FC = () => {
 
                 <div className="form-group">
                     <label htmlFor="task">Tarea:</label>
-                    <select id="task" value="default" onChange={(e) => setTask(e.target.value)}>
-                        <option value="default">Seleccione la tarea</option>
-                        {tasks.map((task) => (
+                    <select id="task" onChange={(e) => setTask(e.target.value)}>
+                        <option selected>Seleccione la tarea</option>
+                        {project && project.tareas?.map((task: TareaProps) => (
                             <option value={`${task.id}`} key={`${task.id}-${task.nombre}`}>
                                 {task.nombre}
                             </option>

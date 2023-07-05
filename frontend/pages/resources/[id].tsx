@@ -9,7 +9,7 @@ import {TareaProps} from "@/components/types";
 function ResourceDetail() {
     const router = useRouter();
     const { id } = router.query;
-    const [resource, setResource] = useState();
+    const [resource, setResource] = useState<Resource>();
     const [task, setTask] = useState<TareaProps>();
     const [tasks, setTasks] = useState([])
 
@@ -23,9 +23,9 @@ function ResourceDetail() {
             });
 
         getHoursByResource(id as string)
-            .then((res) => {
+            .then(async (res) => {
                 const result = res
-                result.map(async (item: ResourceTask) => {
+                await result.map(async (item: ResourceTask) => {
                     try{
                         await getTarea(item.tarea as string, setTask)
 
@@ -49,9 +49,10 @@ function ResourceDetail() {
 
     return (
         <div className="container mx-auto py-4">
+            <h2 className="text-lg font-bold mb-2">Historial de tareas de {resource.nombre + ' ' + resource.apellido}</h2>
             {tasks.map((task: ResourceTask, index) => (
                 <div key={`${index}-task-${task.legajo}`} className="my-4">
-                    <Card task={task} resource={resource} />
+                    <Card task={task} />
                 </div>
             ))}
         </div>
