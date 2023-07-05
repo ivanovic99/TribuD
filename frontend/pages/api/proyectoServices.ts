@@ -106,26 +106,17 @@ export const getTareas = async (id: string, setTareas: React.Dispatch<React.SetS
 
 
 export const getTarea = async (id: string, setTarea: React.Dispatch<React.SetStateAction<any>>) => {
-    await axios.get(`${BASE_URL}/tarea/${id}`)
+    const response = await axios.get(`${BASE_URL}/tarea/${id}`)
         .then(response => response.data as CrearTareaProps)
         .then(tarea => {
-
-            let recursosString = tarea.recursos
-            try {
-                let recursosJson = recursosString.map(recurso => JSON.parse(recurso))
-                tarea.recursos = recursosJson
-                setTarea(tarea)
-            }
-
-            catch {
-                setTarea(tarea)
-            }
-            // console.log('TAREA: ', tarea,)
-
+            tarea.recursos = tarea.recursos.map((recurso: string) => JSON.parse(recurso));
+            setTarea(tarea)
+            return tarea
         })
         .catch(error => {
             throw error;
         })
+    return response
 }
 
 
