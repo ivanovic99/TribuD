@@ -25,13 +25,7 @@ const AddHours: React.FC = () => {
 
     useEffect(() => {
         getProyectos(setProjects)
-            .then((res) => {
-
-            })
-            .catch((error) => {
-
-            });
-    }, [projects]);
+    }, []);
 
     const handleSubmit = async (e: FormEvent<HTMLButtonElement>) => {
         e.preventDefault();

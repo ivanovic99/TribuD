@@ -90,12 +90,13 @@ export const getTareas = async (id: string, setTareas: React.Dispatch<React.SetS
 
 
 export const getTarea = async (id: string, setTarea: React.Dispatch<React.SetStateAction<any>>) => {
-    await axios.get(`${BASE_URL}/tarea/${id}`)
-        .then(response => {
-            setTarea(response.data)
-        }).catch(error => {
-            throw error;
-        })
+    try {
+        const response = await axios.get(`${BASE_URL}/tarea/${id}`);
+        setTarea(response.data)
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
 }
 
 
